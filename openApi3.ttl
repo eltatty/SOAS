@@ -1,0 +1,960 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+
+@prefix openapi: <http://www.intelligence.tuc.gr/ns/open-api#> .
+
+openapi:
+	a owl:Ontology ;
+	rdfs:label "Open API Specification Vocabulary"@en .
+
+#################################################################
+# Document Object Class
+#################################################################
+openapi:Document 
+	a rdfs:Class ;
+	rdfs:label "Document"@en ;
+	rdfs:comment "The root document object of the OpenAPI document"@en .
+
+## Document Object properties
+openapi:info 
+	a rdf:Property ;
+	rdfs:label "info"@en ;
+	rdfs:comment "Metadata info about the API"@en ;
+	rdfs:domain openapi:Document ;
+	rdfs:range openapi:Info .
+
+openapi:externalDoc 
+	a rdf:Property ;
+	rdfs:label "externalDoc"@en ;
+	rdfs:comment "References an external resource for extended documentation"@en ;
+	rdfs:range openapi:ExternalDoc .
+
+openapi:supportedOperation 
+	a rdf:Property ;
+	rdfs:label "supportedOperation"@en ;
+	rdfs:comment "An operation supported by the API or a specific entity"@en ;
+	rdfs:range openapi:Operation .
+
+openapi:supportedEntity 
+	a rdf:Property ;
+	rdfs:label "supportedEntity"@en ;
+	rdfs:comment "An entity known to be supported by the API"@en ;
+	rdfs:domain openapi:Document ;
+	rdfs:range sh:Shape .
+
+openapi:version 
+	a rdf:Property ;
+	rdfs:label "version"@en ;
+	rdfs:domain openapi:Document ;
+	rdfs:range xsd:string .
+
+openapi:supportedSecurity 
+	a rdf:Property ;
+	rdfs:label "supportedSecurity"@en ;
+	rdfs:comment "A security type supported by the API "@en ;
+	rdfs:domain openapi:Document ;
+	rdfs:range openapi:Security .
+
+#################################################################
+# Info Object Class
+#################################################################
+openapi:Info 
+	a rdfs:Class ;
+	rdfs:label "Info"@en ;
+	rdfs:comment "Provides metadata about the API"@en .
+
+## Info Object properties
+openapi:serviceTitle
+	a rdf:Property ;
+	rdfs:label "serviceTitle"@en ;
+	rdfs:comment "The title of the application"@en ;
+	rdfs:domain openapi:Info ;
+	rdfs:range xsd:string .
+
+openapi:description 
+	a rdf:Property ;
+	rdfs:label "description"@en ;
+	rdfs:range xsd:string .
+
+openapi:termsOfService 
+	a rdf:Property ;
+	rdfs:label "termsOfService"@en ;
+	rdfs:comment "A URL to the Terms of Service for the API. MUST be in the format of a URL."@en ;
+	rdfs:domain openapi:Info ;
+	rdfs:range xsd:anyURI .
+
+openapi:contact 
+	a rdf:Property ;
+	rdfs:label "contact"@en ;
+	rdfs:comment "Contact information for the exposed API."@en ;
+	rdfs:domain openapi:Info ;
+	rdfs:range openapi:Contact .
+
+openapi:license 
+	a rdf:Property ;
+	rdfs:label "license"@en ;
+	rdfs:comment "License information for the exposed API"@en ;
+	rdfs:domain openapi:Info ;
+	rdfs:range openapi:License .
+
+#################################################################
+# Contact Object Class
+#################################################################
+openapi:Contact 
+	a rdfs:Class ;
+	rdfs:label "Contact"@en ;
+	rdfs:comment "The contact information for the exposed API"@en .
+
+## Contact Object properties
+openapi:contactName 
+	a rdf:Property ;
+	rdfs:label "contactName"@en ;
+	rdfs:comment "The identifying name of the contact person/organization"@en ;
+	rdfs:domain openapi:Contact ;
+	rdfs:range xsd:string .
+
+openapi:url 
+	a rdf:Property ;
+	rdfs:label "url"@en ;
+	rdfs:range xsd:anyURI .
+
+openapi:email 
+	a rdf:Property ;
+	rdfs:label "email"@en ;
+	rdfs:comment "The email address of the contact person/organization. MUST be in the format of an email address."@en ;
+	rdfs:domain openapi:Contact ;
+	rdfs:range xsd:anyURI .
+
+#################################################################
+# License Object Class
+#################################################################
+openapi:License 
+	a rdfs:Class ;
+	rdfs:label "License"@en ;
+	rdfs:comment "The license information for the exposed API"@en .
+
+## License Object properties
+openapi:licenseName 
+	a rdf:Property ;
+	rdfs:label "licenseName"@en ;
+	rdfs:comment "The license name used for the API."@en ;
+	rdfs:domain openapi:License ;
+	rdfs:range xsd:string .
+
+# The url property is represented by the openapi:url
+
+#################################################################
+# Server Object Class
+#################################################################
+openapi:Server 
+	a rdfs:Class ;
+	rdfs:label "Server"@en ;
+	rdfs:comment "Provides connectivity information to a target server"@en .
+
+## Server Object properties
+openapi:host 
+	a rdf:Property ;
+	rdfs:label "host"@en ;
+	rdfs:comment "The target host's url"@en ;
+	rdfs:domain openapi:Server ;
+	rdfs:range xsd:anyURI .
+
+# The description property is represented by the openapi:description
+
+openapi:variable 
+	a rdf:Property ;
+	rdfs:label "variable"@en ;
+	rdfs:comment "Represents a Server Variable for server URL template substitution"@en ;
+	rdfs:domain openapi:Server ;
+	rdfs:range openapi:ServerVariable .
+
+#################################################################
+# Server Variable Object Class
+#################################################################
+openapi:ServerVariable 
+	a rdfs:Class ;
+	rdfs:label "ServerVariable"@en ;
+	rdfs:comment "An object representing a Server Variable for server URL template substitution"@en .
+
+## Server Variable Object properties
+openapi:name
+	a rdf:Property ;
+	rdfs:label "name"@en ;
+	rdfs:range xsd:string .
+
+openapi:variableDefaultValue 
+	a rdf:Property ;
+	rdfs:label "variableDefaultValue"@en ;
+	rdfs:domain openapi:ServerVariable ;
+	rdfs:range xsd:string .
+
+openapi:variableValue
+	a rdf:Property ;
+	rdfs:label "variableValue"@en ;
+	rdfs:domain openapi:ServerVariable ;
+	rdfs:range xsd:string .
+
+# The description property is represented by the openapi:description
+
+#################################################################
+# Paths Object Class
+#################################################################
+openapi:Path 
+	a rdfs:Class ;
+	rdfs:label "Path"@en ;
+	rdfs:comment "Holds the relative paths to the individual endpoints and their operations"@en .
+
+## Paths Object properties
+openapi:pathName 
+	a rdf:Property ;
+	rdfs:label "pathName"@en ;
+	rdfs:domain openapi:Path ;
+	rdfs:range xsd:string .
+
+#################################################################
+# Http Method Class
+#################################################################
+openapi:Method 
+	a rdfs:Class ;
+	rdfs:label "Method"@en ;
+	rdfs:comment "The HTTP method"@en .
+
+## Individuals
+openapi:DELETE 
+	a openapi:Method .
+
+openapi:GET 
+	a openapi:Method .
+
+openapi:HEAD 
+	a openapi:Method .
+
+openapi:OPTIONS 
+	a openapi:Method .
+
+openapi:PATCH 
+	a openapi:Method .
+
+openapi:POST 
+	a openapi:Method .
+
+openapi:PUT 
+	a openapi:Method .
+
+openapi:TRACE 
+	a openapi:Method .
+
+#################################################################
+# Operation Object Class
+#################################################################
+openapi:Operation 
+	a rdfs:Class  ;
+	rdfs:label "Operation"@en ;
+	rdfs:comment "Describes a single API operation"@en .
+
+## Operation Object properties
+openapi:onPath 
+	a rdf:Property ;
+	rdfs:label "onPath"@en ;
+	rdfs:comment "Holds the relative paths to the individual endpoints and their operations"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Path .
+
+openapi:method 
+	a rdf:Property ;
+	rdfs:label "method"@en ;
+	rdfs:comment "The HTTP method that operation supports"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Method .
+
+openapi:tag 
+	a rdf:Property ;
+	rdfs:label "tag"@en ;
+	rdfs:comment "An operation's tag"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Tag .
+
+openapi:summary 
+	a rdf:Property ;
+	rdfs:label "summary"@en ;
+	rdfs:comment "A short summary of what the operation does."@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range xsd:string .
+
+# The description property is represented by the openapi:description
+
+# The externalDocs property is represented by the openapi:ExternalDoc
+
+# The operationId property is represented by the openapi:name
+
+openapi:parameter 
+	a rdf:Property ;
+	rdfs:label "parameter"@en ;
+	rdfs:comment "An operation's parameter"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Parameter .
+
+openapi:cookie 
+	a rdf:Property ;
+	rdfs:label "cookie"@en ;
+	rdfs:comment "An operation's cookie"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Cookie .
+
+openapi:requestHeader 
+	a rdf:Property ;
+	rdfs:label "requestHeader"@en ;
+	rdfs:comment "An operation's request header"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Header .
+
+openapi:requestBody 
+	a rdf:Property ;
+	rdfs:label "requestBody"@en ;
+	rdfs:comment "An operation's request body"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Body .
+
+openapi:response 
+	a rdf:Property ;
+	rdfs:label "response"@en ;
+	rdfs:comment "An operation's response"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:Response .
+
+openapi:deprecated 
+	a rdf:Property ;
+	rdfs:label "deprecated"@en ;
+	rdfs:comment "Specifies that a schema, operation or parameter is deprecated and SHOULD be transitioned out of usage"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:security 
+	a rdf:Property ;
+	rdfs:label "security"@en ;
+	rdfs:comment "An operation's security"@en ;
+	rdfs:domain openapi:Operation ;
+	rdfs:range openapi:SecurityRequirement .
+
+openapi:serverInfo 
+	a rdf:Property ;
+	rdfs:label "serverInfo"@en ;
+	rdfs:comment "An operation's server"@en ;
+	rdfs:domain openapi:Operation ; 
+	rdfs:range openapi:Server .
+
+#################################################################
+# External Documentation Object Class
+#################################################################
+openapi:ExternalDoc 
+	a rdfs:Class ;
+	rdfs:label "ExternalDocumentation"@en ;
+	rdfs:comment "Allows referencing an external resource for extended documentation."@en .
+
+## External Documentation Object properties
+# The description property is represented by the openapi:description
+
+# The url property is represented by the openapi:url
+
+#################################################################
+# Parameter Object Class
+#################################################################
+openapi:Parameter 
+	a rdfs:Class ;
+	rdfs:label "Parameter"@en ;
+	rdfs:comment "Describes a single operation parameter"@en .
+
+openapi:PathParameter 
+	a rdfs:Class ;
+	rdfs:label "PathParameter"@en ;
+	rdfs:comment "A parameter value that is part of the operation's URL"@en ;
+	rdfs:subClassOf openapi:Parameter .
+
+openapi:Query 
+	a rdfs:Class ;
+	rdfs:label "QueryParameter"@en ;
+	rdfs:comment "A Parameter that is appended to the URL"@en ;
+	rdfs:subClassOf openapi:Parameter .
+
+openapi:Cookie 
+	a rdfs:Class ;
+	rdfs:label "Cookie"@en ;
+	rdfs:comment "Used to pass a specific cookie value to the API"@en .
+
+openapi:Header 
+	a rdfs:Class ;	
+	rdfs:label "Header"@en ;
+	rdfs:comment "Custom headers that are expected as part of the HTTP request/response"@en .
+
+## Parameter Object properties
+# The name property is represented by the openapi:name
+
+# The description property is represented by the openapi:description
+
+openapi:required 
+	a rdf:Property ;
+	rdfs:label "required"@en ;
+	rdfs:range xsd:boolean .
+
+# The deprecated property is represented by the openapi:deprecated
+
+openapi:allowEmptyValue 
+	a rdf:Property ;
+	rdfs:label "allowEmptyValue"@en ;
+	rdfs:comment "Sets the ability to pass empty-valued parameters"@en ;
+	rdfs:domain openapi:Query ;
+	rdfs:range xsd:boolean .
+
+openapi:style 
+	a rdf:Property ;
+	rdfs:label "style"@en ;
+	rdfs:comment "A parameter's style"@en ;
+	rdfs:range openapi:Style .
+
+openapi:explode 
+	a rdf:Property ;
+	rdfs:label "explode"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:allowReserved 
+	a rdf:Property ;
+	rdfs:label "allowReserved"@en ;
+	rdfs:comment "Determines whether the parameter value SHOULD allow reserved characters"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:schema 
+	a rdf:Property ;
+	rdfs:label "schema"@en ;
+	rdfs:comment "The schema defining the content of the request, response, or parameter"@en ;
+	rdfs:range sh:Shape .
+
+openapi:content 
+	a rdf:Property ;
+	rdfs:label "content"@en ;
+	rdfs:comment "The content of a parameter"@en ;
+	rdfs:range openapi:MediaType .
+
+#################################################################
+# Style Class
+#################################################################
+openapi:Style 
+	a rdfs:Class ;		
+	rdfs:label "Style"@en ;
+	rdfs:comment "Describes how the parameter value will be serialized"@en .
+
+## Individuals
+openapi:deepObject 
+	a openapi:Style .
+
+openapi:form 
+	a openapi:Style .
+
+openapi:label 
+	a openapi:Style .
+
+openapi:matrix 
+	a openapi:Style .
+
+openapi:pipeDelimited 
+	a openapi:Style .
+
+openapi:simple 
+	a openapi:Style .
+
+openapi:spaceDelimited 
+	a openapi:Style .
+
+#################################################################
+# Request Body Object Class
+#################################################################
+openapi:Body 
+	a rdfs:Class ;			
+	rdfs:label "Body"@en ;
+	rdfs:comment "The request body applicable for this operation"@en .
+
+## Parameter Object properties
+# The description property is represented by the openapi:description
+
+openapi:requestBodyContent
+	a rdf:Property ;
+	rdfs:label "requestBodyContent"@en ;
+	rdfs:comment "The content of a the request"@en ;
+	rdfs:domain openapi:Body ;
+	rdfs:range openapi:RequestBodyMediaType .
+
+# The required property is represented by the openapi:required
+
+#################################################################
+# Media Type Object Class
+#################################################################
+openapi:MediaType 
+	a rdfs:Class ;		
+	rdfs:label "MediaType"@en ;
+	rdfs:comment "A Media Type Object provides schema for the identified media type"@en .
+
+openapi:RequestBodyMediaType
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:MediaType ;			
+	rdfs:label "RequestBodyMediaType"@en ;
+	rdfs:comment "A Request Body Media Type Object provides schema for the identified media type"@en .
+
+## Parameter Object properties
+openapi:mediaTypeName 
+	a rdf:Property ;
+	rdfs:label "mediaTypeName"@en ;
+	rdfs:domain openapi:MediaType ;
+	rdfs:range xsd:string .
+
+openapi:encoding 
+	a rdf:Property ;
+	rdfs:label "encoding"@en ;
+	rdfs:comment "A map between a property name and its encoding information"@en ;
+	rdfs:domain openapi:RequestBodyMediaType ;
+	rdfs:range openapi:Encoding .
+
+# The schema property is represented by the sh:Shape
+
+#################################################################
+# Encoding Object Class
+#################################################################
+openapi:Encoding 
+	a rdfs:Class ;		
+	rdfs:label "Encoding"@en ;
+	rdfs:comment "A single encoding definition applied to a single schema property"@en .
+
+## Encoding Object properties
+openapi:propertyName 
+	a rdf:Property ;
+	rdfs:label "propertyName"@en ;
+	rdfs:domain openapi:Encoding ;
+	rdfs:range xsd:string .
+
+openapi:contentType 
+	a rdf:Property ;
+	rdfs:label "contentType"@en ;
+	rdfs:comment "The Content-Type for encoding a specific property"@en ;
+	rdfs:domain openapi:Encoding ;
+	rdfs:range xsd:string .
+
+openapi:encodingHeader 
+	a rdf:Property ;
+	rdfs:label "encodingHeader"@en ;
+	rdfs:comment "A map allowing additional information to be provided as headers"@en ;
+	rdfs:domain openapi:Encoding ;
+	rdfs:range openapi:Header .
+
+# The style property is represented by the openapi:style
+
+# The explode property is represented by the openapi:explode
+
+# The allowReserved property is represented by the openapi:allowReserved
+
+#################################################################
+# Response Object Class
+#################################################################
+openapi:Response 
+	a rdfs:Class ;		
+	rdfs:label "Response"@en ;
+	rdfs:comment "Describes a single response from an API Operation"@en .
+
+openapi:DefaultResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "DefaultResponse"@en ;
+	rdfs:comment "A default response object for all HTTP codes that are not covered individually"@en .
+
+openapi:1xxResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "1xxResponse"@en ;
+	rdfs:comment "Represents all response codes between [100-199]"@en .
+
+openapi:2xxResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "2xxResponse"@en ;
+	rdfs:comment "Represents all response codes between [200-299]"@en .
+
+openapi:3xxResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "3xxResponse"@en ;
+	rdfs:comment "Represents all response codes between [300-399]"@en .
+
+openapi:4xxResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "4xxResponse"@en ;
+	rdfs:comment "Represents all response codes between [400-499]"@en .
+
+openapi:5xxResponse 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Response ;
+	rdfs:label "5xxResponse"@en ;
+	rdfs:comment "Represents all response codes between [500-599]"@en .
+
+## Response Object properties
+openapi:statusCode 
+	a rdf:Property ;
+	rdfs:label "statusCode"@en ;
+	rdfs:domain openapi:Response ;
+	rdfs:range xsd:string .
+
+# The description property is represented by the openapi:description
+
+openapi:responseHeader 
+	a rdf:Property ;
+	rdfs:label "responseHeader"@en ;
+	rdfs:comment "Maps a header to a response"@en ;
+	rdfs:domain openapi:Response ;
+	rdfs:range openapi:Header .
+
+# The content property is represented by the openapi:content
+
+#################################################################
+# Tag Object Class
+#################################################################
+openapi:Tag 
+	a rdfs:Class ;
+	rdfs:label "Tag"@en ;
+	rdfs:comment "A Tag can be used for logical grouping of operations by resources or any other qualifier"@en .
+
+## Tag Object properties
+# The name property is represented by the openapi:name
+
+# The description property is represented by the openapi:description
+
+# The externalDoc property is represented by the openapi:externalDoc
+
+#################################################################
+# Schema Object Class
+#################################################################
+
+openapi:multipleOf
+	a rdf:Property ;
+	rdfs:label "multipleOf"@en ;
+	rdfs:domain sh:Shape .
+
+openapi:extraPropertySchema 
+	a rdf:Property ;
+	rdfs:label "exactly one"@en ;
+	rdfs:comment "Specifies a list of shapes so that the value nodes must conform to exactly one of the shapes."@en ;
+	rdfs:range sh:Shape .
+
+openapi:discriminator 
+	a rdf:Property ;
+	rdfs:label "discriminator"@en ;
+	rdfs:Domain sh:Shape ;
+	rdfs:range openapi:Discriminator .
+
+openapi:xml 
+	a rdf:Property ;
+	rdfs:label "xml"@en ;
+	rdfs:comment "Adds additional metadata to describe the XML representation of a property"@en ;
+	rdfs:domain sh:Shape ;
+	rdfs:range openapi:XML .
+
+openapi:maxProperties 
+	a rdf:Property ;
+	rdfs:label "maxProperties"@en ;
+	rdfs:range xsd:integer .
+
+openapi:minProperties
+	a rdf:Property ;
+	rdfs:label "minProperties"@en ;
+	rdfs:range xsd:int .
+
+openapi:nullable 
+	a rdf:Property ;
+	rdfs:label "nullable"@en ;
+	rdfs:comment "Allows sending a null value for the defined schema."@en ;
+	rdfs:range xsd:boolean .
+
+openapi:allowExtraProperties 
+	a rdf:Property ;
+	rdfs:label "allowExtraProperties"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:writeOnly 
+	a rdf:Property ;
+	rdfs:label "writeOnly"@en ;
+	rdfs:comment "Declares the property as write only"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:uniqueItems 
+	a rdf:Property ;
+	rdfs:label "uniqueItems"@en ;
+	rdfs:range xsd:boolean .
+
+openapi:readOnly 
+	a rdf:Property ;
+	rdfs:label "readOnly"@en ;
+	rdfs:comment "Declares the property as read only"@en ;
+	rdfs:range xsd:boolean .
+
+#################################################################
+# Discriminator Object Class
+#################################################################
+openapi:Discriminator 
+	a rdfs:Class ;		
+	rdfs:label "Discriminator"@en ;
+	rdfs:comment "The discriminator is a specific object in a schema which is used to inform the consumer of the specification of an alternative schema based on the value associated with it."@en .
+
+## Discriminator Object properties
+openapi:discriminatorProperty 
+	a rdf:Property ;
+	rdfs:label "discriminatorProperty"@en ;
+	rdfs:comment "The name of the property in the payload that will hold the discriminator value."@en ;
+	rdfs:domain openapi:Discriminator ;
+	rdfs:range xsd:string .
+
+openapi:mapping 
+	a rdf:Property ;
+	rdfs:label "mapping"@en ;
+	rdfs:comment "An object to hold mappings between payload values and schema names or references."@en ;
+	rdfs:domain openapi:Discriminator ;
+	rdfs:range openapi:PropertyMapper .
+
+#################################################################
+# PropertyMapper Class
+#################################################################
+openapi:PropertyMapper 
+	a rdfs:Class ;			
+	rdfs:label "PropertyMapper"@en ;
+	rdfs:comment "Configuration details for a Discriminator object"@en .
+
+## PropertyMapper properties
+openapi:mapKey 
+	a rdf:Property ;
+	rdfs:label "mapKey"@en ;
+	rdfs:domain openapi:PropertyMapper ;
+	rdfs:range xsd:string .
+
+openapi:mapValue 
+	a rdf:Property ;
+	rdfs:label "mapValue"@en ;
+	rdfs:domain openapi:PropertyMapper ;
+	rdfs:range sh:Shape .
+
+#################################################################
+# XML Object Class
+#################################################################
+openapi:XML 
+	a rdfs:Class ;		
+	rdfs:label "XML"@en ;
+	rdfs:comment "A metadata object that allows for more fine-tuned XML model definitions."@en .
+
+## XML Object properties
+openapi:xmlName 
+	a rdf:Property ;
+	rdfs:label "xmlName"@en ;
+	rdfs:comment "Replaces the name of the element/attribute used for the described schema property"@en ;
+	rdfs:domain openapi:XML ;
+	rdfs:range xsd:string .
+
+openapi:namespace 
+	a rdf:Property ;
+	rdfs:label "namespace"@en ;
+	rdfs:comment "The URI of the namespace definition. Value MUST be in the form of an absolute URI."@en ;
+	rdfs:domain openapi:XML ;
+	rdfs:range xsd:anyURI .
+
+openapi:prefix 
+	a rdf:Property ;
+	rdfs:label "prefix"@en ;
+	rdfs:comment "The prefix to be used for the XML name"@en ;
+	rdfs:domain openapi:XML ;
+	rdfs:range xsd:string .
+
+openapi:attribute 
+	a rdf:Property ;
+	rdfs:label "allowReserved"@en ;
+	rdfs:comment "Declares whether the property definition translates to an attribute instead of an element"@en ;
+	rdfs:domain openapi:XML ;
+	rdfs:range xsd:boolean .
+
+openapi:wrapped 
+	a rdf:Property ;
+	rdfs:label "wrapped"@en ;
+	rdfs:comment "Signifies whether the array is wrapped (for example, <books><book/><book/></books>) or unwrapped (<book/><book/>)"@en ;
+	rdfs:domain openapi:XML ;
+	rdfs:range xsd:boolean .
+
+#################################################################
+# Security Scheme Object Class
+#################################################################
+openapi:Security 
+	a rdfs:Class ;	
+	rdfs:label "Security"@en ;
+	rdfs:comment "Defines a security scheme that can be used by the operations."@en .
+
+openapi:ApiKey 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Security ;			
+	rdfs:label "ApiKey"@en ;
+	rdfs:comment "ApiKey authentication security scheme"@en .
+
+openapi:Http 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Security ;			
+	rdfs:label "Http"@en ;
+	rdfs:comment "HTTP authentication security scheme"@en .
+
+openapi:OAuth2 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Security ;			
+	rdfs:label "OAuth2"@en ;
+	rdfs:comment "OAuth2's common flows security scheme"@en .
+
+openapi:OpenIdConnect 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:Security ;			
+	rdfs:label "OpenIdConnect"@en ;
+	rdfs:comment " OpenID Connect Discovery security scheme"@en .
+
+## Security Scheme Object properties
+openapi:flow 
+	a rdf:Property ;
+	rdfs:label "flow"@en ;
+	rdfs:comment "An object to hold mappings between payload values and schema names or references."@en ;
+	rdfs:domain openapi:OAuth2 ;
+	rdfs:range openapi:OAuthFlow .
+
+openapi:scope 
+	a rdf:Property ;
+	rdfs:label "flow"@en ;
+	rdfs:comment "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it"@en ;
+   	rdfs:range openapi:Scope .
+
+openapi:bearerFormat 
+	a rdf:Property ;
+	rdfs:label "bearerFormat"@en ;
+	rdfs:comment "A hint to the client to identify how the bearer token is formatted"@en ;
+	rdfs:domain openapi:Http ;
+	rdfs:range xsd:string .
+
+openapi:in
+	a rdf:Property ;
+	rdfs:label "in"@en ;
+	rdfs:comment "The location of the API key"@en ;
+	rdfs:domain openapi:ApiKey ;
+	rdfs:range xsd:string .
+
+openapi:openIdConnectUrl 
+	a rdf:Property ;
+	rdfs:label "openIdConnectUrl"@en ;
+	rdfs:comment "OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL"@en ;
+	rdfs:domain openapi:OpenIdConnect ;
+	rdfs:range xsd:anyURI .
+
+openapi:scheme 
+	a rdf:Property ;
+	rdfs:label "scheme"@en ;
+	rdfs:comment "The name of the HTTP Authorization scheme to be used in the Authorization header"@en ;
+	rdfs:domain openapi:Http ;
+	rdfs:range xsd:string .
+
+openapi:parameterName 
+	a rdf:Property ;
+	rdfs:label "parameterName"@en ;
+	rdfs:comment "The name of the header, query or cookie parameter to be used."@en ;
+	rdfs:domain openapi:ApiKey ;
+	rdfs:range xsd:string .
+
+#################################################################
+# OAuthFlow Class
+#################################################################
+openapi:OAuthFlow 
+	a rdfs:Class ;		
+	rdfs:label "OAuthFlow"@en ;
+	rdfs:comment "Configuration details for an OAuth Flow"@en .
+
+openapi:AuthorizationCode
+	a rdfs:Class ;
+    rdfs:subClassOf openapi:OAuthFlow ;			
+	rdfs:label "AuthorizationCode"@en ;
+	rdfs:comment "Configuration for the OAuth Authorization Code flow"@en .
+
+openapi:ClientCredentials 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:OAuthFlow ;			
+	rdfs:label "ClientCredentials"@en ;
+	rdfs:comment "Configuration for the OAuth Client Credentials flow"@en .
+
+openapi:Implicit 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:OAuthFlow ;			
+	rdfs:label "Implicit"@en ;
+	rdfs:comment "Configuration for the OAuth Implicit flow"@en .
+
+openapi:Password 
+	a rdfs:Class ;
+	rdfs:subClassOf openapi:OAuthFlow ;			
+	rdfs:label "Password"@en ;
+	rdfs:comment "Configuration for the OAuth Resource Owner Password flow"@en .
+
+## OAuthFlow Class properties
+openapi:refreshUrl 
+	a rdf:Property ;
+	rdfs:label "refreshUrl"@en ;
+	rdfs:comment "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL."@en ;
+	rdfs:domain openapi:OAuthFlow ;
+	rdfs:range xsd:anyURI .
+
+openapi:authorizationUrl 
+	a rdf:Property ;
+	rdfs:label "authorizationUrl"@en ;
+	rdfs:comment "The authorization URL to be used for this flow"@en ;
+	rdfs:domain openapi:OAuthFlow ;
+	rdfs:range xsd:anyURI .
+
+openapi:tokenUrl 
+	a rdf:Property ;
+	rdfs:label "tokenUrl"@en ;
+	rdfs:comment "The token URL to be used for this flow. This MUST be in the form of a URL."@en ;
+	rdfs:domain openapi:OAuthFlow ;
+	rdfs:range xsd:anyURI .
+
+#################################################################
+# Scope Class
+#################################################################
+openapi:Scope 
+	a rdfs:Class ;	
+	rdfs:label "Scope"@en ;
+	rdfs:comment "The available scopes for the OAuth2 security scheme"@en .
+
+#################################################################
+# Security Requirement Object Class
+#################################################################
+openapi:SecurityRequirement 
+	a rdfs:Class ;	
+	rdfs:label "SecurityRequirement"@en ;
+	rdfs:comment "The required security scheme to execute this operation"@en .
+
+## Security Requirement Object properties
+openapi:securityType 
+	a rdf:Property ;
+	rdfs:label "securityType"@en ;
+	rdfs:domain openapi:SecurityRequirement ;
+	rdfs:range openapi:Security .
+
+#################################################################
+# Collection Class
+#################################################################
+openapi:Collection 
+	a rdfs:Class ;		
+	rdfs:label "Collection"@en ;
+	rdfs:comment "A Collection can be used to reference a set of resources"@en .
+
+## Collection properties
+openapi:member 
+	a rdf:Property ;	
+	rdfs:label "member"@en ;
+	rdfs:domain openapi:Collection ;
+	rdfs:range sh:Shape .
+
+openapi:binary
+    a rdfs:Datatype ;
+    rdfs:comment "any sequence of octets" ;

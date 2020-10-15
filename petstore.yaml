@@ -1,0 +1,192 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Petstore
+  license:
+    name: MIT
+servers:
+  - url: http://petstore.swagger.io/v1
+tags:
+  - name: pets
+    description: Everything about Pets
+    x-OnResource: "#/components/schemas/Pet"  
+  - name: cat
+    description: Everything about Cats
+    x-OnResource: "#/components/schemas/Cat"
+  - name: dog
+    description: Everything about Dogs
+    x-OnResource: "#/components/schemas/Dog"
+paths:
+  /pets:
+    get:
+      summary: List all pets
+      operationId: listPets
+      tags:
+        - pets
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of pets
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pets"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a pet
+      operationId: createPets
+      tags:
+        - pets
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /pets/{petId}:
+    get:
+      summary: Info for a specific pet
+      operationId: showPetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /pets/{petId2}:
+    get:
+      summary: Info for a cat
+      operationId: showCatById
+      tags:
+        - cat
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the cat to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cat"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /pets/{petId3}:
+    get:
+      summary: Info for a dog
+      operationId: showDogById
+      tags:
+        - dog
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the dog to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dog"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"                
+components:
+  schemas:
+    Pet:
+      type: object
+      x-refersTo: http://schema.org/Pet
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Pets:
+      type: array
+      items:
+        $ref: "#/components/schemas/Pet"
+    Cat:  
+      description: A representation of a cat
+      x-kindOf: http://schema.org/Pet
+      type: object
+      properties:
+        huntingSkill:
+          type: string
+          description: The measured skill for hunting
+    Dog:  
+      description: A representation of a dog
+      type: object
+      x-kindOf: http://schema.org/Pet
+      properties:
+        packSize:
+          type: integer
+          format: int32
+          description: the size of the pack the dog
+ 
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
