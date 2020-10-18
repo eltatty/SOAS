@@ -101,7 +101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OtherPet'
+                $ref: '#/components/schemas/ThirdPet'
         default:
           description: unexpected error
           content:
@@ -147,16 +147,34 @@ components:
         - speed
       properties:
         speed:
-          # x-refersTo: http://schema.org/speedMaster
-          oneOf:
+          x-refersTo: http://schema.org/speedMaster
+          anyOf:
             - type: integer
               format: int64
-              x-refersTo: http://schema.org/speedNumber
+              # x-refersTo: http://schema.org/speedNumber
             - type: string
-              x-refersTo: http://schema.org/speed
+              # x-refersTo: http://schema.org/speed
+            - $ref: '#/components/schemas/ForProperty'
             - $ref: '#/components/schemas/Error'
-            
+              # When referenced object exists, annotation doesn`t count in parser
+              # x-refersTo: http://schema.org/ErrorPropery
         
+    ForProperty:
+      type: integer
+      # x-refersTo: http://schema.org/ForProperty   
+           
+    ThirdPet:
+      type: object
+      required:
+        - category
+      properties:
+        category:
+          $ref: '#/components/schemas/TheCategory'
+    
+    TheCategory:
+      type: integer
+      format: int64
+
     NewPet:
       type: object
       required:

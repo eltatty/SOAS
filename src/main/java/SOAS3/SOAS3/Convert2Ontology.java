@@ -929,13 +929,104 @@ public class Convert2Ontology {
 
 	}
 
+	private boolean semanticValidation(Schema schemaObject, Map<String, Schema> schemas) {
+
+		Boolean propertyAnnotation;
+
+		if(schemaObject.getExtensions() == null){
+			propertyAnnotation = false;
+		} else {
+			propertyAnnotation = true;
+		}
+
+		ArrayList<Boolean> subAnnotation = new ArrayList<>();
+
+		if(schemaObject.getClass().toString().endsWith("ComposedSchema")){
+			ComposedSchema cObj = new ComposedSchema();
+			cObj = (ComposedSchema) schemaObject;
+
+			if (cObj.getOneOf() != null){
+				List<Schema> oneOfs = cObj.getOneOf();
+
+				// For every schema in property
+				for(Schema subject : oneOfs){
+					// Check for annotations
+					if(subject.getExtensions() != null){
+						// If annotation exists true
+						subAnnotation.add(true);
+					} else {
+						// If annotation does not exists invastigate
+						// Check if annotation is missing because of type
+						if (subject.get$ref() != null){
+							String[] parts = subject.get$ref().split("/");
+							subject = schemas.get(parts[parts.length-1]);
+							if (subject.getType().equals("object") || subject.getExtensions() == null){
+								subAnnotation.add(false);
+							} else {
+								subAnnotation.add(true);
+							}
+						}
+					}
+
+				}
+
+			} else if (cObj.getAnyOf() != null){
+				List<Schema> anyOfs = cObj.getAnyOf();
+
+				// For every schema in property
+				for(Schema subject : anyOfs){
+					// Check for annotations
+					if(subject.getExtensions() != null){
+						// If annotation exists true
+						subAnnotation.add(true);
+					} else {
+						// If annotation does not exists invastigate
+						// Check if annotation is missing because of type
+						if (subject.get$ref() != null){
+							String[] parts = subject.get$ref().split("/");
+							subject = schemas.get(parts[parts.length-1]);
+							if (subject.getType().equals("object") || subject.getExtensions() == null){
+								subAnnotation.add(false);
+							} else {
+								subAnnotation.add(true);
+							}
+						}
+					}
+
+				}
+
+			}
+
+//			System.out.println(Arrays.toString(subAnnotation.toArray()));
+
+			// System Exits
+			if((subAnnotation.contains(true) && subAnnotation.contains(false)) || (propertyAnnotation == true && subAnnotation.contains(true))){
+				// If properties do not agree
+				System.out.println("System exits dew to semantic malfunction");
+				System.exit(1);
+			}
+
+		}
+
+		return subAnnotation.contains(true);
+	}
+
+
+	private Schema findSchema(String refString, Map<String, Schema> schemas){
+		String[] parts = refString.split("/");
+		return schemas.get(parts[parts.length-1]);
+	}
+
 
 	private Individual createPropertyShape(OntModel ontModel, String ownerName, String schemaName, Schema schemaObject,
 			Map<String, Schema> schemas) {
 
 		String oldSchemaName = null;
-
+		String originalName = null;
+		Boolean pathInit = null;
+		
 		if(schemaName!=null){
+			originalName = schemaName;
 			oldSchemaName = schemaName;
 			schemaName=schemaName+"PropertyShape";
 		}
@@ -944,6 +1035,9 @@ public class Convert2Ontology {
 			oldSchemaName=ownerName+"_"+oldSchemaName;
 			schemaName=ownerName+"_"+schemaName;
 		}
+
+		// Semantic validation
+		pathInit  = semanticValidation(schemaObject, schemas);
 
 		Individual propertyShapeInd =  ontModel.createIndividual(schemaName,ontModel.getOntClass(OpenApiOntUtils.PropertyShapeClassURI));
 		property_creator.AddSchemaLabel(propertyShapeInd, schemaName);
@@ -954,8 +1048,10 @@ public class Convert2Ontology {
 			if (schemaObject.getExtensions().get("x-refersTo")!=null && !schemaObject.getExtensions().get("x-refersTo").equals("none")) {
 				//Get property uri that x-refersTo indicates.
 				propertyUri = ResourceFactory.createResource(schemaObject.getExtensions().get("x-refersTo").toString());
-				ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
-				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
+				if(!pathInit){
+					ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
+					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
+				}
 			}
 			else if (schemaObject.getExtensions().get("x-kindOf")!=null) {
 				//Get property uri that x-kindOf indicates.
@@ -995,7 +1091,7 @@ public class Convert2Ontology {
 					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI),mappedPropertyShape));
 				}
 			}
-		} else if (oldSchemaName != null){
+		} else if (oldSchemaName != null && !pathInit){
 			Resource propertyValue = ResourceFactory.createProperty(oldSchemaName);
 			ontModel.createOntProperty(oldSchemaName);
 			ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyValue));
@@ -1004,54 +1100,65 @@ public class Convert2Ontology {
 
 		// Embedded composedSchema in properties
 		if (schemaObject.getType() == null ){
-			ComposedSchema cObj = new ComposedSchema();
-			cObj = (ComposedSchema) schemaObject;
 
-			if (cObj.getOneOf() != null){
-				List <Schema> oneOfs = cObj.getOneOf();
-				RDFList rdfList = ontModel.createList();
+			if(schemaObject.getClass().toString().endsWith("ComposedSchema")) {
 
-				Individual listComponent = null;
-				for (Schema subject : oneOfs) {
-					listComponent = parseSchemaObject(ontModel, null, null, subject, schemas);
+				ComposedSchema cObj = new ComposedSchema();
+				cObj = (ComposedSchema) schemaObject;
 
-					// If nodeshape needs calibrate
-					if (subject.get$ref() != null){
-						Individual refInd = ontModel.createIndividual(null,ontModel.getOntClass(OpenApiOntUtils.PropertyShapeClassURI));
-						ontModel.add(ontModel.createStatement(refInd, ontModel.getProperty(OpenApiOntUtils.nodeURI), listComponent));
-						listComponent = refInd;
+				if (cObj.getOneOf() != null) {
+					List<Schema> oneOfs = cObj.getOneOf();
+					RDFList rdfList = ontModel.createList();
+
+					Individual listComponent = null;
+					for (Schema subject : oneOfs) {
+						listComponent = parseSchemaObject(ontModel, null, null, subject, schemas);
+
+
+						// If nodeshape needs calibrate
+						if (subject.get$ref() != null) {
+							Schema tmpSchema = findSchema(subject.get$ref(), schemas);
+							if (tmpSchema.getType() != null && tmpSchema.getType().equals("object")){
+								Individual refInd = ontModel.createIndividual(null, ontModel.getOntClass(OpenApiOntUtils.PropertyShapeClassURI));
+								ontModel.add(ontModel.createStatement(refInd, ontModel.getProperty(OpenApiOntUtils.nodeURI), listComponent));
+								listComponent = refInd;
+							}
+						}
+
+						//Add to list
+						rdfList = rdfList.cons(listComponent);
+						listComponent = null;
 					}
 
-					//Add to list
-					rdfList = rdfList.cons(listComponent);
-					listComponent = null;
-				}
+					// Add list to nodeShape
+					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.xoneURI), rdfList));
 
-				// Add list to nodeShape
-				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.xoneURI), rdfList));
+				} else if (cObj.getAnyOf() != null) {
+					List<Schema> anyOfs = cObj.getAnyOf();
+					RDFList rdfList = ontModel.createList();
 
-			} else if (cObj.getAnyOf() != null){
-				List <Schema> anyOfs = cObj.getAnyOf();
-				RDFList rdfList = ontModel.createList();
+					Individual listComponent = null;
+					for (Schema subject : anyOfs) {
+						listComponent = parseSchemaObject(ontModel, null, null, subject, schemas);
 
-				Individual listComponent = null;
-				for (Schema subject : anyOfs) {
-					listComponent = parseSchemaObject(ontModel, null, null, subject, schemas);
+						if (subject.get$ref() != null) {
+							Schema tmpSchema = findSchema(subject.get$ref(), schemas);
+							if (tmpSchema.getType() != null && tmpSchema.getType().equals("object")){
+								Individual refInd = ontModel.createIndividual(null, ontModel.getOntClass(OpenApiOntUtils.PropertyShapeClassURI));
+								ontModel.add(ontModel.createStatement(refInd, ontModel.getProperty(OpenApiOntUtils.nodeURI), listComponent));
+								listComponent = refInd;
+							}
+						}
 
-					if (subject.get$ref() != null){
-						Individual refInd = ontModel.createIndividual(null,ontModel.getOntClass(OpenApiOntUtils.PropertyShapeClassURI));
-						ontModel.add(ontModel.createStatement(refInd, ontModel.getProperty(OpenApiOntUtils.nodeURI), listComponent));
-						listComponent = refInd;
+						//Add to list
+						rdfList = rdfList.cons(listComponent);
+						listComponent = null;
 					}
 
-					//Add to list
-					rdfList = rdfList.cons(listComponent);
-					listComponent = null;
+					// Add list to nodeShape
+					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.orURI), rdfList));
+
 				}
-
-				// Add list to nodeShape
-				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.orURI), rdfList));
-
 			}
 
 		} else {
