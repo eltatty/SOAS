@@ -164,6 +164,7 @@ components:
       format: int32
            
     ThirdPet:
+      x-mapsTo: '#/components/schemas/OtherPet' 
       type: object
       required:
         - category
@@ -176,8 +177,6 @@ components:
       type: integer
       format: int64
 
-    OnPurpose:
-      type: object
 
     NewPet:
       type: object
@@ -185,6 +184,7 @@ components:
         - name  
       properties:
         name:
+          # x-kindOf: http://schema.org/BundleOfNames
           # x-mapsTo: '#/components/schemas/OnPurpose'
           # x-mapsTo: '#/components/schemas/Error.message'
           # x-mapsTo: '#/components/schemas/OtherPet.speed'

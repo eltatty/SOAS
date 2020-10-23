@@ -1006,22 +1006,27 @@ public class Convert2Ontology {
 
 			}
 
-//			System.out.println(Arrays.toString(subAnnotation.toArray()));
+			//System.out.println(Arrays.toString(subAnnotation.toArray()));
 
 			// System Exits
+			// if not ALL of the subproperties contain annotations
+			// if both head property and sub properties contain annotations
 			if((subAnnotation.contains(true) && subAnnotation.contains(false)) || (propertyAnnotation == true && subAnnotation.contains(true))){
 				// If properties do not agree
 				System.out.println("System exits dew to semantic malfunction");
 				System.exit(1);
 			}
 
+			// Return true means sh:path property (=> pathInit) is going to be initialized later in composed schema
 			return subAnnotation.contains(true);
 
 		} else if (schemaObject.get$ref() != null){
+
+			// It is handled from createNodeShape in embedded ref property
 			return true;
 		}
 
-		// Investigate
+		// Not really necessary
 		return subAnnotation.contains(true);
 	}
 
@@ -1062,21 +1067,26 @@ public class Convert2Ontology {
 			if (schemaObject.getExtensions().get("x-refersTo")!=null && !schemaObject.getExtensions().get("x-refersTo").equals("none")) {
 				//Get property uri that x-refersTo indicates.
 				propertyUri = ResourceFactory.createResource(schemaObject.getExtensions().get("x-refersTo").toString());
-				if(!pathInit){
-					ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
-					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
-				}
+				ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
+				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
+				//if(!pathInit){
+				//	ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
+				//	ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
+				//}
 			}
 			else if (schemaObject.getExtensions().get("x-kindOf")!=null) {
 				//Get property uri that x-kindOf indicates.
 				String uri = schemaObject.getExtensions().get("x-kindOf").toString();
-
 				//create a property with name "schemaName"
-				Property property = ontModel.createProperty(schemaName);
+				Property property = ontModel.createOntProperty(oldSchemaName);
 				//Set x-kindOf url as SuperProperty of our property
 				property.addProperty( RDFS.subPropertyOf, uri );
 				//Get uri of the new property
 				propertyUri = ResourceFactory.createResource(property.getURI());
+				// create rdf property of referred uri
+				ontModel.createOntProperty(uri);
+				// add to path
+				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
 			}
 			else if (schemaObject.getExtensions().get("x-mapsTo")!=null) {
 				//Get property that x-mapsTo indicates.
@@ -1119,7 +1129,6 @@ public class Convert2Ontology {
 
 		// Embedded composedSchema in properties
 		if (schemaObject.getType() == null ){
-
 			if(schemaObject.getClass().toString().endsWith("ComposedSchema")) {
 
 				ComposedSchema cObj = new ComposedSchema();
@@ -1318,8 +1327,10 @@ public class Convert2Ontology {
 			else if (schemaObject.getExtensions().get("x-kindOf")!=null) {
 				//Extract x-kindof class uri
 				String uri = schemaObject.getExtensions().get("x-kindOf").toString();
+				// create class with the given uri
+				ontModel.createClass(uri);
 				//create class with name "schemaName"
-//				OntClass newClass = ontModel.createClass(schemaName+"Class");
+				//OntClass newClass = ontModel.createClass(schemaName+"Class");
 				OntClass newClass = ontModel.createClass(oldSchemaName);
 				//Set x-kindOf class as superClass
 				newClass.addSuperClass(ResourceFactory.createResource(uri));
@@ -1328,11 +1339,13 @@ public class Convert2Ontology {
 			}
 			else if (schemaObject.getExtensions().get("x-mapsTo")!=null) {
 				//Extract x-mapsTo class uri
-				String mappedSchemaName = schemaObject.getExtensions().get("x-mapsTo").toString();
+				String mappedSchemaString = schemaObject.getExtensions().get("x-mapsTo").toString();
+				// Extract schema name
+				String mappedSchemaName = extractSchemaName(mappedSchemaString);
 				//Get component schema with name "mappedSchemaName"
 				Schema mappedSchemaEntry = schemas.get(mappedSchemaName);
 				//Check if that schema is already defined in ontology
-				Individual mappedShapeInd = findShapeIndividual(ontModel, schemaName);
+				Individual mappedShapeInd = findShapeIndividual(ontModel, mappedSchemaName);
 				if (mappedShapeInd == null) {
 					//Else create individual for that schema object
 					mappedShapeInd = createNodeShape(ontModel, mappedSchemaName, null, mappedSchemaEntry, schemas);
@@ -1342,7 +1355,7 @@ public class Convert2Ontology {
 			}
 			else if (schemaObject.getExtensions().get("x-collectionTo")!=null) {
 				//create a class with name "schemaName"
-//				OntClass newClass = ontModel.createClass(schemaName+"Class");
+				//OntClass newClass = ontModel.createClass(schemaName+"Class");
 				OntClass newClass = ontModel.createClass(oldSchemaName);
 				//Set Collection as superClass of our class
 				newClass.addSuperClass(ontModel.getOntClass(OpenApiOntUtils.CollectionClassURI));
@@ -1354,6 +1367,7 @@ public class Convert2Ontology {
 
 			//In case of x-refersTo: none nothing will happen
 			if(classUri!=null ){
+				ontModel.createClass(classUri.getURI());
 				ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.targetClassURI), classUri));
 			}
 		} else if (oldSchemaName != null){
@@ -1368,6 +1382,7 @@ public class Convert2Ontology {
 			for ( Map.Entry<String,Schema>  propertyEntry : propertySchemas.entrySet()) {
 				Individual propertyShapeInd = null;
 				if(propertyEntry.getValue().get$ref() != null){
+					// Embedded ref in property
 					propertyShapeInd = parseSchemaObject(ontModel, null, null, propertyEntry.getValue(), schemas);
 				}
 				else if (oldSchemaName == null && composedParent != null) {
