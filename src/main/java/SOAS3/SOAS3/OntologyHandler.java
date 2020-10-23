@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.jena.ontology.OntModel;
@@ -18,6 +19,9 @@ import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.reasoner.Reasoner;
+import org.apache.jena.reasoner.ReasonerRegistry;
+import org.apache.jena.reasoner.ValidityReport;
 import org.apache.jena.util.PrintUtil;
 
 import openllet.jena.PelletReasonerFactory;
@@ -98,6 +102,18 @@ public class OntologyHandler {
 
 	/* Print Ontology to file */
 	public void  PrintOntologyToFile(String productName){
+//		Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
+//		InfModel infmodel = ModelFactory.createInfModel(reasoner, ontModel);
+//		ValidityReport validity = infmodel.validate();
+//		if (validity.isValid()) {
+//			System.out.println("OK");
+//		} else {
+//			System.out.println("Conflicts");
+//			for (Iterator i = validity.getReports(); i.hasNext(); ) {
+//				ValidityReport.Report report = (ValidityReport.Report)i.next();
+//				System.out.println(" - " + report);
+//			}
+//		}
 		File folder = new File( "Products");
 		String product = folder.getAbsolutePath() + "/" + productName + ".ttl";
 		String base = "https://www.example.com/service/#" + productName;
