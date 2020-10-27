@@ -880,50 +880,53 @@ public class Convert2Ontology {
 		Schema subModel = schemas.get(schemaName);
 
 		if (superModel.getExtensions() == null && subModel.getExtensions() == null){
-			System.out.println("Case 1 (ii)");
+			// Both schemas have no annotations
+			System.out.println("Case 1 (ii) a");
 			OntClass newClass = ontModel.createClass(schemaName);
 			newClass.addSuperClass(ResourceFactory.createResource(subjectName));
 		} else if (superModel.getExtensions() != null && superModel.getExtensions().get("x-refersTo").equals("none")){
-
+			// SuperModel has x-refersTo:none
 			if (subModel.getExtensions() != null && !subModel.getExtensions().get("x-refersTo").equals("none")) {
-				System.out.println("Case 3");
-				OntClass newClass = ontModel.createClass(subModel.getExtensions().values().toArray()[0].toString());
-				newClass.addSuperClass(ResourceFactory.createResource(subjectName));
-			} else {
-				System.out.println("Case 1 (ii)");
-				OntClass newClass = ontModel.createClass(schemaName);
-				newClass.addSuperClass(ResourceFactory.createResource(subjectName));
+				// If submodel has annotations but not x-refersTo:none
+				System.out.println("Case 3 a");
+				//OntClass newClass = ontModel.createClass(subModel.getExtensions().values().toArray()[0].toString());
+				//newClass.addSuperClass(ResourceFactory.createResource(subjectName));
+			} else{
+				System.out.println("Case 1 (ii) b");
+				//OntClass newClass = ontModel.createClass(schemaName);
+				//newClass.addSuperClass(ResourceFactory.createResource(subjectName));
 			}
 		} else if(subModel.getExtensions() != null && subModel.getExtensions().get("x-refersTo").equals("none")){
-
+			// SubModel has x-refersTo:none
 			if (superModel.getExtensions() != null && !superModel.getExtensions().get("x-refersTo").equals("none")) {
-				System.out.println("Case 2");
-				OntClass newClass = ontModel.createClass(schemaName);
-				newClass.addSuperClass(ResourceFactory.createResource(superModel.getExtensions().values().toArray()[0].toString()));
+				// If supermodel has annotations but not x-refersTo:none
+				System.out.println("Case 2 a");
+				//OntClass newClass = ontModel.createClass(schemaName);
+				//newClass.addSuperClass(ResourceFactory.createResource(superModel.getExtensions().values().toArray()[0].toString()));
 			} else {
-				System.out.println("Case 1 (ii)");
-				OntClass newClass = ontModel.createClass(schemaName);
-				newClass.addSuperClass(ResourceFactory.createResource(subjectName));
+				System.out.println("Case 1 (ii) c");
+				//OntClass newClass = ontModel.createClass(schemaName);
+				//newClass.addSuperClass(ResourceFactory.createResource(subjectName));
 			}
 		} else if (superModel.getExtensions() != null){
-
+			//SuperModel annotation but not x-refersTo:none
 			if (subModel.getExtensions() != null) {
-				System.out.println("Case 4");
+				System.out.println("Case 4 a");
 				OntClass newClass = ontModel.createClass(subModel.getExtensions().values().toArray()[0].toString());
 				newClass.addSuperClass(ResourceFactory.createResource(superModel.getExtensions().values().toArray()[0].toString()));
 			} else {
-				System.out.println("Case 2");
+				System.out.println("Case 2 b");
 				OntClass newClass = ontModel.createClass(schemaName);
 				newClass.addSuperClass(ResourceFactory.createResource(superModel.getExtensions().values().toArray()[0].toString()));
 			}
 		} else if (subModel.getExtensions() != null) {
-
+			// SubModel annotation but not x-refersTo:none
 			if (superModel.getExtensions() != null) {
-				System.out.println("Case 4");
+				System.out.println("Case 4 b");
 				OntClass newClass = ontModel.createClass(subModel.getExtensions().values().toArray()[0].toString());
 				newClass.addSuperClass(ResourceFactory.createResource(superModel.getExtensions().values().toArray()[0].toString()));
 			} else {
-				System.out.println("Case 3");
+				System.out.println("Case 3 b");
 				OntClass newClass = ontModel.createClass(subModel.getExtensions().values().toArray()[0].toString());
 				newClass.addSuperClass(ResourceFactory.createResource(subjectName));
 			}
@@ -1345,7 +1348,7 @@ public class Convert2Ontology {
 				//Get component schema with name "mappedSchemaName"
 				Schema mappedSchemaEntry = schemas.get(mappedSchemaName);
 				//Check if that schema is already defined in ontology
-				Individual mappedShapeInd = findShapeIndividual(ontModel, mappedSchemaName);
+				Individual mappedShapeInd = findShapeIndividual(ontModel, mappedSchemaName + "NodeShape");
 				if (mappedShapeInd == null) {
 					//Else create individual for that schema object
 					mappedShapeInd = createNodeShape(ontModel, mappedSchemaName, null, mappedSchemaEntry, schemas);
@@ -1389,6 +1392,8 @@ public class Convert2Ontology {
 					propertyShapeInd = createPropertyShape(ontModel, composedParent, propertyEntry.getKey(), propertyEntry.getValue(), schemas);
 				} else if (oldSchemaName != null) {
 					propertyShapeInd = createPropertyShape(ontModel, oldSchemaName, propertyEntry.getKey(), propertyEntry.getValue(), schemas);
+				} else {
+					propertyShapeInd = createPropertyShape(ontModel, null, propertyEntry.getKey(), propertyEntry.getValue(), schemas);
 				}
 				//Save property name
 				property_creator.AddName(propertyShapeInd, propertyEntry.getKey());
@@ -1397,7 +1402,9 @@ public class Convert2Ontology {
 				if (propertyEntry.getKey().equals(collectionMember)) {
 					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), ontModel.getProperty(OpenApiOntUtils.memberURI)));
 				}
-				ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.propertyURI), propertyShapeInd));
+				if(propertyShapeInd != null){
+					ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.propertyURI), propertyShapeInd));
+				}
 			}
 		}
 		//Extract a short description
