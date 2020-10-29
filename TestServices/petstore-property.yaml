@@ -137,9 +137,11 @@ paths:
 components:
   schemas:
     Pet:
+      # x-kindOf: http://schema.org/BundleOfPets
+      x-refersTo: http://schema.org/Pet
+      # x-mapsTo: '#/components/schemas/Specified'
       anyOf:
-        - $ref: '#/components/schemas/Cat'
-        - $ref: '#/components/schemas/Dog'
+        - $ref: '#/components/schemas/NewPet'
         - type: object
           required:
           - id
@@ -148,23 +150,25 @@ components:
               type: integer
               format: int64
 
-    Dog:
+    NewPet:
+      # x-kindOf: http://schema.org/BundleOfNewPets
+      # x-refersTo: http://schema.org/NewPet
+      # x-mapsTo: '#/components/schemas/Specified'
       type: object
+      required:
+        - name  
       properties:
-        bark:
-          type: boolean
-        breed:
+        name:
           type: string
-          enum: [Dingo, Husky, Retriever, Shepherd]
-    
-    Cat:
-      type: object
-      properties:
-        hunts:
-          type: boolean
-        age:
-          type: integer              
+        tag:
+          type: string
 
+                  
+    Specified:
+      # x-kindOf: http://schema.org/Specified
+      # x-refersTo: http://schema.org/Specified
+      type: object
+      format: int32
   
     OtherPet:
       type: object
@@ -177,10 +181,6 @@ components:
               format: int64 
             - type: string
             - $ref: '#/components/schemas/Specified'
-        
-    Specified:
-      type: integer
-      format: int32
            
     ThirdPet:
       # x-mapsTo: '#/components/schemas/OtherPet' 
@@ -195,22 +195,7 @@ components:
       x-kindOf: http://schema.org/TheCategory
       type: integer
       format: int64
-
-
-    NewPet:
-      type: object
-      required:
-        - name  
-      properties:
-        name:
-          # x-kindOf: http://schema.org/BundleOfNames
-          # x-mapsTo: '#/components/schemas/OnPurpose'
-          # x-mapsTo: '#/components/schemas/Error.message'
-          # x-mapsTo: '#/components/schemas/OtherPet.speed'
-          # x-mapsTo: '#/components/schemas/TheCategory'
-          type: string
-        tag:
-          type: string    
+    
 
     Error:
       type: object
@@ -243,3 +228,9 @@ components:
     #       x-mapsTo: '#/components/schemas/Pet.id'
     #       type: integer
     #       format: int64
+
+              # x-kindOf: http://schema.org/BundleOfNames
+          # x-mapsTo: '#/components/schemas/OnPurpose'
+          # x-mapsTo: '#/components/schemas/Error.message'
+          # x-mapsTo: '#/components/schemas/OtherPet.speed'
+          # x-mapsTo: '#/components/schemas/TheCategory'
