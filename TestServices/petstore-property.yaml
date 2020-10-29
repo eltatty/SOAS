@@ -138,9 +138,9 @@ components:
   schemas:
     Pet:
       # x-kindOf: http://schema.org/BundleOfPets
-      x-refersTo: http://schema.org/Pet
+      # x-refersTo: http://schema.org/Pet
       # x-mapsTo: '#/components/schemas/Specified'
-      anyOf:
+      allOf:
         - $ref: '#/components/schemas/NewPet'
         - type: object
           required:

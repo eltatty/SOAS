@@ -748,11 +748,13 @@ public class Convert2Ontology {
 			Map<String, Schema> schemas) {
 
 		Individual shapeInd = null;
+
 		if(schemaObject.get$ref()!=null){
 			//If schema is already defined in , retrieve it from its name.
 			schemaName=extractSchemaName(schemaObject.get$ref());
 			schemaObject=schemas.get(schemaName);
 		}
+
 		shapeInd = findShapeIndividual(ontModel, schemaName+"NodeShape");
 
 
@@ -766,56 +768,23 @@ public class Convert2Ontology {
 			// Will be used as a base for all three types.
 			shapeInd = createNodeShape(ontModel, schemaName, null, schemaObject, schemas);
 
-
 			// Three types
 			if (cObj.getAllOf() != null) {
 				List <Schema> allOfs = cObj.getAllOf();
-				RDFList rdfList = ontModel.createList();
-
-				Individual listComponent = null;
-				for (Schema subject : allOfs) {
-					listComponent = parseSchemaObject(ontModel, null, schemaName, subject, schemas);
-
-					// Last Function
-					if (subject.get$ref() != null){
-						createInheritance(ontModel, extractSchemaName(subject.get$ref()), schemaName, schemas);
-					}
-
-					//Add to list
-					rdfList = rdfList.cons(listComponent);
-					listComponent = null;
-				}
+				RDFList rdfList = complexSchema(ontModel, schemaName, allOfs, true, schemas);
 
 				// Add list to nodeShape
 				ontModel.add(ontModel.createStatement(shapeInd, ontModel.getProperty(OpenApiOntUtils.andURI), rdfList));
 			} else if (cObj.getAnyOf() != null) {
 				List <Schema> anyOfs = cObj.getAnyOf();
-				RDFList rdfList = ontModel.createList();
-
-				Individual listComponent = null;
-				for (Schema subject : anyOfs) {
-					listComponent = parseSchemaObject(ontModel, null, schemaName, subject, schemas);
-
-					//Add to list
-					rdfList = rdfList.cons(listComponent);
-					listComponent = null;
-				}
+				RDFList rdfList = complexSchema(ontModel, schemaName, anyOfs, false, schemas);
 
 				// Add list to nodeShape
 				ontModel.add(ontModel.createStatement(shapeInd, ontModel.getProperty(OpenApiOntUtils.orURI), rdfList));
 
 			} else if (cObj.getOneOf() != null) {
 				List <Schema> oneOfs = cObj.getOneOf();
-				RDFList rdfList = ontModel.createList();
-
-				Individual listComponent = null;
-				for (Schema subject : oneOfs) {
-					listComponent = parseSchemaObject(ontModel, null, schemaName, subject, schemas);
-
-					//Add to list
-					rdfList = rdfList.cons(listComponent);
-					listComponent = null;
-				}
+				RDFList rdfList = complexSchema(ontModel, schemaName, oneOfs, false, schemas);
 				
 				// Add list to nodeShape
 				ontModel.add(ontModel.createStatement(shapeInd, ontModel.getProperty(OpenApiOntUtils.xoneURI), rdfList));
@@ -842,27 +811,50 @@ public class Convert2Ontology {
 		return shapeInd;
 	}
 
-	public String inherit(OntModel ontModel, String subject, Map<String, Schema> schemas){
+	private RDFList complexSchema(OntModel ontModel, String schemaName, List<Schema> components, Boolean all, Map<String, Schema> schemas){
+		RDFList rdfList = ontModel.createList();
+		Individual listComponent = null;
+
+		for (Schema subject : components) {
+			listComponent = parseSchemaObject(ontModel, null, schemaName, subject, schemas);
+
+			if (subject.get$ref() != null && all){
+				createInheritance(ontModel, extractSchemaName(subject.get$ref()), schemaName, schemas);
+			}
+
+			//Add to list
+			rdfList = rdfList.cons(listComponent);
+			listComponent = null;
+		}
+
+		return rdfList;
+	}
+
+
+	private String inherit(OntModel ontModel, String subject, Map<String, Schema> schemas){
 
 		Schema subjectSchema = schemas.get(subject);
 		if (subjectSchema.getExtensions() == null){
 			return subject;
-		} else{
-			if(subjectSchema.getExtensions().get("x-refersTo") != null){
-				if(subjectSchema.getExtensions().get("x-refersTo").equals("none")){
+		} else {
+			if (subjectSchema.getExtensions().get("x-refersTo") != null) {
+				// x-refesTo
+				if (subjectSchema.getExtensions().get("x-refersTo").equals("none")) {
 					return null;
-				}else{
+				} else {
+					// x-refersTo: none
 					return subjectSchema.getExtensions().get("x-refersTo").toString();
 				}
-			} else if(subjectSchema.getExtensions().get("x-kindOf") != null){
+			} else if (subjectSchema.getExtensions().get("x-kindOf") != null) {
+				// x-kindOf
 				return subjectSchema.getExtensions().get("x-kindOf").toString();
-			} else if(subjectSchema.getExtensions().get("x-mapsTo") != null){
+
+			} else if (subjectSchema.getExtensions().get("x-mapsTo") != null) {
+				// x-mapsTo
 				String mappedSchema = extractSchemaName(subjectSchema.getExtensions().get("x-mapsTo").toString());
 				Individual mappedInd = findShapeIndividual(ontModel, mappedSchema + "NodeShape");
-				if(mappedInd != null){
+				if (mappedInd != null) {
 					return mappedInd.getPropertyResourceValue(ontModel.getProperty(OpenApiOntUtils.targetClassURI)).getURI();
-				} else {
-					return createNodeShape(ontModel, mappedSchema, null, schemas.get(mappedSchema), schemas).getPropertyResourceValue(ontModel.getProperty(OpenApiOntUtils.targetClassURI)).getURI();
 				}
 			}
 		}
@@ -873,12 +865,8 @@ public class Convert2Ontology {
 	private void createInheritance(OntModel ontModel, String subjectName, String schemaName, Map<String, Schema> schemas){
 		Schema superModel = schemas.get(subjectName);
 		Schema subModel = schemas.get(schemaName);
-
 		String toSubClass = inherit(ontModel, schemaName, schemas);
 		String toSuperClass = inherit(ontModel, subjectName, schemas);
-
-		//System.out.println(schemaName +" ====> "+ toSubClass);
-		//System.out.println(subjectName +" ====> "+ toSuperClass);
 
 		if(toSubClass != null && toSuperClass != null){
 			OntClass newSubClass = ontModel.createClass(toSubClass);
@@ -1024,10 +1012,6 @@ public class Convert2Ontology {
 				propertyUri = ResourceFactory.createResource(schemaObject.getExtensions().get("x-refersTo").toString());
 				ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
 				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
-				//if(!pathInit){
-				//	ontModel.createOntProperty(schemaObject.getExtensions().get("x-refersTo").toString());
-				//	ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyUri));
-				//}
 			}
 			else if (schemaObject.getExtensions().get("x-kindOf")!=null) {
 				//Get property uri that x-kindOf indicates.
