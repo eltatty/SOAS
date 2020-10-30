@@ -974,6 +974,7 @@ public class Convert2Ontology {
 	}
 
 
+
 	private Schema findSchema(String refString, Map<String, Schema> schemas){
 		String[] parts = refString.split("/");
 		return schemas.get(parts[parts.length-1]);
@@ -986,7 +987,8 @@ public class Convert2Ontology {
 		String oldSchemaName = null;
 		String originalName = null;
 		Boolean pathInit = null;
-		
+
+
 		if(schemaName!=null){
 			originalName = schemaName;
 			oldSchemaName = schemaName;
@@ -1126,9 +1128,12 @@ public class Convert2Ontology {
 					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.orURI), rdfList));
 
 				}
+			} else if(schemaObject.getNot() != null){
+				Schema notSchema = schemaObject.getNot();
+				Individual component = parseSchemaObject(ontModel, null, null, notSchema, schemas);
+				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.notURI), component));
 			}
 		} else {
-
 			if (schemaObject.getType().equals("array")) {
 				ArraySchema arraySchema = (ArraySchema) schemaObject;
 				//Extract items of array
