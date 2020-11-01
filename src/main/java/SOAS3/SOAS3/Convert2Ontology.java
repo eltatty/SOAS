@@ -1130,6 +1130,16 @@ public class Convert2Ontology {
 				}
 			} else if(schemaObject.getNot() != null){
 				Schema notSchema = schemaObject.getNot();
+
+				// not property cannot have
+				Map<String, String> not = new HashMap<>();
+
+				not.put("x-refersTo", null);
+				not.put("x-kindOf", null);
+				not.put("x-mapsTo", null);
+
+				notSchema.setExtensions(not);
+
 				Individual component = parseSchemaObject(ontModel, null, null, notSchema, schemas);
 				ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.notURI), component));
 			}

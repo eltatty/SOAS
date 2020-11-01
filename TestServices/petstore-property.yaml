@@ -219,7 +219,7 @@ components:
           format: int64
         toBe:
           not:
-            x-refersTo: http://schema.org/toBe
+            x-kindOf: http://schema.org/toBe
             type: string
 
     # SecondPet:
