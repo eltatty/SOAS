@@ -957,4 +957,4 @@ openapi:member
 
 openapi:binary
     a rdfs:Datatype ;
-    rdfs:comment "any sequence of octets" ;
+    rdfs:comment "any sequence of octets" .

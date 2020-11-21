@@ -1021,7 +1021,8 @@ public class Convert2Ontology {
 				//create a property with name "schemaName"
 				Property property = ontModel.createOntProperty(oldSchemaName);
 				//Set x-kindOf url as SuperProperty of our property
-				property.addProperty( RDFS.subPropertyOf, uri );
+				property.addProperty( RDFS.subPropertyOf, ontModel.createOntProperty(uri)
+                );
 				//Get uri of the new property
 				propertyUri = ResourceFactory.createResource(property.getURI());
 				// create rdf property of referred uri

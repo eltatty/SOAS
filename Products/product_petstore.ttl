@@ -84,11 +84,6 @@ sh:targetClass  a         rdf:Property ;
         rdfs:label        "target class"@en ;
         rdfs:range        rdfs:Class .
 
-[ a            sh:PropertyShape ;
-  sh:datatype  xsd:string ;
-  sh:path      openapi:member
-] .
-
 sh:ClosedConstraintComponent-closed
         a                 sh:Parameter ;
         rdfs:isDefinedBy  sh: ;
@@ -135,11 +130,6 @@ sh:ResultAnnotation  a    rdfs:Class ;
         rdfs:label        "Result annotation"@en ;
         rdfs:subClassOf   rdfs:Resource .
 
-[ a        sh:PropertyShape ;
-  sh:node  <PetNodeShape> ;
-  sh:path  openapi:member
-] .
-
 sh:JSRule  a              rdfs:Class ;
         rdfs:comment      "The class of SHACL rules expressed using JavaScript."@en ;
         rdfs:isDefinedBy  sh: ;
@@ -174,6 +164,10 @@ sh:Rule  a                rdfs:Class ;
 openapi:Collection  a  rdfs:Class ;
         rdfs:comment  "A Collection can be used to reference a set of resources"@en ;
         rdfs:label    "Collection"@en .
+
+[ a                owl:Class ;
+  rdfs:subClassOf  openapi:Collection
+] .
 
 sh:annotationProperty
         a                 rdf:Property ;
@@ -262,6 +256,14 @@ sh:MaxExclusiveConstraintComponent-maxExclusive
                                                                                   ] ;
                                                              openapi:style        openapi:simple
                                                            ] ;
+                                      openapi:response     [ a                    openapi:Response ;
+                                                             openapi:content      [ a                      openapi:MediaType ;
+                                                                                    openapi:mediaTypeName  "application/json" ;
+                                                                                    openapi:schema         <PetNodeShape>
+                                                                                  ] ;
+                                                             openapi:description  "pet response" ;
+                                                             openapi:statusCode   "200"
+                                                           ] ;
                                       openapi:response     [ a                    openapi:DefaultResponse ;
                                                              openapi:content      [ a                      openapi:MediaType ;
                                                                                     openapi:mediaTypeName  "application/json" ;
@@ -276,14 +278,6 @@ sh:MaxExclusiveConstraintComponent-maxExclusive
                                                                                   ] ;
                                                              openapi:description  "other pet" ;
                                                              openapi:statusCode   "202"
-                                                           ] ;
-                                      openapi:response     [ a                    openapi:Response ;
-                                                             openapi:content      [ a                      openapi:MediaType ;
-                                                                                    openapi:mediaTypeName  "application/json" ;
-                                                                                    openapi:schema         <PetNodeShape>
-                                                                                  ] ;
-                                                             openapi:description  "pet response" ;
-                                                             openapi:statusCode   "200"
                                                            ] ;
                                       openapi:serverInfo   <service_server>
                                     ] ;
@@ -323,22 +317,22 @@ sh:MaxExclusiveConstraintComponent-maxExclusive
                                       openapi:name         "findPets" ;
                                       openapi:onPath       _:b1 ;
                                       openapi:parameter    [ a                    openapi:Query ;
-                                                             openapi:description  "tags to filter by" ;
-                                                             openapi:explode      true ;
-                                                             openapi:name         "tags" ;
-                                                             openapi:required     false ;
-                                                             openapi:schema       [ a               sh:NodeShape ;
-                                                                                    sh:targetClass  [] 
-                                                                                  ] ;
-                                                             openapi:style        openapi:form
-                                                           ] ;
-                                      openapi:parameter    [ a                    openapi:Query ;
                                                              openapi:description  "maximum number of results to return" ;
                                                              openapi:explode      true ;
                                                              openapi:name         "limit" ;
                                                              openapi:required     false ;
                                                              openapi:schema       [ a            sh:PropertyShape ;
                                                                                     sh:datatype  xsd:int
+                                                                                  ] ;
+                                                             openapi:style        openapi:form
+                                                           ] ;
+                                      openapi:parameter    [ a                    openapi:Query ;
+                                                             openapi:description  "tags to filter by" ;
+                                                             openapi:explode      true ;
+                                                             openapi:name         "tags" ;
+                                                             openapi:required     false ;
+                                                             openapi:schema       [ a               sh:NodeShape ;
+                                                                                    sh:targetClass  [] 
                                                                                   ] ;
                                                              openapi:style        openapi:form
                                                            ] ;
@@ -452,6 +446,11 @@ sh:QualifiedMaxCountConstraintComponent-qualifiedValueShapesDisjoint
         sh:datatype       xsd:boolean ;
         sh:optional       true ;
         sh:path           sh:qualifiedValueShapesDisjoint .
+
+[ a            sh:PropertyShape ;
+  sh:datatype  xsd:string ;
+  sh:path      openapi:member
+] .
 
 sh:minExclusive  a        rdf:Property ;
         rdfs:comment      "Specifies the minimum exclusive value of each value node."@en ;
@@ -747,6 +746,9 @@ openapi:mapKey  a    rdf:Property ;
         rdfs:label   "mapKey"@en ;
         rdfs:range   xsd:string .
 
+_:b0    a                 openapi:Path ;
+        openapi:pathName  "/pets/{id}" .
+
 <Error_codePropertyShape>
         a             sh:PropertyShape ;
         rdfs:label    "Error_codePropertyShape" ;
@@ -854,6 +856,11 @@ sh:XoneConstraintComponent
         rdfs:label        "Exactly one constraint component"@en ;
         sh:parameter      sh:XoneConstraintComponent-xone .
 
+[ a        sh:PropertyShape ;
+  sh:node  <PetNodeShape> ;
+  sh:path  openapi:member
+] .
+
 sh:closed  a              rdf:Property ;
         rdfs:comment      "If set to true then the shape is closed."@en ;
         rdfs:isDefinedBy  sh: ;
@@ -880,10 +887,6 @@ sh:parameter  a           rdf:Property ;
         rdfs:isDefinedBy  sh: ;
         rdfs:label        "parameter"@en ;
         rdfs:range        sh:Parameter .
-
-[ a                owl:Class ;
-  rdfs:subClassOf  openapi:Collection
-] .
 
 sh:ClosedConstraintComponent
         a                 sh:ConstraintComponent ;
@@ -1074,6 +1077,9 @@ sh:zeroOrMorePath  a      rdf:Property ;
         rdfs:label        "zero or more path"@en ;
         rdfs:range        rdfs:Resource .
 
+_:b1    a                 openapi:Path ;
+        openapi:pathName  "/pets" .
+
 openapi:nullable  a   rdf:Property ;
         rdfs:comment  "Allows sending a null value for the defined schema."@en ;
         rdfs:label    "nullable"@en ;
@@ -1112,9 +1118,6 @@ openapi:flow  a       rdf:Property ;
         rdfs:domain   openapi:OAuth2 ;
         rdfs:label    "flow"@en ;
         rdfs:range    openapi:OAuthFlow .
-
-_:b0    a                 openapi:Path ;
-        openapi:pathName  "/pets/{id}" .
 
 sh:path  a                rdf:Property ;
         rdfs:comment      "Specifies the property path of a property shape."@en ;
@@ -1213,9 +1216,6 @@ sh:BlankNodeOrLiteral
         rdfs:comment      "The node kind of all blank nodes or literals."@en ;
         rdfs:isDefinedBy  sh: ;
         rdfs:label        "Blank node or literal"@en .
-
-_:b1    a                 openapi:Path ;
-        openapi:pathName  "/pets" .
 
 openapi:in  a         rdf:Property ;
         rdfs:comment  "The location of the API key"@en ;
@@ -1390,9 +1390,8 @@ sh:MinLengthConstraintComponent
         rdfs:label        "Min-length constraint component"@en ;
         sh:parameter      sh:MinLengthConstraintComponent-minLength .
 
-[ a                owl:Class ;
-  rdfs:subClassOf  openapi:Collection
-] .
+<http://schema.org/Id>
+        a       rdf:Property .
 
 sh:TargetType  a          rdfs:Class ;
         rdfs:comment      "The (meta) class for parameterizable targets.\tInstances of this are instantiated as values of the sh:target property."@en ;
@@ -1499,7 +1498,8 @@ openapi:info  a       rdf:Property ;
         rdfs:label    "info"@en ;
         rdfs:range    openapi:Info .
 
-<Pet_id>  a     rdf:Property .
+<Pet_id>  a                 rdf:Property ;
+        rdfs:subPropertyOf  <http://schema.org/Id> .
 
 openapi:Response  a   rdfs:Class ;
         rdfs:comment  "Describes a single response from an API Operation"@en ;
@@ -2154,6 +2154,10 @@ sh:class  a               rdf:Property ;
                                 ] ;
         openapi:serviceTitle    "Swagger Petstore" ;
         openapi:termsOfService  "http://swagger.io/terms/"^^xsd:anyURI .
+
+[ a                owl:Class ;
+  rdfs:subClassOf  openapi:Collection
+] .
 
 sh:BlankNode  a           sh:NodeKind ;
         rdfs:comment      "The node kind of all blank nodes."@en ;

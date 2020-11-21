@@ -94,30 +94,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Pet'
-        # '201':
-          # description: Pet with discriminator OldPetDisc /Case 1 (ii)/ 
-          # content:
-            # application/json:
-              # schema:
-                # $ref: '#/components/schemas/PetDisc'
-        # '202':
-          # description: Pet with SOAS /Case 2/
-          # content:
-            # application/json:
-              # schema:
-                # $ref: '#/components/schemas/PetSOAS'
-        # '203':
-          # description: Pet with SOASOldPet /Case 3/
-          # content:
-            # application/json:
-              # schema:
-                # $ref: '#/components/schemas/PetWithSOASOldPet'
-        # '204':
-          # description: Pet AllSOAS /Case 4/
-          # content:
-            # application/json:
-              # schema:
-                # $ref: '#/components/schemas/PetAllSOAS'
+        '201':
+          description: Pet with discriminator OldPetDisc /Case 1 (ii)/ 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetDisc'
+        '202':
+          description: Pet with SOAS /Case 2/
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetSOAS'
+        '203':
+          description: Pet with SOASOldPet /Case 3/
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetWithSOASOldPet'
+        '204':
+          description: Pet AllSOAS /Case 4/
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PetAllSOAS'
         default:
           description: unexpected error
           content:

@@ -137,9 +137,7 @@ paths:
 components:
   schemas:
     # Pet:
-    #   # x-kindOf: http://schema.org/BundleOfPets
-    #   # x-refersTo: http://schema.org/Pet
-    #   # x-mapsTo: '#/components/schemas/Specified'
+    #   x-refersTo: none
     #   allOf:
     #     - $ref: '#/components/schemas/NewPet'
     #     - type: object
@@ -151,9 +149,6 @@ components:
     #           format: int64
 
     NewPet:
-      # x-kindOf: http://schema.org/BundleOfNewPets
-      # x-refersTo: http://schema.org/NewPet
-      # x-mapsTo: '#/components/schemas/Specified'
       type: object
       required:
         - name  
@@ -215,11 +210,11 @@ components:
         - id
       properties:
         id:
+          x-kindOf: http://schema.org/Id
           type: integer
           format: int64
         toBe:
           not:
-            x-kindOf: http://schema.org/toBe
             type: string
 
     # SecondPet:
