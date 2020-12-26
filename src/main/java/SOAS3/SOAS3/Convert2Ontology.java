@@ -1164,7 +1164,9 @@ public class Convert2Ontology {
 					} else {
 						//if items are not object type, keep only the datatype of items
 						Resource resource = getDatatype(ontModel, itemsObject.getType(), itemsObject.getFormat());
-						ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.datatypeURI), resource));
+						if (resource != null) {
+							ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.datatypeURI), resource));
+						}
 					}
 				}
 				property_creator.AddMinItems(propertyShapeInd, String.valueOf(arraySchema.getMinItems()));
