@@ -42,9 +42,11 @@ import io.swagger.v3.oas.models.tags.Tag;
 public class Convert2Ontology {
 	private OpenApiDataPropertyCreator property_creator;
 	private RDFNode securityReqInd;
+	private OpenAPI openApi4header;
 	
 	public Convert2Ontology(OpenAPI openapi, OntModel ontModel) {
 		property_creator=new OpenApiDataPropertyCreator(ontModel);
+		openApi4header = openapi;
 		parseDocumentObject(ontModel, openapi);
 	}
 
@@ -333,6 +335,16 @@ public class Convert2Ontology {
 	private Individual parseHeaderObject(OntModel ontModel, String headerName, Header header,
 			Map<String, Schema> schemas) {
 
+		if (header.get$ref() != null){
+			// Get refernece name
+			String objectName = RefUtils.computeDefinitionName(header.get$ref());
+
+			// Get referenced object if exists in components
+			ResolverFully resolver = new ResolverFully();
+			resolver.resolveFully(openApi4header);
+			header = resolver.resolveHeader(header);
+		}
+
 		Individual headerInd= ontModel.createIndividual(ontModel.getOntClass(OpenApiOntUtils.HeaderClassURI));
 		property_creator.AddName(headerInd,headerName);
 		property_creator.AddDescription(headerInd, header.getDescription());
@@ -575,15 +587,9 @@ public class Convert2Ontology {
 			ResolverFully resolver = new ResolverFully();
 			resolver.resolveFully(openapi);
 			requestBody = resolver.resolveRequestBody(requestBody);
-
-			// Create individual name.
-			String individualName = OpenApiOntUtils.BasicURI + "reqBody_" + objectName;
-
-			requestInd = ontModel.createIndividual(individualName, ontModel.getOntClass(OpenApiOntUtils.RequestBodyClassURI));
-		} else {
-			requestInd  = ontModel.createIndividual(ontModel.getOntClass(OpenApiOntUtils.RequestBodyClassURI));
 		}
 
+		requestInd  = ontModel.createIndividual(ontModel.getOntClass(OpenApiOntUtils.RequestBodyClassURI));
 		property_creator.AddDescription(requestInd, requestBody.getDescription());
 		//Extract if the request body is required in the request.
 		property_creator.AddRequired(requestInd, String.valueOf(requestBody.getRequired()));

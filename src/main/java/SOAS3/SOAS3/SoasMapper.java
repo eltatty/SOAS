@@ -76,6 +76,7 @@ public class SoasMapper {
 				System.out.println(file.getName());
 				//Convert OpenApi To Ontology
 				 new Convert2Ontology(openapi,ontModel);
+				 this.ontHandler.PrintOntologyToFile(FilenameUtils.removeExtension(file.getName()));
 			}
 		}
 	}
