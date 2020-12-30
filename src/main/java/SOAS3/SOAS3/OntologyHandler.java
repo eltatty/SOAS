@@ -119,7 +119,8 @@ public class OntologyHandler {
 		String base = "https://www.example.com/service/#" + productName;
 		try{
 			OutputStream fileOut = new FileOutputStream(product);
-			ontModel.write(fileOut, "TURTLE", base);
+//			ontModel.write(fileOut, "TURTLE", base);
+			ontModel.write(fileOut, "TURTLE");
 		}catch (Exception e) {
 			e.getStackTrace();
 		}

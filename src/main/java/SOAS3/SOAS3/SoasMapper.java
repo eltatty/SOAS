@@ -74,8 +74,11 @@ public class SoasMapper {
 			if (file.isFile()) {
 				openapi=openapiHandler.ReadFile(file.getAbsolutePath());
 				System.out.println(file.getName());
+				// Add prefix
+				String NS = "https://www.example.com/service/" + FilenameUtils.removeExtension(file.getName()) + "#";
+				ontModel.setNsPrefix("myOnt", NS);
 				//Convert OpenApi To Ontology
-				 new Convert2Ontology(openapi,ontModel);
+				 new Convert2Ontology(openapi,ontModel, NS);
 				 this.ontHandler.PrintOntologyToFile(FilenameUtils.removeExtension(file.getName()));
 			}
 		}
