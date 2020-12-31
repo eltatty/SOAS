@@ -1262,6 +1262,9 @@ public class Convert2Ontology {
 		//create a property shape individual for the schemaObject
 		Individual memberInd = createPropertyShape(ontModel, null, null, schemaObject, schemas);
 		//Make this property shape a member of collection
+		//Test
+		ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.propertyURI), memberInd));
+		///
 		ontModel.add(ontModel.createStatement(memberInd, ontModel.getProperty(OpenApiOntUtils.pathURI),ontModel.getProperty(OpenApiOntUtils.memberURI)));
 		return nodeShapeInd;
 	}
