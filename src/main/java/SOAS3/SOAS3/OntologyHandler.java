@@ -116,10 +116,8 @@ public class OntologyHandler {
 //		}
 		File folder = new File( "Products");
 		String product = folder.getAbsolutePath() + "/" + productName + ".ttl";
-		String base = "https://www.example.com/service/#" + productName;
 		try{
 			OutputStream fileOut = new FileOutputStream(product);
-//			ontModel.write(fileOut, "TURTLE", base);
 			ontModel.write(fileOut, "TURTLE");
 		}catch (Exception e) {
 			e.getStackTrace();

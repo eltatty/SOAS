@@ -1071,7 +1071,7 @@ public class Convert2Ontology {
 				}
 			}
 		} else if (oldSchemaName != null && !pathInit){
-			Resource propertyValue = ResourceFactory.createProperty(oldSchemaName);
+			Resource propertyValue = ResourceFactory.createProperty( NS + oldSchemaName);
 			ontModel.createOntProperty(NS + oldSchemaName);
 			ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.pathURI), propertyValue));
 		}
@@ -1253,7 +1253,6 @@ public class Convert2Ontology {
 		Individual nodeShapeInd = ontModel.createIndividual(schemaName,ontModel.getOntClass(OpenApiOntUtils.NodeShapeClassURI));
 		property_creator.AddSchemaLabel(nodeShapeInd, schemaName);
 		//create a new class with name "schemaName"
-//		OntClass newClass = ontModel.createClass(schemaName+"Class");
 		OntClass newClass = ontModel.createClass(NS + oldSchemaName);
 		//Set collection as superClass
 		newClass.addSuperClass(ontModel.getOntClass(OpenApiOntUtils.CollectionClassURI));
@@ -1295,7 +1294,6 @@ public class Convert2Ontology {
 				// create class with the given uri
 				ontModel.createClass(uri);
 				//create class with name "schemaName"
-				//OntClass newClass = ontModel.createClass(schemaName+"Class");
 				OntClass newClass = ontModel.createClass( NS + oldSchemaName);
 				//Set x-kindOf class as superClass
 				newClass.addSuperClass(ResourceFactory.createResource(uri));
@@ -1320,7 +1318,6 @@ public class Convert2Ontology {
 			}
 			else if (schemaObject.getExtensions().get("x-collectionTo")!=null) {
 				//create a class with name "schemaName"
-				//OntClass newClass = ontModel.createClass(schemaName+"Class");
 				OntClass newClass = ontModel.createClass( NS + oldSchemaName);
 				//Set Collection as superClass of our class
 				newClass.addSuperClass(ontModel.getOntClass(OpenApiOntUtils.CollectionClassURI));

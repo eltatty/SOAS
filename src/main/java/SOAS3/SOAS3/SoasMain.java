@@ -44,8 +44,6 @@ public class SoasMain {
 		SoasMapper control= new SoasMapper("TestServices/","openApi3.ttl", "shacl.ttl", PelletReasonerFactory.THE_SPEC,null,"RDF/XML");
 
 
-//		control.PrintOntology();
-
 		/****** Query 1 *******/
 		/* Which paths use tag with name=pets */
 		/*
