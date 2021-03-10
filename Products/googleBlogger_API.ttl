@@ -1,0 +1,3330 @@
+@prefix myOnt: <https://www.example.com/service/googleBlogger_API#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix openapi: <http://www.intelligence.tuc.gr/ns/open-api#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+sh:minExclusive  a        rdf:Property ;
+        rdfs:comment      "Specifies the minimum exclusive value of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "min exclusive"@en .
+
+sh:AndConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to test whether a value node conforms to all members of a provided list of shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "And constraint component"@en ;
+        sh:parameter      sh:AndConstraintComponent-and .
+
+sh:Severity  a            rdfs:Class ;
+        rdfs:comment      "The class of validation result severity levels, including violation and warning levels."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Severity"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+sh:returnType  a          rdf:Property ;
+        rdfs:comment      "The expected type of values returned by the associated function."@en ;
+        rdfs:domain       sh:Function ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "return type"@en ;
+        rdfs:range        rdfs:Class .
+
+openapi:RequestBodyMediaType
+        a                rdfs:Class ;
+        rdfs:comment     "A Request Body Media Type Object provides schema for the identified media type"@en ;
+        rdfs:label       "RequestBodyMediaType"@en ;
+        rdfs:subClassOf  openapi:MediaType .
+
+<Comments_authorPropertyShape_imagePropertyShape_urlPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape_imagePropertyShape_urlPropertyShape" ;
+        openapi:description  "The URL of the comment creator's avatar image." ;
+        openapi:name         "url" ;
+        sh:node              <Comments_authorPropertyShape_imagePropertyShape_urlPropertyShapeNodeShape> ;
+        sh:path              myOnt:Comments_authorPropertyShape_imagePropertyShape_url .
+
+sh:rule  a                rdf:Property ;
+        rdfs:comment      "The rules linked to a shape."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "rule"@en ;
+        rdfs:range        sh:Rule .
+
+sh:minLength  a           rdf:Property ;
+        rdfs:comment      "Specifies the minimum string length of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "min length"@en ;
+        rdfs:range        xsd:integer .
+
+openapi:Encoding  a   rdfs:Class ;
+        rdfs:comment  "A single encoding definition applied to a single schema property"@en ;
+        rdfs:label    "Encoding"@en .
+
+openapi:Implicit  a      rdfs:Class ;
+        rdfs:comment     "Configuration for the OAuth Implicit flow"@en ;
+        rdfs:label       "Implicit"@en ;
+        rdfs:subClassOf  openapi:OAuthFlow .
+
+sh:SPARQLTargetType  a    rdfs:Class ;
+        rdfs:comment      "The (meta) class for parameterizable targets that are based on SPARQL queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL target type"@en ;
+        rdfs:subClassOf   sh:SPARQLSelectExecutable , sh:SPARQLAskExecutable , sh:TargetType .
+
+openapi:Server  a     rdfs:Class ;
+        rdfs:comment  "Provides connectivity information to a target server"@en ;
+        rdfs:label    "Server"@en .
+
+openapi:allowExtraProperties
+        a           rdf:Property ;
+        rdfs:label  "allowExtraProperties"@en ;
+        rdfs:range  xsd:boolean .
+
+sh:nodeValidator  a       rdf:Property ;
+        rdfs:comment      "The validator(s) used to evaluate a constraint in the context of a node shape."@en ;
+        rdfs:domain       sh:ConstraintComponent ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "shape validator"@en ;
+        rdfs:range        sh:Validator .
+
+myOnt:Blog_pagesPropertyShape
+        a       owl:Class .
+
+sh:resultSeverity  a      rdf:Property ;
+        rdfs:comment      "The severity of the result, e.g. warning."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "result severity"@en ;
+        rdfs:range        sh:Severity .
+
+<service_externalDoc>
+        a                    openapi:ExternalDoc ;
+        openapi:description  "Find more info here" ;
+        openapi:url          "https://developers.google.com/blogger/docs/3.0/reference"^^xsd:anyURI .
+
+openapi:Style  a      rdfs:Class ;
+        rdfs:comment  "Describes how the parameter value will be serialized"@en ;
+        rdfs:label    "Style"@en .
+
+sh:ClassConstraintComponent-class
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:class .
+
+sh:NotConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that value nodes do not conform to a given shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Not constraint component"@en ;
+        sh:parameter      sh:NotConstraintComponent-not .
+
+<Blog_pagesPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Blog_pagesPropertyShapeNodeShape" ;
+        openapi:description  "The container for this blog's pages." ;
+        sh:property          <Blog_pagesPropertyShape_selfLinkPropertyShape> , <Blog_pagesPropertyShape_totalItemsPropertyShape> ;
+        sh:targetClass       myOnt:Blog_pagesPropertyShape .
+
+sh:LessThanConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that each value node is smaller than all the nodes that have the focus node as subject and the value of a given property as predicate."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Less-than constraint component"@en ;
+        sh:parameter      sh:LessThanConstraintComponent-lessThan .
+
+_:b0    a                 openapi:Path ;
+        openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}" .
+
+myOnt:Blog_pagesPropertyShape_totalItems
+        a       rdf:Property .
+
+openapi:name  a     rdf:Property ;
+        rdfs:label  "name"@en ;
+        rdfs:range  xsd:string .
+
+myOnt:Blog_locale  a  rdf:Property .
+
+openapi:version  a   rdf:Property ;
+        rdfs:domain  openapi:Document ;
+        rdfs:label   "version"@en ;
+        rdfs:range   xsd:string .
+
+sh:minCount  a            rdf:Property ;
+        rdfs:comment      "Specifies the minimum number of values in the set of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "min count"@en ;
+        rdfs:range        xsd:integer .
+
+openapi:Document  a   rdfs:Class ;
+        rdfs:comment  "The root document object of the OpenAPI document"@en ;
+        rdfs:label    "Document"@en .
+
+openapi:allowReserved
+        a             rdf:Property ;
+        rdfs:comment  "Determines whether the parameter value SHOULD allow reserved characters"@en ;
+        rdfs:label    "allowReserved"@en ;
+        rdfs:range    xsd:boolean .
+
+sh:minInclusive  a        rdf:Property ;
+        rdfs:comment      "Specifies the minimum inclusive value of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "min inclusive"@en .
+
+<Blog_updatedPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_updatedPropertyShape" ;
+        openapi:description  "RFC 3339 date-time when this blog was published." ;
+        openapi:name         "updated" ;
+        sh:datatype          xsd:dateTime ;
+        sh:path              myOnt:Blog_updated .
+
+<Comments_blogPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_blogPropertyShapeNodeShape" ;
+        openapi:description  "Data about the blog containing this comment." ;
+        sh:property          <Comments_blogPropertyShape_idPropertyShape> ;
+        sh:targetClass       myOnt:Comments_blogPropertyShape .
+
+sh:NodeShape  a           rdfs:Class ;
+        rdfs:comment      "A node shape is a shape that specifies constraint that need to be met with respect to focus nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Node shape"@en ;
+        rdfs:subClassOf   sh:Shape .
+
+sh:JSConstraint  a        rdfs:Class ;
+        rdfs:comment      "The class of constraints backed by a JavaScript function."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript-based constraint"@en ;
+        rdfs:subClassOf   sh:JSExecutable .
+
+sh:DatatypeConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the datatype of all value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Datatype constraint component"@en ;
+        sh:parameter      sh:DatatypeConstraintComponent-datatype .
+
+openapi:variableValue
+        a            rdf:Property ;
+        rdfs:domain  openapi:ServerVariable ;
+        rdfs:label   "variableValue"@en ;
+        rdfs:range   xsd:string .
+
+openapi:securityType  a  rdf:Property ;
+        rdfs:domain  openapi:SecurityRequirement ;
+        rdfs:label   "securityType"@en ;
+        rdfs:range   openapi:Security .
+
+sh:DisjointConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that the set of value nodes is disjoint with the the set of nodes that have the focus node as subject and the value of a given property as predicate."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Disjoint constraint component"@en ;
+        sh:parameter      sh:DisjointConstraintComponent-disjoint .
+
+openapi:Query  a         rdfs:Class ;
+        rdfs:comment     "A Parameter that is appended to the URL"@en ;
+        rdfs:label       "QueryParameter"@en ;
+        rdfs:subClassOf  openapi:Parameter .
+
+sh:PropertyConstraintComponent-property
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:property .
+
+sh:lessThanOrEquals  a    rdf:Property ;
+        rdfs:comment      "Specifies a property that must have smaller or equal values than the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "less than or equals"@en ;
+        rdfs:range        rdf:Property .
+
+<Comments_authorPropertyShape_urlPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape_urlPropertyShape" ;
+        openapi:description  "The URL of the comment creator's profile page." ;
+        openapi:name         "url" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_authorPropertyShape_url .
+
+<Blog_postsPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_postsPropertyShape" ;
+        openapi:description  "The container for this blog's posts." ;
+        openapi:name         "posts" ;
+        sh:node              <Blog_postsPropertyShapeNodeShape> ;
+        sh:path              myOnt:Blog_posts .
+
+sh:optional  a            rdf:Property ;
+        rdfs:comment      "Indicates whether a parameter is optional."@en ;
+        rdfs:domain       sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "optional"@en ;
+        rdfs:range        xsd:boolean .
+
+openapi:scope  a      rdf:Property ;
+        rdfs:comment  "The available scopes for the OAuth2 security scheme. A map between the scope name and a short description for it"@en ;
+        rdfs:label    "flow"@en ;
+        rdfs:range    openapi:Scope .
+
+<BlogUserInfos_blog_user_infoPropertyShape_photosAlbumKeyPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape_photosAlbumKeyPropertyShape" ;
+        openapi:description  "The Photo Album Key for the user when adding photos to the blog." ;
+        openapi:name         "photosAlbumKey" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:BlogUserInfos_blog_user_infoPropertyShape_photosAlbumKey .
+
+openapi:multipleOf  a  rdf:Property ;
+        rdfs:domain  sh:Shape ;
+        rdfs:label   "multipleOf"@en .
+
+sh:TripleRule  a          rdfs:Class ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "A rule based on triple (subject, predicate, object) pattern."@en ;
+        rdfs:subClassOf   sh:Rule .
+
+sh:jsLibrary  a           rdf:Property ;
+        rdfs:comment      "Declares which JavaScript libraries are needed to execute this."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript library"@en ;
+        rdfs:range        sh:JSLibrary .
+
+openapi:description  a  rdf:Property ;
+        rdfs:label  "description"@en ;
+        rdfs:range  xsd:string .
+
+<Blog_postsPropertyShape_itemsPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_postsPropertyShape_itemsPropertyShape" ;
+        openapi:description  "The list of posts for this Blog." ;
+        openapi:name         "items" ;
+        sh:node              <Blog_postsPropertyShape_itemsPropertyShapeNodeShape> ;
+        sh:path              myOnt:Blog_postsPropertyShape_items .
+
+myOnt:Comments_blogPropertyShape_id
+        a       rdf:Property .
+
+sh:LessThanConstraintComponent-lessThan
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:lessThan .
+
+sh:PrefixDeclaration  a   rdfs:Class ;
+        rdfs:comment      "The class of prefix declarations, consisting of pairs of a prefix with a namespace."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Prefix declaration"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+sh:SPARQLTarget  a        rdfs:Class ;
+        rdfs:comment      "The class of targets that are based on SPARQL queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL target"@en ;
+        rdfs:subClassOf   sh:SPARQLSelectExecutable , sh:SPARQLAskExecutable , sh:Target .
+
+<Comments_statusPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_statusPropertyShape" ;
+        openapi:description  "The status of the comment. The status is only visible to users who have Administration rights on a blog." ;
+        openapi:name         "status" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_status .
+
+<BlogUserInfos_blog_user_infoPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape" ;
+        openapi:description  "Information about a User for the Blog." ;
+        openapi:name         "blog_user_info" ;
+        sh:node              <BlogUserInfos_blog_user_infoPropertyShapeNodeShape> ;
+        sh:path              myOnt:BlogUserInfos_blog_user_info .
+
+myOnt:Blog_kind  a          rdf:Property ;
+        rdfs:subPropertyOf  <https://schema.org/about> .
+
+sh:target  a              rdf:Property ;
+        rdfs:comment      "Links a shape to a target specified by an extension language, for example instances of sh:SPARQLTarget."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "target"@en ;
+        rdfs:range        sh:Target .
+
+openapi:maxProperties
+        a           rdf:Property ;
+        rdfs:label  "maxProperties"@en ;
+        rdfs:range  xsd:integer .
+
+sh:InConstraintComponent-in
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:path           sh:in .
+
+openapi:style  a      rdf:Property ;
+        rdfs:comment  "A parameter's style"@en ;
+        rdfs:label    "style"@en ;
+        rdfs:range    openapi:Style .
+
+openapi:Password  a      rdfs:Class ;
+        rdfs:comment     "Configuration for the OAuth Resource Owner Password flow"@en ;
+        rdfs:label       "Password"@en ;
+        rdfs:subClassOf  openapi:OAuthFlow .
+
+sh:targetClass  a         rdf:Property ;
+        rdfs:comment      "Links a shape to a class, indicating that all instances of the class must conform to the shape."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "target class"@en ;
+        rdfs:range        rdfs:Class .
+
+sh:targetNode  a          rdf:Property ;
+        rdfs:comment      "Links a shape to individual nodes, indicating that these nodes must conform to the shape."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "target node"@en .
+
+openapi:3xxResponse  a   rdfs:Class ;
+        rdfs:comment     "Represents all response codes between [300-399]"@en ;
+        rdfs:label       "3xxResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+openapi:PropertyMapper
+        a             rdfs:Class ;
+        rdfs:comment  "Configuration details for a Discriminator object"@en ;
+        rdfs:label    "PropertyMapper"@en .
+
+<Comments_selfLinkPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_selfLinkPropertyShape" ;
+        openapi:description  "The Blogger API URL to fetch this resource from." ;
+        openapi:name         "selfLink" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_selfLink .
+
+sh:SPARQLUpdateExecutable
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of SPARQL executables based on a SPARQL UPDATE."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL UPDATE executable"@en ;
+        rdfs:subClassOf   sh:SPARQLExecutable .
+
+openapi:authorizationUrl
+        a             rdf:Property ;
+        rdfs:comment  "The authorization URL to be used for this flow"@en ;
+        rdfs:domain   openapi:OAuthFlow ;
+        rdfs:label    "authorizationUrl"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:ClosedConstraintComponent-closed
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:boolean ;
+        sh:path           sh:closed .
+
+openapi:Path  a       rdfs:Class ;
+        rdfs:comment  "Holds the relative paths to the individual endpoints and their operations"@en ;
+        rdfs:label    "Path"@en .
+
+openapi:attribute  a  rdf:Property ;
+        rdfs:comment  "Declares whether the property definition translates to an attribute instead of an element"@en ;
+        rdfs:domain   openapi:XML ;
+        rdfs:label    "allowReserved"@en ;
+        rdfs:range    xsd:boolean .
+
+openapi:requestHeader
+        a             rdf:Property ;
+        rdfs:comment  "An operation's request header"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "requestHeader"@en ;
+        rdfs:range    openapi:Header .
+
+openapi:ApiKey  a        rdfs:Class ;
+        rdfs:comment     "ApiKey authentication security scheme"@en ;
+        rdfs:label       "ApiKey"@en ;
+        rdfs:subClassOf  openapi:Security .
+
+sh:MinLengthConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the minimum string length of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Min-length constraint component"@en ;
+        sh:parameter      sh:MinLengthConstraintComponent-minLength .
+
+myOnt:Blog_updated  a  rdf:Property .
+
+sh:LanguageInConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to enumerate language tags that all value nodes must have."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Language-in constraint component"@en ;
+        sh:parameter      sh:LanguageInConstraintComponent-languageIn .
+
+sh:ClosedConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to indicate that focus nodes must only have values for those properties that have been explicitly enumerated via sh:property/sh:path."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Closed constraint component"@en ;
+        sh:parameter      sh:ClosedConstraintComponent-ignoredProperties , sh:ClosedConstraintComponent-closed .
+
+openapi:TRACE  a  openapi:Method .
+
+sh:AbstractResult  a      rdfs:Class ;
+        rdfs:comment      "The base class of validation results, typically not instantiated directly."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Abstract result"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+<Blog_selfLinkPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_selfLinkPropertyShape" ;
+        openapi:description  "The Blogger API URL to fetch this resource from." ;
+        openapi:name         "selfLink" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_selfLink .
+
+sh:languageIn  a          rdf:Property ;
+        rdfs:comment      "Specifies a list of language tags that all value nodes must have."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "language in"@en ;
+        rdfs:range        rdf:List .
+
+<Comments_authorPropertyShape_displayNamePropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape_displayNamePropertyShape" ;
+        openapi:description  "The comment creator's display name." ;
+        openapi:name         "displayName" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_authorPropertyShape_displayName .
+
+sh:select  a              rdf:Property ;
+        rdfs:comment      "The SPARQL SELECT query to execute."@en ;
+        rdfs:domain       sh:SPARQLSelectExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "select"@en ;
+        rdfs:range        xsd:string .
+
+sh:SPARQLConstraint  a    rdfs:Class ;
+        rdfs:comment      "The class of constraints based on SPARQL SELECT queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL constraint"@en ;
+        rdfs:subClassOf   sh:SPARQLSelectExecutable .
+
+openapi:extraPropertySchema
+        a             rdf:Property ;
+        rdfs:comment  "Specifies a list of shapes so that the value nodes must conform to exactly one of the shapes."@en ;
+        rdfs:label    "exactly one"@en ;
+        rdfs:range    sh:Shape .
+
+openapi:content  a    rdf:Property ;
+        rdfs:comment  "The content of a parameter"@en ;
+        rdfs:label    "content"@en ;
+        rdfs:range    openapi:MediaType .
+
+<Blog_pagesPropertyShape_selfLinkPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_pagesPropertyShape_selfLinkPropertyShape" ;
+        openapi:description  "The URL of the pages collection for this blog." ;
+        openapi:name         "selfLink" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_pagesPropertyShape_selfLink .
+
+openapi:OAuth2  a        rdfs:Class ;
+        rdfs:comment     "OAuth2's common flows security scheme"@en ;
+        rdfs:label       "OAuth2"@en ;
+        rdfs:subClassOf  openapi:Security .
+
+sh:MinExclusiveConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the range of value nodes with a minimum exclusive value."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Min-exclusive constraint component"@en ;
+        sh:parameter      sh:MinExclusiveConstraintComponent-minExclusive .
+
+openapi:allowEmptyValue
+        a             rdf:Property ;
+        rdfs:comment  "Sets the ability to pass empty-valued parameters"@en ;
+        rdfs:domain   openapi:Query ;
+        rdfs:label    "allowEmptyValue"@en ;
+        rdfs:range    xsd:boolean .
+
+sh:alternativePath  a     rdf:Property ;
+        rdfs:comment      "The (single) value of this property must be a list of path elements, representing the elements of alternative paths."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "alternative path"@en ;
+        rdfs:range        rdf:List .
+
+openapi:AuthorizationCode
+        a                rdfs:Class ;
+        rdfs:comment     "Configuration for the OAuth Authorization Code flow"@en ;
+        rdfs:label       "AuthorizationCode"@en ;
+        rdfs:subClassOf  openapi:OAuthFlow .
+
+sh:ValidationReport  a    rdfs:Class ;
+        rdfs:comment      "The class of SHACL validation reports."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Validation report"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:member  a    rdf:Property ;
+        rdfs:domain  openapi:Collection ;
+        rdfs:label   "member"@en ;
+        rdfs:range   sh:Shape .
+
+openapi:refreshUrl  a  rdf:Property ;
+        rdfs:comment  "The URL to be used for obtaining refresh tokens. This MUST be in the form of a URL."@en ;
+        rdfs:domain   openapi:OAuthFlow ;
+        rdfs:label    "refreshUrl"@en ;
+        rdfs:range    xsd:anyURI .
+
+openapi:wrapped  a    rdf:Property ;
+        rdfs:comment  "Signifies whether the array is wrapped (for example, <books><book/><book/></books>) or unwrapped (<book/><book/>)"@en ;
+        rdfs:domain   openapi:XML ;
+        rdfs:label    "wrapped"@en ;
+        rdfs:range    xsd:boolean .
+
+openapi:Http  a          rdfs:Class ;
+        rdfs:comment     "HTTP authentication security scheme"@en ;
+        rdfs:label       "Http"@en ;
+        rdfs:subClassOf  openapi:Security .
+
+myOnt:Blog_selfLink  a  rdf:Property .
+
+sh:EqualsConstraintComponent-equals
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:equals .
+
+sh:not  a                 rdf:Property ;
+        rdfs:comment      "Specifies a shape that the value nodes must not conform to."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "not"@en ;
+        rdfs:range        sh:Shape .
+
+myOnt:Blog_postsPropertyShape_items
+        a       rdf:Property .
+
+openapi:SecurityRequirement
+        a             rdfs:Class ;
+        rdfs:comment  "The required security scheme to execute this operation"@en ;
+        rdfs:label    "SecurityRequirement"@en .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape_hasAdminAccess
+        a       rdf:Property .
+
+openapi:OPTIONS  a  openapi:Method .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape_userId
+        a       rdf:Property .
+
+<Blog_postsPropertyShape_totalItemsPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_postsPropertyShape_totalItemsPropertyShape" ;
+        openapi:description  "The total number of posts on this blog." ;
+        openapi:name         "totalItems" ;
+        sh:datatype          xsd:int ;
+        sh:path              myOnt:Blog_postsPropertyShape_totalItems .
+
+sh:ClassConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that each value node is an instance of a given type."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Class constraint component"@en ;
+        sh:parameter      sh:ClassConstraintComponent-class .
+
+openapi:PUT  a  openapi:Method .
+
+<Comments_inReplyToPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_inReplyToPropertyShapeNodeShape" ;
+        openapi:description  "Data about the comment this is in reply to." ;
+        sh:property          <Comments_inReplyToPropertyShape_idPropertyShape> ;
+        sh:targetClass       myOnt:Comments_inReplyToPropertyShape .
+
+myOnt:Comments_published
+        a       rdf:Property .
+
+openapi:email  a      rdf:Property ;
+        rdfs:comment  "The email address of the contact person/organization. MUST be in the format of an email address."@en ;
+        rdfs:domain   openapi:Contact ;
+        rdfs:label    "email"@en ;
+        rdfs:range    xsd:anyURI .
+
+myOnt:Comments_authorPropertyShape_url
+        a       rdf:Property .
+
+<Comments_publishedPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_publishedPropertyShape" ;
+        openapi:description  "RFC 3339 date-time date-time when this comment was published, for example \"2012-04-15T19:38:01-07:00\"." ;
+        openapi:name         "published" ;
+        sh:datatype          xsd:dateTime ;
+        sh:path              myOnt:Comments_published .
+
+sh:NodeKind  a            rdfs:Class ;
+        rdfs:comment      "The class of all node kinds, including sh:BlankNode, sh:IRI, sh:Literal or the combinations of these: sh:BlankNodeOrIRI, sh:BlankNodeOrLiteral, sh:IRIOrLiteral."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Node kind"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+myOnt:Comments_post  a  rdf:Property .
+
+sh:UniqueLangConstraintComponent-uniqueLang
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:boolean ;
+        sh:maxCount       1 ;
+        sh:path           sh:uniqueLang .
+
+openapi:5xxResponse  a   rdfs:Class ;
+        rdfs:comment     "Represents all response codes between [500-599]"@en ;
+        rdfs:label       "5xxResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+sh:Info  a                sh:Severity ;
+        rdfs:comment      "The severity for an informational validation result."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Info"@en .
+
+<Blog_localePropertyShape_languagePropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_localePropertyShape_languagePropertyShape" ;
+        openapi:description  "The language this blog is set to, for example \"en\" for English." ;
+        openapi:name         "language" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_localePropertyShape_language .
+
+sh:SPARQLAskExecutable
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of SPARQL executables that are based on an ASK query."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL ASK executable"@en ;
+        rdfs:subClassOf   sh:SPARQLExecutable .
+
+myOnt:Comments_authorPropertyShape_image
+        a       rdf:Property .
+
+sh:labelTemplate  a       rdf:Property ;
+        rdfs:comment      "Outlines how human-readable labels of instances of the associated Parameterizable shall be produced. The values can contain {?paramName} as placeholders for the actual values of the given parameter."@en ;
+        rdfs:domain       sh:Parameterizable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "label template"@en .
+
+<CommentsNodeShape>  a  sh:NodeShape ;
+        rdfs:label      "CommentsNodeShape" ;
+        sh:property     <Comments_inReplyToPropertyShape> , <Comments_publishedPropertyShape> , <Comments_contextPropertyShape> , <Comments_idPropertyShape> , <Comments_selfLinkPropertyShape> , <Comments_statusPropertyShape> , <Comments_updatedPropertyShape> , <Comments_authorPropertyShape> , <Comments_blogPropertyShape> , <Comments_kindPropertyShape> , <Comments_postPropertyShape> ;
+        sh:targetClass  <https://schema.org/comment> .
+
+sh:QualifiedMaxCountConstraintComponent-qualifiedValueShapesDisjoint
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:boolean ;
+        sh:optional       true ;
+        sh:path           sh:qualifiedValueShapesDisjoint .
+
+sh:or   a                 rdf:Property ;
+        rdfs:comment      "Specifies a list of shapes so that the value nodes must conform to at least one of the shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "or"@en ;
+        rdfs:range        rdf:List .
+
+<Comments_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_idPropertyShape" ;
+        openapi:description  "The ID for this resource." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_id .
+
+openapi:host  a       rdf:Property ;
+        rdfs:comment  "The target host's url"@en ;
+        rdfs:domain   openapi:Server ;
+        rdfs:label    "host"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:node  a                rdf:Property ;
+        rdfs:comment      "Specifies the node shape that all value nodes must conform to."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "node"@en ;
+        rdfs:range        sh:NodeShape .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape_blogId
+        a       rdf:Property .
+
+<Blog_postsPropertyShape_itemsPropertyShapeNodeShape>
+        a               sh:NodeShape ;
+        rdfs:label      "Blog_postsPropertyShape_itemsPropertyShapeNodeShape" ;
+        sh:targetClass  myOnt:Blog_postsPropertyShape_itemsPropertyShape .
+
+sh:     a                        owl:Ontology ;
+        rdfs:comment             "This vocabulary defines terms used in SHACL, the W3C Shapes Constraint Language."@en ;
+        rdfs:label               "W3C Shapes Constraint Language (SHACL) Vocabulary"@en ;
+        sh:declare               [ sh:namespace  "http://www.w3.org/ns/shacl#"^^xsd:anyURI ;
+                                   sh:prefix     "sh"
+                                 ] ;
+        sh:suggestedShapesGraph  <http://www.w3.org/ns/shacl-shacl#> .
+
+sh:in   a                 rdf:Property ;
+        rdfs:comment      "Specifies a list of allowed values so that each value node must be among the members of the given list."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "in"@en ;
+        rdfs:range        rdf:List .
+
+sh:intersection  a        rdf:Property ;
+        rdfs:comment      "A list of node expressions that shall be intersected."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "intersection"@en .
+
+myOnt:Blog_publised  a      rdf:Property ;
+        rdfs:subPropertyOf  <https://schema.org/datePublished> .
+
+sh:PropertyConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that all value nodes conform to the given property shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Property constraint component"@en ;
+        sh:parameter      sh:PropertyConstraintComponent-property .
+
+sh:maxLength  a           rdf:Property ;
+        rdfs:comment      "Specifies the maximum string length of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "max length"@en ;
+        rdfs:range        xsd:integer .
+
+sh:shapesGraphWellFormed
+        a                 rdf:Property ;
+        rdfs:comment      "If true then the validation engine was certain that the shapes graph has passed all SHACL syntax requirements during the validation process."@en ;
+        rdfs:domain       sh:ValidationReport ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "shapes graph well-formed"@en ;
+        rdfs:range        xsd:boolean .
+
+myOnt:nextPageToken  a  rdf:Property .
+
+openapi:in  a         rdf:Property ;
+        rdfs:comment  "The location of the API key"@en ;
+        rdfs:domain   openapi:ApiKey ;
+        rdfs:label    "in"@en ;
+        rdfs:range    xsd:string .
+
+sh:path  a                rdf:Property ;
+        rdfs:comment      "Specifies the property path of a property shape."@en ;
+        rdfs:domain       sh:PropertyShape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "path"@en ;
+        rdfs:range        rdfs:Resource .
+
+sh:Literal  a             sh:NodeKind ;
+        rdfs:comment      "The node kind of all literals."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Literal"@en .
+
+<https://schema.org/about>
+        a       rdf:Property .
+
+sh:annotationProperty
+        a                 rdf:Property ;
+        rdfs:comment      "The annotation property that shall be set."@en ;
+        rdfs:domain       sh:ResultAnnotation ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "annotation property"@en ;
+        rdfs:range        rdf:Property .
+
+sh:JSConstraint-js  a     sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:js .
+
+sh:datatype  a            rdf:Property ;
+        rdfs:comment      "Specifies an RDF datatype that all value nodes must have."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "datatype"@en ;
+        rdfs:range        rdfs:Datatype .
+
+openapi:propertyName  a  rdf:Property ;
+        rdfs:domain  openapi:Encoding ;
+        rdfs:label   "propertyName"@en ;
+        rdfs:range   xsd:string .
+
+sh:maxCount  a            rdf:Property ;
+        rdfs:comment      "Specifies the maximum number of values in the set of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "max count"@en ;
+        rdfs:range        xsd:integer .
+
+openapi:supportedOperation
+        a             rdf:Property ;
+        rdfs:comment  "An operation supported by the API or a specific entity"@en ;
+        rdfs:label    "supportedOperation"@en ;
+        rdfs:range    openapi:Operation .
+
+sh:TargetType  a          rdfs:Class ;
+        rdfs:comment      "The (meta) class for parameterizable targets.\tInstances of this are instantiated as values of the sh:target property."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Target type"@en ;
+        rdfs:subClassOf   sh:Parameterizable , rdfs:Class .
+
+<Comments_contextPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_contextPropertyShape" ;
+        openapi:description  "The content of the comment, which can include HTML markup." ;
+        openapi:name         "context" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_context .
+
+openapi:statusCode  a  rdf:Property ;
+        rdfs:domain  openapi:Response ;
+        rdfs:label   "statusCode"@en ;
+        rdfs:range   xsd:string .
+
+sh:Violation  a           sh:Severity ;
+        rdfs:comment      "The severity for a violation validation result."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Violation"@en .
+
+myOnt:Comments_postPropertyShape
+        a       owl:Class .
+
+sh:resultMessage  a       rdf:Property ;
+        rdfs:comment      "Human-readable messages explaining the cause of the result."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "result message"@en .
+
+sh:PropertyShape  a       rdfs:Class ;
+        rdfs:comment      "A property shape is a shape that specifies constraints on the values of a focus node for a given property or path."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Property shape"@en ;
+        rdfs:subClassOf   sh:Shape .
+
+sh:disjoint  a            rdf:Property ;
+        rdfs:comment      "Specifies a property where the set of values must be disjoint with the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "disjoint"@en ;
+        rdfs:range        rdf:Property .
+
+openapi:xml  a        rdf:Property ;
+        rdfs:comment  "Adds additional metadata to describe the XML representation of a property"@en ;
+        rdfs:domain   sh:Shape ;
+        rdfs:label    "xml"@en ;
+        rdfs:range    openapi:XML .
+
+myOnt:Comments_status
+        a       rdf:Property .
+
+openapi:OpenIdConnect
+        a                rdfs:Class ;
+        rdfs:comment     " OpenID Connect Discovery security scheme"@en ;
+        rdfs:label       "OpenIdConnect"@en ;
+        rdfs:subClassOf  openapi:Security .
+
+myOnt:Blog_description
+        a       rdf:Property .
+
+sh:jsLibraryURL  a        rdf:Property ;
+        rdfs:comment      "Declares the URLs of a JavaScript library. This should be the absolute URL of a JavaScript file. Implementations may redirect those to local files."@en ;
+        rdfs:domain       sh:JSLibrary ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript library URL"@en ;
+        rdfs:range        xsd:anyURI .
+
+sh:DatatypeConstraintComponent-datatype
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:datatype .
+
+sh:QualifiedMinCountConstraintComponent-qualifiedMinCount
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:path           sh:qualifiedMinCount .
+
+sh:SPARQLSelectValidator
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of validators based on SPARQL SELECT queries. The queries are evaluated for each focus node and are supposed to produce bindings for all focus nodes that do not conform."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL SELECT validator"@en ;
+        rdfs:subClassOf   sh:SPARQLSelectExecutable , sh:Validator .
+
+openapi:Method  a     rdfs:Class ;
+        rdfs:comment  "The HTTP method"@en ;
+        rdfs:label    "Method"@en .
+
+openapi:nullable  a   rdf:Property ;
+        rdfs:comment  "Allows sending a null value for the defined schema."@en ;
+        rdfs:label    "nullable"@en ;
+        rdfs:range    xsd:boolean .
+
+sh:ask  a                 rdf:Property ;
+        rdfs:comment      "The SPARQL ASK query to execute."@en ;
+        rdfs:domain       sh:SPARQLAskExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "ask"@en ;
+        rdfs:range        xsd:string .
+
+sh:MaxInclusiveConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the range of value nodes with a maximum inclusive value."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Max-inclusive constraint component"@en ;
+        sh:parameter      sh:MaxInclusiveConstraintComponent-maxInclusive .
+
+sh:property  a            rdf:Property ;
+        rdfs:comment      "Links a shape to its property shapes."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "property"@en ;
+        rdfs:range        sh:PropertyShape .
+
+myOnt:Blog_posts  a  rdf:Property .
+
+sh:zeroOrMorePath  a      rdf:Property ;
+        rdfs:comment      "The (single) value of this property represents a path that is matched zero or more times."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "zero or more path"@en ;
+        rdfs:range        rdfs:Resource .
+
+openapi:xmlName  a    rdf:Property ;
+        rdfs:comment  "Replaces the name of the element/attribute used for the described schema property"@en ;
+        rdfs:domain   openapi:XML ;
+        rdfs:label    "xmlName"@en ;
+        rdfs:range    xsd:string .
+
+sh:predicate  a           rdf:Property ;
+        rdfs:comment      "An expression producing the properties that shall be inferred as predicates."@en ;
+        rdfs:domain       sh:TripleRule ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "predicate"@en .
+
+sh:QualifiedMaxCountConstraintComponent-qualifiedValueShape
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:qualifiedValueShape .
+
+myOnt:items  a  rdf:Property .
+
+sh:JSTarget  a            rdfs:Class ;
+        rdfs:comment      "The class of targets that are based on JavaScript functions."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript target"@en ;
+        rdfs:subClassOf   sh:JSExecutable , sh:Target .
+
+openapi:tag  a        rdf:Property ;
+        rdfs:comment  "An operation's tag"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "tag"@en ;
+        rdfs:range    openapi:Tag .
+
+openapi:matrix  a  openapi:Style .
+
+sh:SPARQLAskValidator
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of validators based on SPARQL ASK queries. The queries are evaluated for each value node and are supposed to return true if the given node conforms."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL ASK validator"@en ;
+        rdfs:subClassOf   sh:SPARQLAskExecutable , sh:Validator .
+
+sh:BlankNode  a           sh:NodeKind ;
+        rdfs:comment      "The node kind of all blank nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Blank node"@en .
+
+openapi:contactName  a  rdf:Property ;
+        rdfs:comment  "The identifying name of the contact person/organization"@en ;
+        rdfs:domain   openapi:Contact ;
+        rdfs:label    "contactName"@en ;
+        rdfs:range    xsd:string .
+
+sh:SPARQLSelectExecutable
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of SPARQL executables based on a SELECT query."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL SELECT executable"@en ;
+        rdfs:subClassOf   sh:SPARQLExecutable .
+
+sh:OrConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the value nodes so that they conform to at least one out of several provided shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Or constraint component"@en ;
+        sh:parameter      sh:OrConstraintComponent-or .
+
+openapi:url  a      rdf:Property ;
+        rdfs:label  "url"@en ;
+        rdfs:range  xsd:anyURI .
+
+<Comments_blogPropertyShape_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_blogPropertyShape_idPropertyShape" ;
+        openapi:description  "The identifier of the blog containing this comment." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_blogPropertyShape_id .
+
+sh:uniqueLang  a          rdf:Property ;
+        rdfs:comment      "Specifies whether all node values must have a unique (or no) language tag."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "unique languages"@en ;
+        rdfs:range        xsd:boolean .
+
+openapi:supportedEntity
+        a             rdf:Property ;
+        rdfs:comment  "An entity known to be supported by the API"@en ;
+        rdfs:domain   openapi:Document ;
+        rdfs:label    "supportedEntity"@en ;
+        rdfs:range    sh:Shape .
+
+openapi:2xxResponse  a   rdfs:Class ;
+        rdfs:comment     "Represents all response codes between [200-299]"@en ;
+        rdfs:label       "2xxResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+openapi:tokenUrl  a   rdf:Property ;
+        rdfs:comment  "The token URL to be used for this flow. This MUST be in the form of a URL."@en ;
+        rdfs:domain   openapi:OAuthFlow ;
+        rdfs:label    "tokenUrl"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:ClosedConstraintComponent-ignoredProperties
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:optional       true ;
+        sh:path           sh:ignoredProperties .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape
+        a       owl:Class .
+
+sh:ignoredProperties  a   rdf:Property ;
+        rdfs:comment      "An optional RDF list of properties that are also permitted in addition to those explicitly enumerated via sh:property/sh:path."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "ignored properties"@en ;
+        rdfs:range        rdf:List .
+
+<itemsPropertyShape>  a      sh:PropertyShape ;
+        rdfs:label           "itemsPropertyShape" ;
+        openapi:description  "The list of comments resources for the specified post." , "The list of Blogs this user has Authorship or Admin rights for." ;
+        openapi:name         "items" ;
+        sh:path              myOnt:items .
+
+<BlogUserInfosNodeShape>
+        a               sh:NodeShape ;
+        rdfs:label      "BlogUserInfosNodeShape" ;
+        sh:and          ( [ a            sh:NodeShape ;
+                            sh:property  <BlogUserInfos_blog_user_infoPropertyShape> , <BlogUserInfos_kindPropertyShape>
+                          ]
+                          <BlogNodeShape>
+                        ) ;
+        sh:targetClass  myOnt:BlogUserInfos .
+
+sh:QualifiedMinCountConstraintComponent-qualifiedValueShape
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:qualifiedValueShape .
+
+sh:construct  a           rdf:Property ;
+        rdfs:comment      "The SPARQL CONSTRUCT query to execute."@en ;
+        rdfs:domain       sh:SPARQLConstructExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "construct"@en ;
+        rdfs:range        xsd:string .
+
+<Blog_customMetaDataPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_customMetaDataPropertyShape" ;
+        openapi:description  "The JSON custom metadata for the blog." ;
+        openapi:name         "customMetaData" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_customMetaData .
+
+sh:NodeKindConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the RDF node kind of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Node-kind constraint component"@en ;
+        sh:parameter      sh:NodeKindConstraintComponent-nodeKind .
+
+openapi:requestBody  a  rdf:Property ;
+        rdfs:comment  "An operation's request body"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "requestBody"@en ;
+        rdfs:range    openapi:Body .
+
+sh:prefixes  a            rdf:Property ;
+        rdfs:comment      "The prefixes that shall be applied before parsing the associated SPARQL query."@en ;
+        rdfs:domain       sh:SPARQLExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "prefixes"@en ;
+        rdfs:range        owl:Ontology .
+
+myOnt:Blog_postsPropertyShape
+        a       owl:Class .
+
+myOnt:Blog_url  a  rdf:Property .
+
+sh:SPARQLFunction  a      rdfs:Class ;
+        rdfs:comment      "A function backed by a SPARQL query - either ASK or SELECT."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL function"@en ;
+        rdfs:subClassOf   sh:SPARQLSelectExecutable , sh:SPARQLAskExecutable , sh:Function .
+
+myOnt:Comments_authorPropertyShape_id
+        a       rdf:Property .
+
+sh:MinLengthConstraintComponent-minLength
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:maxCount       1 ;
+        sh:path           sh:minLength .
+
+sh:MaxInclusiveConstraintComponent-maxInclusive
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           sh:maxInclusive .
+
+sh:BlankNodeOrIRI  a      sh:NodeKind ;
+        rdfs:comment      "The node kind of all blank nodes or IRIs."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Blank node or IRI"@en .
+
+<Comments_kindPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_kindPropertyShape" ;
+        openapi:description  "The kind of this resource. Always blogger#comment." ;
+        openapi:name         "kind" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_kind .
+
+sh:sourceConstraint  a    rdf:Property ;
+        rdfs:comment      "The constraint that was validated when the result was produced."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "source constraint"@en .
+
+openapi:variableDefaultValue
+        a            rdf:Property ;
+        rdfs:domain  openapi:ServerVariable ;
+        rdfs:label   "variableDefaultValue"@en ;
+        rdfs:range   xsd:string .
+
+openapi:prefix  a     rdf:Property ;
+        rdfs:comment  "The prefix to be used for the XML name"@en ;
+        rdfs:domain   openapi:XML ;
+        rdfs:label    "prefix"@en ;
+        rdfs:range    xsd:string .
+
+openapi:pathName  a  rdf:Property ;
+        rdfs:domain  openapi:Path ;
+        rdfs:label   "pathName"@en ;
+        rdfs:range   xsd:string .
+
+myOnt:BlogUserInfos  a   owl:Class ;
+        rdfs:subClassOf  <https://schema.org/Blog> .
+
+sh:object  a              rdf:Property ;
+        rdfs:comment      "An expression producing the nodes that shall be inferred as objects."@en ;
+        rdfs:domain       sh:TripleRule ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "object"@en .
+
+openapi:summary  a    rdf:Property ;
+        rdfs:comment  "A short summary of what the operation does."@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "summary"@en ;
+        rdfs:range    xsd:string .
+
+openapi:Tag  a        rdfs:Class ;
+        rdfs:comment  "A Tag can be used for logical grouping of operations by resources or any other qualifier"@en ;
+        rdfs:label    "Tag"@en .
+
+myOnt:Blog_name  a  rdf:Property .
+
+openapi:ServerVariable
+        a             rdfs:Class ;
+        rdfs:comment  "An object representing a Server Variable for server URL template substitution"@en ;
+        rdfs:label    "ServerVariable"@en .
+
+sh:JSExecutable  a        rdfs:Class ;
+        rdfs:comment      "Abstract base class of resources that declare an executable JavaScript."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript executable"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+sh:zeroOrOnePath  a       rdf:Property ;
+        rdfs:comment      "The (single) value of this property represents a path that is matched zero or one times."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "zero or one path"@en ;
+        rdfs:range        rdfs:Resource .
+
+sh:nodeKind  a            rdf:Property ;
+        rdfs:comment      "Specifies the node kind (e.g. IRI or literal) each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "node kind"@en ;
+        rdfs:range        sh:NodeKind .
+
+openapi:externalDoc  a  rdf:Property ;
+        rdfs:comment  "References an external resource for extended documentation"@en ;
+        rdfs:label    "externalDoc"@en ;
+        rdfs:range    openapi:ExternalDoc .
+
+<Blog_descriptionPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_descriptionPropertyShape" ;
+        openapi:description  "The description of this blog, which is usually displayed in Blogger underneath the blog's title. The description can include HTML." ;
+        openapi:name         "description" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_description .
+
+sh:Parameterizable  a     rdfs:Class ;
+        rdfs:comment      "Superclass of components that can take parameters, especially functions and constraint components."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Parameterizable"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:Contact  a    rdfs:Class ;
+        rdfs:comment  "The contact information for the exposed API"@en ;
+        rdfs:label    "Contact"@en .
+
+openapi:contact  a    rdf:Property ;
+        rdfs:comment  "Contact information for the exposed API."@en ;
+        rdfs:domain   openapi:Info ;
+        rdfs:label    "contact"@en ;
+        rdfs:range    openapi:Contact .
+
+sh:order  a               rdf:Property ;
+        rdfs:comment      "Specifies the relative order of this compared to its siblings. For example use 0 for the first, 1 for the second."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "order"@en .
+
+myOnt:Blog_pagesPropertyShape_selfLink
+        a       rdf:Property .
+
+myOnt:BlogUserInfos_kind
+        a       rdf:Property .
+
+sh:Rule  a                rdfs:Class ;
+        rdfs:comment      "The class of SHACL rules. Never instantiated directly."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Rule"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+<service_info>  a               openapi:Info ;
+        openapi:description     "The Blogger API v3 allows client applications to view and update Blogger content. Your client application can use Blogger API v3 to create new blog posts, edit or delete existing posts, and query for posts that match particular criteria." ;
+        openapi:license         [ openapi:licenseName  "Apache 2.0" ;
+                                  openapi:url          "https://creativecommons.org/licenses/by/4.0"^^xsd:anyURI
+                                ] ;
+        openapi:serviceTitle    "Google Blogger" ;
+        openapi:termsOfService  "https://developer.google.com/books/terms.html"^^xsd:anyURI .
+
+sh:MinCountConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the minimum number of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Min-count constraint component"@en ;
+        sh:parameter      sh:MinCountConstraintComponent-minCount .
+
+sh:validator  a           rdf:Property ;
+        rdfs:comment      "The validator(s) used to evaluate constraints of either node or property shapes."@en ;
+        rdfs:domain       sh:ConstraintComponent ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "validator"@en ;
+        rdfs:range        sh:Validator .
+
+openapi:bearerFormat  a  rdf:Property ;
+        rdfs:comment  "A hint to the client to identify how the bearer token is formatted"@en ;
+        rdfs:domain   openapi:Http ;
+        rdfs:label    "bearerFormat"@en ;
+        rdfs:range    xsd:string .
+
+openapi:licenseName  a  rdf:Property ;
+        rdfs:comment  "The license name used for the API."@en ;
+        rdfs:domain   openapi:License ;
+        rdfs:label    "licenseName"@en ;
+        rdfs:range    xsd:string .
+
+sh:XoneConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the value nodes so that they conform to exactly one out of several provided shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Exactly one constraint component"@en ;
+        sh:parameter      sh:XoneConstraintComponent-xone .
+
+sh:description  a         rdf:Property ;
+        rdfs:comment      "Human-readable descriptions for the property in the context of the surrounding shape."@en ;
+        rdfs:domain       sh:PropertyShape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "description"@en .
+
+sh:prefix  a              rdf:Property ;
+        rdfs:comment      "The prefix of a prefix declaration."@en ;
+        rdfs:domain       sh:PrefixDeclaration ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "prefix"@en ;
+        rdfs:range        xsd:string .
+
+openapi:4xxResponse  a   rdfs:Class ;
+        rdfs:comment     "Represents all response codes between [400-499]"@en ;
+        rdfs:label       "4xxResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+openapi:DELETE  a  openapi:Method .
+
+openapi:Discriminator
+        a             rdfs:Class ;
+        rdfs:comment  "The discriminator is a specific object in a schema which is used to inform the consumer of the specification of an alternative schema based on the value associated with it."@en ;
+        rdfs:label    "Discriminator"@en .
+
+sh:js   a                 rdf:Property ;
+        rdfs:comment      "Constraints expressed in JavaScript." ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript constraint"@en ;
+        rdfs:range        sh:JSConstraint .
+
+openapi:responseHeader
+        a             rdf:Property ;
+        rdfs:comment  "Maps a header to a response"@en ;
+        rdfs:domain   openapi:Response ;
+        rdfs:label    "responseHeader"@en ;
+        rdfs:range    openapi:Header .
+
+sh:nodes  a               rdf:Property ;
+        rdfs:comment      "The node expression producing the input nodes of a filter shape expression."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "nodes"@en .
+
+myOnt:Comments_authorPropertyShape_displayName
+        a       rdf:Property .
+
+sh:resultAnnotation  a    rdf:Property ;
+        rdfs:comment      "Links a SPARQL validator with zero or more sh:ResultAnnotation instances, defining how to derive additional result properties based on the variables of the SELECT query."@en ;
+        rdfs:domain       sh:SPARQLSelectValidator ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "result annotation"@en ;
+        rdfs:range        sh:ResultAnnotation .
+
+openapi:parameter  a  rdf:Property ;
+        rdfs:comment  "An operation's parameter"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "parameter"@en ;
+        rdfs:range    openapi:Parameter .
+
+myOnt:Blog  a            owl:Class ;
+        rdfs:subClassOf  <https://schema.org/Blog> .
+
+sh:value  a               rdf:Property ;
+        rdfs:comment      "An RDF node that has caused the result."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "value"@en .
+
+sh:parameter  a           rdf:Property ;
+        rdfs:comment      "The parameters of a function or constraint component."@en ;
+        rdfs:domain       sh:Parameterizable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "parameter"@en ;
+        rdfs:range        sh:Parameter .
+
+sh:flags  a               rdf:Property ;
+        rdfs:comment      "An optional flag to be used with regular expression pattern matching."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "flags"@en ;
+        rdfs:range        xsd:string .
+
+openapi:HEAD  a  openapi:Method .
+
+openapi:schema  a     rdf:Property ;
+        rdfs:comment  "The schema defining the content of the request, response, or parameter"@en ;
+        rdfs:label    "schema"@en ;
+        rdfs:range    sh:Shape .
+
+myOnt:Comments_authorPropertyShape_imagePropertyShape_url
+        a       rdf:Property .
+
+<Comments_inReplyToPropertyShape_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_inReplyToPropertyShape_idPropertyShape" ;
+        openapi:description  "The ID of the parent of this comment." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_inReplyToPropertyShape_id .
+
+sh:NodeKindConstraintComponent-nodeKind
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:in             ( sh:BlankNode sh:IRI sh:Literal sh:BlankNodeOrIRI sh:BlankNodeOrLiteral sh:IRIOrLiteral ) ;
+        sh:maxCount       1 ;
+        sh:path           sh:nodeKind .
+
+sh:MaxCountConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the maximum number of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Max-count constraint component"@en ;
+        sh:parameter      sh:MaxCountConstraintComponent-maxCount .
+
+<Comments_postPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_postPropertyShape" ;
+        openapi:description  "Data about the post containing this comment." ;
+        openapi:name         "post" ;
+        sh:node              <Comments_postPropertyShapeNodeShape> ;
+        sh:path              myOnt:Comments_post .
+
+sh:NodeConstraintComponent-node
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:node .
+
+openapi:supportedSecurity
+        a             rdf:Property ;
+        rdfs:comment  "A security type supported by the API "@en ;
+        rdfs:domain   openapi:Document ;
+        rdfs:label    "supportedSecurity"@en ;
+        rdfs:range    openapi:Security .
+
+sh:AndConstraintComponent-and
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:and .
+
+sh:Function  a            rdfs:Class ;
+        rdfs:comment      "The class of SHACL functions."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Function"@en ;
+        rdfs:subClassOf   sh:Parameterizable .
+
+openapi:Response  a   rdfs:Class ;
+        rdfs:comment  "Describes a single response from an API Operation"@en ;
+        rdfs:label    "Response"@en .
+
+sh:MaxExclusiveConstraintComponent-maxExclusive
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           sh:maxExclusive .
+
+myOnt:Comments_id  a  rdf:Property .
+
+openapi:cookie  a     rdf:Property ;
+        rdfs:comment  "An operation's cookie"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "cookie"@en ;
+        rdfs:range    openapi:Cookie .
+
+myOnt:Blog_localePropertyShape_language
+        a       rdf:Property .
+
+sh:ExpressionConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that a given node expression produces true for all value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Expression constraint component"@en ;
+        sh:parameter      sh:ExpressionConstraintComponent-expression .
+
+openapi:POST  a  openapi:Method .
+
+openapi:termsOfService
+        a             rdf:Property ;
+        rdfs:comment  "A URL to the Terms of Service for the API. MUST be in the format of a URL."@en ;
+        rdfs:domain   openapi:Info ;
+        rdfs:label    "termsOfService"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:ResultAnnotation  a    rdfs:Class ;
+        rdfs:comment      "A class of result annotations, which define the rules to derive the values of a given annotation property as extra values for a validation result."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Result annotation"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+myOnt:kind  a   rdf:Property .
+
+sh:NotConstraintComponent-not
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:not .
+
+openapi:PATCH  a  openapi:Method .
+
+openapi:serviceTitle  a  rdf:Property ;
+        rdfs:comment  "The title of the application"@en ;
+        rdfs:domain   openapi:Info ;
+        rdfs:label    "serviceTitle"@en ;
+        rdfs:range    xsd:string .
+
+sh:JSValidator  a         rdfs:Class ;
+        rdfs:comment      "A SHACL validator based on JavaScript. This can be used to declare SHACL constraint components that perform JavaScript-based validation when used."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript validator"@en ;
+        rdfs:subClassOf   sh:Validator , sh:JSExecutable .
+
+myOnt:Blog_customMetaData
+        a       rdf:Property .
+
+sh:JSRule  a              rdfs:Class ;
+        rdfs:comment      "The class of SHACL rules expressed using JavaScript."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript rule"@en ;
+        rdfs:subClassOf   sh:Rule , sh:JSExecutable .
+
+openapi:  a         owl:Ontology ;
+        rdfs:label  "Open API Specification Vocabulary"@en .
+
+sh:BlankNodeOrLiteral
+        a                 sh:NodeKind ;
+        rdfs:comment      "The node kind of all blank nodes or literals."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Blank node or literal"@en .
+
+sh:qualifiedMinCount  a   rdf:Property ;
+        rdfs:comment      "The minimum number of value nodes that must conform to the shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "qualified min count"@en ;
+        rdfs:range        xsd:integer .
+
+sh:suggestedShapesGraph
+        a                 rdf:Property ;
+        rdfs:comment      "Suggested shapes graphs for this ontology. The values of this property may be used in the absence of specific sh:shapesGraph statements."@en ;
+        rdfs:domain       owl:Ontology ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "suggested shapes graph"@en ;
+        rdfs:range        owl:Ontology .
+
+myOnt:Comments_authorPropertyShape_imagePropertyShape
+        a       owl:Class .
+
+sh:maxExclusive  a        rdf:Property ;
+        rdfs:comment      "Specifies the maximum exclusive value of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "max exclusive"@en .
+
+openapi:required  a  rdf:Property ;
+        rdfs:label  "required"@en ;
+        rdfs:range  xsd:boolean .
+
+openapi:Security  a   rdfs:Class ;
+        rdfs:comment  "Defines a security scheme that can be used by the operations."@en ;
+        rdfs:label    "Security"@en .
+
+<prevPageTokenPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "prevPageTokenPropertyShape" ;
+        openapi:description  "Pagination token to fetch the previous page, if one exists." ;
+        openapi:name         "prevPageToken" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:prevPageToken .
+
+myOnt:Comments_updated
+        a       rdf:Property .
+
+openapi:serverInfo  a  rdf:Property ;
+        rdfs:comment  "An operation's server"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "serverInfo"@en ;
+        rdfs:range    openapi:Server .
+
+sh:MinInclusiveConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the range of value nodes with a minimum inclusive value."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Min-inclusive constraint component"@en ;
+        sh:parameter      sh:MinInclusiveConstraintComponent-minInclusive .
+
+sh:filterShape  a         rdf:Property ;
+        rdfs:comment      "The shape that all input nodes of the expression need to conform to."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "filter shape"@en ;
+        rdfs:range        sh:Shape .
+
+<Comments_inReplyToPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_inReplyToPropertyShape" ;
+        openapi:description  "Data about the comment this is in reply to." ;
+        openapi:name         "inReplyTo" ;
+        sh:node              <Comments_inReplyToPropertyShapeNodeShape> ;
+        sh:path              myOnt:Comments_inReplyTo .
+
+myOnt:prevPageToken  a  rdf:Property .
+
+<kindPropertyShape>  a       sh:PropertyShape ;
+        rdfs:label           "kindPropertyShape" ;
+        openapi:description  "The kind of this entry. Always blogger#commentList." , "The kind of this entity. Always blogger#blogList." ;
+        openapi:name         "kind" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:kind .
+
+sh:PatternConstraintComponent-flags
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:string ;
+        sh:optional       true ;
+        sh:path           sh:flags .
+
+myOnt:Blog_postsPropertyShape_itemsPropertyShape
+        a       owl:Class .
+
+sh:PatternConstraintComponent-pattern
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:string ;
+        sh:path           sh:pattern .
+
+<Blog_pagesPropertyShape_totalItemsPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_pagesPropertyShape_totalItemsPropertyShape" ;
+        openapi:description  "The total number of pages for this blog." ;
+        openapi:name         "totalItems" ;
+        sh:datatype          xsd:int ;
+        sh:path              myOnt:Blog_pagesPropertyShape_totalItems .
+
+openapi:Body  a       rdfs:Class ;
+        rdfs:comment  "The request body applicable for this operation"@en ;
+        rdfs:label    "Body"@en .
+
+sh:union  a               rdf:Property ;
+        rdfs:comment      "A list of node expressions that shall be used together."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "union"@en .
+
+openapi:1xxResponse  a   rdfs:Class ;
+        rdfs:comment     "Represents all response codes between [100-199]"@en ;
+        rdfs:label       "1xxResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+<Comments_postPropertyShape_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_postPropertyShape_idPropertyShape" ;
+        openapi:description  "The identifier of the post containing this comment." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_postPropertyShape_id .
+
+sh:name  a                rdf:Property ;
+        rdfs:comment      "Human-readable labels for the property in the context of the surrounding shape."@en ;
+        rdfs:domain       sh:PropertyShape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "name"@en .
+
+sh:closed  a              rdf:Property ;
+        rdfs:comment      "If set to true then the shape is closed."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "closed"@en ;
+        rdfs:range        xsd:boolean .
+
+openapi:MediaType  a  rdfs:Class ;
+        rdfs:comment  "A Media Type Object provides schema for the identified media type"@en ;
+        rdfs:label    "MediaType"@en .
+
+<https://schema.org/author>
+        a       owl:Class , rdf:Property .
+
+sh:LessThanOrEqualsConstraintComponent-lessThanOrEquals
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:lessThanOrEquals .
+
+sh:severity  a            rdf:Property ;
+        rdfs:comment      "Defines the severity that validation results produced by a shape must have. Defaults to sh:Violation."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "severity"@en ;
+        rdfs:range        sh:Severity .
+
+<Comments_authorPropertyShape_imagePropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_authorPropertyShape_imagePropertyShapeNodeShape" ;
+        openapi:description  "The container for the creator's avatar URL." ;
+        sh:property          <Comments_authorPropertyShape_imagePropertyShape_urlPropertyShape> ;
+        sh:targetClass       myOnt:Comments_authorPropertyShape_imagePropertyShape .
+
+myOnt:Comments_inReplyToPropertyShape
+        a       owl:Class .
+
+sh:MinCountConstraintComponent-minCount
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:maxCount       1 ;
+        sh:path           sh:minCount .
+
+sh:annotationVarName  a   rdf:Property ;
+        rdfs:comment      "The name of the SPARQL variable from the SELECT clause that shall be used for the values."@en ;
+        rdfs:domain       sh:ResultAnnotation ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "annotation variable name"@en ;
+        rdfs:range        xsd:string .
+
+sh:sourceShape  a         rdf:Property ;
+        rdfs:comment      "The shape that is was validated when the result was produced."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "source shape"@en ;
+        rdfs:range        sh:Shape .
+
+openapi:deprecated  a  rdf:Property ;
+        rdfs:comment  "Specifies that a schema, operation or parameter is deprecated and SHOULD be transitioned out of usage"@en ;
+        rdfs:label    "deprecated"@en ;
+        rdfs:range    xsd:boolean .
+
+sh:sparql  a              rdf:Property ;
+        rdfs:comment      "Links a shape with SPARQL constraints."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "constraint (in SPARQL)"@en ;
+        rdfs:range        sh:SPARQLConstraint .
+
+openapi:encoding  a   rdf:Property ;
+        rdfs:comment  "A map between a property name and its encoding information"@en ;
+        rdfs:domain   openapi:RequestBodyMediaType ;
+        rdfs:label    "encoding"@en ;
+        rdfs:range    openapi:Encoding .
+
+openapi:openIdConnectUrl
+        a             rdf:Property ;
+        rdfs:comment  "OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL"@en ;
+        rdfs:domain   openapi:OpenIdConnect ;
+        rdfs:label    "openIdConnectUrl"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:QualifiedMinCountConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that a specified minimum number of value nodes conforms to a given shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Qualified-min-count constraint component"@en ;
+        sh:parameter      sh:QualifiedMinCountConstraintComponent-qualifiedValueShapesDisjoint , sh:QualifiedMinCountConstraintComponent-qualifiedValueShape , sh:QualifiedMinCountConstraintComponent-qualifiedMinCount .
+
+openapi:flow  a       rdf:Property ;
+        rdfs:comment  "An object to hold mappings between payload values and schema names or references."@en ;
+        rdfs:domain   openapi:OAuth2 ;
+        rdfs:label    "flow"@en ;
+        rdfs:range    openapi:OAuthFlow .
+
+sh:ValidationResult  a    rdfs:Class ;
+        rdfs:comment      "The class of validation results."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Validation result"@en ;
+        rdfs:subClassOf   sh:AbstractResult .
+
+sh:HasValueConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that one of the value nodes is a given RDF node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Has-value constraint component"@en ;
+        sh:parameter      sh:HasValueConstraintComponent-hasValue .
+
+sh:maxInclusive  a        rdf:Property ;
+        rdfs:comment      "Specifies the maximum inclusive value of each value node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "max inclusive"@en .
+
+sh:pattern  a             rdf:Property ;
+        rdfs:comment      "Specifies a regular expression pattern that the string representations of the value nodes must match."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "pattern"@en ;
+        rdfs:range        xsd:string .
+
+<Blog_publisedPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_publisedPropertyShape" ;
+        openapi:description  "RFC 3339 date-time when this blog was published." ;
+        openapi:name         "publised" ;
+        sh:datatype          xsd:dateTime ;
+        sh:path              myOnt:Blog_publised .
+
+openapi:deepObject  a  openapi:Style .
+
+<BlogNodeShape>  a           sh:NodeShape ;
+        rdfs:label           "BlogNodeShape" ;
+        openapi:description  "A blog is the root data class for the Blogger API. Each blog has a series of posts and pages, and each post has a series of comments." ;
+        sh:property          <Blog_customMetaDataPropertyShape> , <Blog_selfLinkPropertyShape> , <Blog_idPropertyShape> , <Blog_updatedPropertyShape> , <Blog_namePropertyShape> , <Blog_publisedPropertyShape> , <Blog_kindPropertyShape> , <Blog_pagesPropertyShape> , <Blog_descriptionPropertyShape> , <Blog_postsPropertyShape> , <Blog_localePropertyShape> , <Blog_urlPropertyShape> ;
+        sh:targetClass       myOnt:Blog .
+
+<service_document>  a               openapi:Document ;
+        openapi:externalDoc         <service_externalDoc> ;
+        openapi:info                <service_info> ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/byurl"
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "The URL of the blog to retrieve." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "url" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         <BlogNodeShape>
+                                                                                    ] ;
+                                                               openapi:description  "Blog Resource" ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves a blog by URL."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:POST ;
+                                      openapi:onPath      [ a                 openapi:Path ;
+                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam"
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:content      [ a                      openapi:MediaType ;
+                                                                                   openapi:mediaTypeName  "application/json" ;
+                                                                                   openapi:schema         <CommentsNodeShape>
+                                                                                 ] ;
+                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Marks a comment as spam."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:DELETE ;
+                                      openapi:onPath      _:b0 ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:description  "If successful, this method returns an empty response body." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Delete a comment by ID."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/{blogId}"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the blog to get." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "blogId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Maximum number of posts to retrieve along with the blog. When this parameter is not specified, no posts will be returned as part of the blog resource." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "maxPosts" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:int
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         <BlogNodeShape>
+                                                                                    ] ;
+                                                               openapi:description  "Blog Resource" ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves a blog by its ID"
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/users/{userId}/blogs"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the user whose blogs are to be fetched. Either the word self or the user's profile ID." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "userId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                 openapi:Header ;
+                                                               openapi:explode   false ;
+                                                               openapi:name      "view" ;
+                                                               openapi:required  false ;
+                                                               openapi:schema    [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                               openapi:style     openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Whether the response is a list of blogs with per-user information instead of just blogs." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "fetchUserInfo" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:boolean
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         [ a            sh:NodeShape ;
+                                                                                                               sh:property  <blogUserInfosPropertyShape> , <itemsPropertyShape> , <kindPropertyShape>
+                                                                                                             ]
+                                                                                    ] ;
+                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves a list of blogs."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:POST ;
+                                      openapi:onPath      [ a                 openapi:Path ;
+                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve"
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:content      [ a                      openapi:MediaType ;
+                                                                                   openapi:mediaTypeName  "application/json" ;
+                                                                                   openapi:schema         <CommentsNodeShape>
+                                                                                 ] ;
+                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Marks a comment as not spam."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:GET ;
+                                      openapi:onPath      _:b0 ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:content      [ a                      openapi:MediaType ;
+                                                                                   openapi:mediaTypeName  "application/json" ;
+                                                                                   openapi:schema         <CommentsNodeShape>
+                                                                                 ] ;
+                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Retrieves one comment resource by its commentId."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:POST ;
+                                      openapi:onPath      [ a                 openapi:Path ;
+                                                            openapi:pathName  "/blogs/blogId/posts/postId/comments/commentId/removecontent"
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:content      [ a                      openapi:MediaType ;
+                                                                                   openapi:mediaTypeName  "application/json" ;
+                                                                                   openapi:schema         <CommentsNodeShape>
+                                                                                 ] ;
+                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Removes the content of a comment."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/{blogId}/comments"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the blog to get." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "blogId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Continuation token if request is paged." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "pageToken" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "startDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Maximum number of comments to include in the result." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "maxResults" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:int
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Whether the body content of the comments is included." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "fetchBodies" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:boolean
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "endDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         [ a            sh:NodeShape ;
+                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
+                                                                                                             ]
+                                                                                    ] ;
+                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves the comments for a blog, across all posts, possibly filtered."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the post to fetch comments from." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "postId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the blog to get." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "blogId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "endDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Acceptable values are." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "status" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "startDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Maximum number of comments to include in the result." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "maxResults" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:int
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Continuation token if request is paged." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "pageToken" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Whether the body content of the comments is included." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "fetchBodies" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:boolean
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Acceptable values are." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "view" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         [ a            sh:NodeShape ;
+                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
+                                                                                                             ]
+                                                                                    ] ;
+                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves the list of comments for a post."
+                                    ] ;
+        openapi:version             "1.0.0" .
+
+myOnt:Comments_inReplyToPropertyShape_id
+        a       rdf:Property .
+
+sh:group  a               rdf:Property ;
+        rdfs:comment      "Can be used to link to a property group to indicate that a property shape belongs to a group of related property shapes."@en ;
+        rdfs:domain       sh:PropertyShape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "group"@en ;
+        rdfs:range        sh:PropertyGroup .
+
+openapi:ExternalDoc  a  rdfs:Class ;
+        rdfs:comment  "Allows referencing an external resource for extended documentation."@en ;
+        rdfs:label    "ExternalDocumentation"@en .
+
+openapi:mediaTypeName
+        a            rdf:Property ;
+        rdfs:domain  openapi:MediaType ;
+        rdfs:label   "mediaTypeName"@en ;
+        rdfs:range   xsd:string .
+
+<BlogUserInfos_blog_user_infoPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShapeNodeShape" ;
+        openapi:description  "Information about a User for the Blog." ;
+        sh:property          <BlogUserInfos_blog_user_infoPropertyShape_hasAdminAccessPropertyShape> , <BlogUserInfos_blog_user_infoPropertyShape_photosAlbumKeyPropertyShape> , <BlogUserInfos_blog_user_infoPropertyShape_blogIdPropertyShape> , <BlogUserInfos_blog_user_infoPropertyShape_userIdPropertyShape> , <BlogUserInfos_blog_user_infoPropertyShape_kindPropertyShape> ;
+        sh:targetClass       myOnt:BlogUserInfos_blog_user_infoPropertyShape .
+
+<Comments_authorPropertyShape_imagePropertyShape_urlPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_authorPropertyShape_imagePropertyShape_urlPropertyShapeNodeShape" ;
+        openapi:description  "The URL of the comment creator's avatar image." ;
+        sh:targetClass       myOnt:Comments_authorPropertyShape_imagePropertyShape_urlPropertyShape .
+
+myOnt:Comments_inReplyTo
+        a       rdf:Property .
+
+openapi:Info  a       rdfs:Class ;
+        rdfs:comment  "Provides metadata about the API"@en ;
+        rdfs:label    "Info"@en .
+
+openapi:uniqueItems  a  rdf:Property ;
+        rdfs:label  "uniqueItems"@en ;
+        rdfs:range  xsd:boolean .
+
+<Blog_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_idPropertyShape" ;
+        openapi:description  "The ID for this resource." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_id .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape_kind
+        a       rdf:Property .
+
+myOnt:Blog_id  a  rdf:Property .
+
+myOnt:BlogUserInfos_blog_user_info
+        a       rdf:Property .
+
+sh:hasValue  a            rdf:Property ;
+        rdfs:comment      "Specifies a value that must be among the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "has value"@en .
+
+sh:InConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to exclusively enumerate the permitted value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "In constraint component"@en ;
+        sh:parameter      sh:InConstraintComponent-in .
+
+openapi:requestBodyContent
+        a             rdf:Property ;
+        rdfs:comment  "The content of a the request"@en ;
+        rdfs:domain   openapi:Body ;
+        rdfs:label    "requestBodyContent"@en ;
+        rdfs:range    openapi:RequestBodyMediaType .
+
+<Blog_pagesPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_pagesPropertyShape" ;
+        openapi:description  "The container for this blog's pages." ;
+        openapi:name         "pages" ;
+        sh:node              <Blog_pagesPropertyShapeNodeShape> ;
+        sh:path              myOnt:Blog_pages .
+
+sh:QualifiedMaxCountConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that a specified maximum number of value nodes conforms to a given shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Qualified-max-count constraint component"@en ;
+        sh:parameter      sh:QualifiedMaxCountConstraintComponent-qualifiedValueShapesDisjoint , sh:QualifiedMaxCountConstraintComponent-qualifiedValueShape , sh:QualifiedMaxCountConstraintComponent-qualifiedMaxCount .
+
+openapi:method  a     rdf:Property ;
+        rdfs:comment  "The HTTP method that operation supports"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "method"@en ;
+        rdfs:range    openapi:Method .
+
+openapi:encodingHeader
+        a             rdf:Property ;
+        rdfs:comment  "A map allowing additional information to be provided as headers"@en ;
+        rdfs:domain   openapi:Encoding ;
+        rdfs:label    "encodingHeader"@en ;
+        rdfs:range    openapi:Header .
+
+openapi:discriminatorProperty
+        a             rdf:Property ;
+        rdfs:comment  "The name of the property in the payload that will hold the discriminator value."@en ;
+        rdfs:domain   openapi:Discriminator ;
+        rdfs:label    "discriminatorProperty"@en ;
+        rdfs:range    xsd:string .
+
+openapi:Operation  a  rdfs:Class ;
+        rdfs:comment  "Describes a single API operation"@en ;
+        rdfs:label    "Operation"@en .
+
+openapi:namespace  a  rdf:Property ;
+        rdfs:comment  "The URI of the namespace definition. Value MUST be in the form of an absolute URI."@en ;
+        rdfs:domain   openapi:XML ;
+        rdfs:label    "namespace"@en ;
+        rdfs:range    xsd:anyURI .
+
+sh:LanguageInConstraintComponent-languageIn
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:path           sh:languageIn .
+
+sh:XoneConstraintComponent-xone
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:xone .
+
+myOnt:Comments_authorPropertyShape_imagePropertyShape_urlPropertyShape
+        a       owl:Class .
+
+myOnt:Comments_context
+        a       rdf:Property .
+
+<service_server>  a   openapi:Server ;
+        openapi:host  "https://www.googleapis.com/blogger/v3"^^xsd:anyURI .
+
+sh:inversePath  a         rdf:Property ;
+        rdfs:comment      "The (single) value of this property represents an inverse path (object to subject)."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "inverse path"@en ;
+        rdfs:range        rdfs:Resource .
+
+sh:PatternConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that every value node matches a given regular expression."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Pattern constraint component"@en ;
+        sh:parameter      sh:PatternConstraintComponent-flags , sh:PatternConstraintComponent-pattern .
+
+openapi:onPath  a     rdf:Property ;
+        rdfs:comment  "Holds the relative paths to the individual endpoints and their operations"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "onPath"@en ;
+        rdfs:range    openapi:Path .
+
+openapi:DefaultResponse
+        a                rdfs:Class ;
+        rdfs:comment     "A default response object for all HTTP codes that are not covered individually"@en ;
+        rdfs:label       "DefaultResponse"@en ;
+        rdfs:subClassOf  openapi:Response .
+
+openapi:Cookie  a     rdfs:Class ;
+        rdfs:comment  "Used to pass a specific cookie value to the API"@en ;
+        rdfs:label    "Cookie"@en .
+
+myOnt:Blog_pages  a  rdf:Property .
+
+sh:Target  a              rdfs:Class ;
+        rdfs:comment      "The base class of targets such as those based on SPARQL queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Target"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:response  a   rdf:Property ;
+        rdfs:comment  "An operation's response"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "response"@en ;
+        rdfs:range    openapi:Response .
+
+sh:IRIOrLiteral  a        sh:NodeKind ;
+        rdfs:comment      "The node kind of all IRIs or literals."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "IRI or literal"@en .
+
+sh:namespace  a           rdf:Property ;
+        rdfs:comment      "The namespace associated with a prefix in a prefix declaration."@en ;
+        rdfs:domain       sh:PrefixDeclaration ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "namespace"@en ;
+        rdfs:range        xsd:anyURI .
+
+sh:HasValueConstraintComponent-hasValue
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:hasValue .
+
+myOnt:Blog_localePropertyShape_country
+        a       rdf:Property .
+
+<BlogUserInfos_blog_user_infoPropertyShape_blogIdPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape_blogIdPropertyShape" ;
+        openapi:description  "ID of the Blog resource" ;
+        openapi:name         "blogId" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:BlogUserInfos_blog_user_infoPropertyShape_blogId .
+
+openapi:ClientCredentials
+        a                rdfs:Class ;
+        rdfs:comment     "Configuration for the OAuth Client Credentials flow"@en ;
+        rdfs:label       "ClientCredentials"@en ;
+        rdfs:subClassOf  openapi:OAuthFlow .
+
+sh:lessThan  a            rdf:Property ;
+        rdfs:comment      "Specifies a property that must have smaller values than the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "less than"@en ;
+        rdfs:range        rdf:Property .
+
+<BlogUserInfos_blog_user_infoPropertyShape_userIdPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape_userIdPropertyShape" ;
+        openapi:description  "ID of the User" ;
+        openapi:name         "userId" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:BlogUserInfos_blog_user_infoPropertyShape_userId .
+
+openapi:OAuthFlow  a  rdfs:Class ;
+        rdfs:comment  "Configuration details for an OAuth Flow"@en ;
+        rdfs:label    "OAuthFlow"@en .
+
+<Blog_postsPropertyShape_selfLinkPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_postsPropertyShape_selfLinkPropertyShape" ;
+        openapi:description  "The URL of the collection of posts for this blog." ;
+        openapi:name         "selfLink" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_postsPropertyShape_selfLink .
+
+sh:LessThanOrEqualsConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that every value node is smaller than all the nodes that have the focus node as subject and the value of a given property as predicate."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "less-than-or-equals constraint component"@en ;
+        sh:parameter      sh:LessThanOrEqualsConstraintComponent-lessThanOrEquals .
+
+sh:entailment  a          rdf:Property ;
+        rdfs:comment      "An entailment regime that indicates what kind of inferencing is required by a shapes graph."@en ;
+        rdfs:domain       owl:Ontology ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "entailment"@en ;
+        rdfs:range        rdfs:Resource .
+
+sh:deactivated  a         rdf:Property ;
+        rdfs:comment      "If set to true then all nodes conform to this."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "deactivated"@en ;
+        rdfs:range        xsd:boolean .
+
+<Comments_blogPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_blogPropertyShape" ;
+        openapi:description  "Data about the blog containing this comment." ;
+        openapi:name         "blog" ;
+        sh:node              <Comments_blogPropertyShapeNodeShape> ;
+        sh:path              myOnt:Comments_blog .
+
+sh:this  a                rdfs:Resource ;
+        rdfs:comment      "A node expression that represents the current focus node."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "this"@en .
+
+sh:defaultValue  a        rdf:Property ;
+        rdfs:comment      "A default value for a property, for example for user interface tools to pre-populate input fields."@en ;
+        rdfs:domain       sh:PropertyShape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "default value"@en .
+
+openapi:Collection  a  rdfs:Class ;
+        rdfs:comment  "A Collection can be used to reference a set of resources"@en ;
+        rdfs:label    "Collection"@en .
+
+<blogUserInfosPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "blogUserInfosPropertyShape" ;
+        openapi:description  "Admin level list of blog per-user information." ;
+        openapi:name         "blogUserInfos" ;
+        sh:path              myOnt:blogUserInfos .
+
+<Blog_localePropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_localePropertyShape" ;
+        openapi:description  "The locale this blog is set to, as broken out below." ;
+        openapi:name         "locale" ;
+        sh:node              <Blog_localePropertyShapeNodeShape> ;
+        sh:path              myOnt:Blog_locale .
+
+sh:expression  a          rdf:Property ;
+        rdfs:comment      "The node expression that must return true for the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "expression"@en .
+
+sh:DisjointConstraintComponent-disjoint
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:nodeKind       sh:IRI ;
+        sh:path           sh:disjoint .
+
+myOnt:Comments_selfLink
+        a       rdf:Property .
+
+openapi:security  a   rdf:Property ;
+        rdfs:comment  "An operation's security"@en ;
+        rdfs:domain   openapi:Operation ;
+        rdfs:label    "security"@en ;
+        rdfs:range    openapi:SecurityRequirement .
+
+sh:OrConstraintComponent-or
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:or .
+
+myOnt:Comments_postPropertyShape_id
+        a       rdf:Property .
+
+sh:MaxLengthConstraintComponent-maxLength
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:maxCount       1 ;
+        sh:path           sh:maxLength .
+
+myOnt:blogUserInfos  a  rdf:Property .
+
+sh:oneOrMorePath  a       rdf:Property ;
+        rdfs:comment      "The (single) value of this property represents a path that is matched one or more times."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "one or more path"@en ;
+        rdfs:range        rdfs:Resource .
+
+sh:MinInclusiveConstraintComponent-minInclusive
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           sh:minInclusive .
+
+openapi:License  a    rdfs:Class ;
+        rdfs:comment  "The license information for the exposed API"@en ;
+        rdfs:label    "License"@en .
+
+sh:qualifiedMaxCount  a   rdf:Property ;
+        rdfs:comment      "The maximum number of value nodes that can conform to the shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "qualified max count"@en ;
+        rdfs:range        xsd:integer .
+
+myOnt:Blog_postsPropertyShape_totalItems
+        a       rdf:Property .
+
+openapi:license  a    rdf:Property ;
+        rdfs:comment  "License information for the exposed API"@en ;
+        rdfs:domain   openapi:Info ;
+        rdfs:label    "license"@en ;
+        rdfs:range    openapi:License .
+
+sh:UniqueLangConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to specify that no pair of value nodes may use the same language tag."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Unique-languages constraint component"@en ;
+        sh:parameter      sh:UniqueLangConstraintComponent-uniqueLang .
+
+<Blog_namePropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_namePropertyShape" ;
+        openapi:description  "The name of this blog, which is usually displayed in Blogger as the blog's title. The title can include HTML." ;
+        openapi:name         "name" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_name .
+
+<Comments_postPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_postPropertyShapeNodeShape" ;
+        openapi:description  "Data about the post containing this comment." ;
+        sh:property          <Comments_postPropertyShape_idPropertyShape> ;
+        sh:targetClass       myOnt:Comments_postPropertyShape .
+
+openapi:XML  a        rdfs:Class ;
+        rdfs:comment  "A metadata object that allows for more fine-tuned XML model definitions."@en ;
+        rdfs:label    "XML"@en .
+
+sh:ExpressionConstraintComponent-expression
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:expression .
+
+sh:QualifiedMinCountConstraintComponent-qualifiedValueShapesDisjoint
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:boolean ;
+        sh:optional       true ;
+        sh:path           sh:qualifiedValueShapesDisjoint .
+
+<Comments_authorPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape" ;
+        openapi:description  "The author of this comment." ;
+        openapi:name         "author" ;
+        sh:node              <Comments_authorPropertyShapeNodeShape> ;
+        sh:path              <https://schema.org/author> .
+
+openapi:info  a       rdf:Property ;
+        rdfs:comment  "Metadata info about the API"@en ;
+        rdfs:domain   openapi:Document ;
+        rdfs:label    "info"@en ;
+        rdfs:range    openapi:Info .
+
+myOnt:Blog_localePropertyShape_variant
+        a       rdf:Property .
+
+sh:SPARQLConstructExecutable
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of SPARQL executables that are based on a CONSTRUCT query."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL CONSTRUCT executable"@en ;
+        rdfs:subClassOf   sh:SPARQLExecutable .
+
+sh:detail  a              rdf:Property ;
+        rdfs:comment      "Links a result with other results that provide more details, for example to describe violations against nested shapes."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "detail"@en ;
+        rdfs:range        sh:AbstractResult .
+
+sh:NodeConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that all value nodes conform to the given node shape."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Node constraint component"@en ;
+        sh:parameter      sh:NodeConstraintComponent-node .
+
+sh:Validator  a           rdfs:Class ;
+        rdfs:comment      "The class of validators, which provide instructions on how to process a constraint definition. This class serves as base class for the SPARQL-based validators and other possible implementations."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Validator"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:variable  a   rdf:Property ;
+        rdfs:comment  "Represents a Server Variable for server URL template substitution"@en ;
+        rdfs:domain   openapi:Server ;
+        rdfs:label    "variable"@en ;
+        rdfs:range    openapi:ServerVariable .
+
+<Blog_localePropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Blog_localePropertyShapeNodeShape" ;
+        openapi:description  "The locale this blog is set to, as broken out below." ;
+        sh:property          <Blog_localePropertyShape_variantPropertyShape> , <Blog_localePropertyShape_countryPropertyShape> , <Blog_localePropertyShape_languagePropertyShape> ;
+        sh:targetClass       myOnt:Blog_localePropertyShape .
+
+<nextPageTokenPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "nextPageTokenPropertyShape" ;
+        openapi:description  "Pagination token to fetch the next page, if one exists." ;
+        openapi:name         "nextPageToken" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:nextPageToken .
+
+<BlogUserInfos_blog_user_infoPropertyShape_hasAdminAccessPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape_hasAdminAccessPropertyShape" ;
+        openapi:description  "True if the user has Admin level access to the blog." ;
+        openapi:name         "hasAdminAccess" ;
+        sh:datatype          xsd:boolean ;
+        sh:path              myOnt:BlogUserInfos_blog_user_infoPropertyShape_hasAdminAccess .
+
+<Comments_updatedPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_updatedPropertyShape" ;
+        openapi:description  "RFC 3339 date-time when this comment was last updated, for example \"2012-04-15T19:43:21-07:00\"." ;
+        openapi:name         "updated" ;
+        sh:datatype          xsd:dateTime ;
+        sh:path              myOnt:Comments_updated .
+
+sh:ConstraintComponent
+        a                 rdfs:Class ;
+        rdfs:comment      "The class of constraint components."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Constraint component"@en ;
+        rdfs:subClassOf   sh:Parameterizable .
+
+sh:and  a                 rdf:Property ;
+        rdfs:comment      "RDF list of shapes to validate the value nodes against."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "and"@en ;
+        rdfs:range        rdf:List .
+
+sh:MaxLengthConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the maximum string length of value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Max-length constraint component"@en ;
+        sh:parameter      sh:MaxLengthConstraintComponent-maxLength .
+
+openapi:contentType  a  rdf:Property ;
+        rdfs:comment  "The Content-Type for encoding a specific property"@en ;
+        rdfs:domain   openapi:Encoding ;
+        rdfs:label    "contentType"@en ;
+        rdfs:range    xsd:string .
+
+sh:JSConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component with the parameter sh:js linking to a sh:JSConstraint containing a sh:script."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript constraint component"@en ;
+        sh:parameter      sh:JSConstraint-js .
+
+<Blog_localePropertyShape_countryPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_localePropertyShape_countryPropertyShape" ;
+        openapi:description  "The country variant of the language, for example \"US\" for American English." ;
+        openapi:name         "country" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_localePropertyShape_country .
+
+<https://schema.org/Blog>
+        a       owl:Class .
+
+sh:JSLibrary  a           rdfs:Class ;
+        rdfs:comment      "Represents a JavaScript library, typically identified by one or more URLs of files to include."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript library"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:explode  a  rdf:Property ;
+        rdfs:label  "explode"@en ;
+        rdfs:range  xsd:boolean .
+
+openapi:simple  a  openapi:Style .
+
+sh:targetObjectsOf  a     rdf:Property ;
+        rdfs:comment      "Links a shape to a property, indicating that all all objects of triples that have the given property as their predicate must conform to the shape."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "target objects of"@en ;
+        rdfs:range        rdf:Property .
+
+openapi:discriminator
+        a            rdf:Property ;
+        rdfs:Domain  sh:Shape ;
+        rdfs:label   "discriminator"@en ;
+        rdfs:range   openapi:Discriminator .
+
+openapi:Parameter  a  rdfs:Class ;
+        rdfs:comment  "Describes a single operation parameter"@en ;
+        rdfs:label    "Parameter"@en .
+
+sh:IRI  a                 sh:NodeKind ;
+        rdfs:comment      "The node kind of all IRIs."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "IRI"@en .
+
+openapi:form  a  openapi:Style .
+
+sh:MaxCountConstraintComponent-maxCount
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:maxCount       1 ;
+        sh:path           sh:maxCount .
+
+openapi:writeOnly  a  rdf:Property ;
+        rdfs:comment  "Declares the property as write only"@en ;
+        rdfs:label    "writeOnly"@en ;
+        rdfs:range    xsd:boolean .
+
+openapi:scheme  a     rdf:Property ;
+        rdfs:comment  "The name of the HTTP Authorization scheme to be used in the Authorization header"@en ;
+        rdfs:domain   openapi:Http ;
+        rdfs:label    "scheme"@en ;
+        rdfs:range    xsd:string .
+
+myOnt:Blog_postsPropertyShape_selfLink
+        a       rdf:Property .
+
+openapi:parameterName
+        a             rdf:Property ;
+        rdfs:comment  "The name of the header, query or cookie parameter to be used."@en ;
+        rdfs:domain   openapi:ApiKey ;
+        rdfs:label    "parameterName"@en ;
+        rdfs:range    xsd:string .
+
+myOnt:Comments_blog  a  rdf:Property .
+
+sh:update  a              rdf:Property ;
+        rdfs:comment      "The SPARQL UPDATE to execute."@en ;
+        rdfs:domain       sh:SPARQLUpdateExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "update"@en ;
+        rdfs:range        xsd:string .
+
+sh:annotationValue  a     rdf:Property ;
+        rdfs:comment      "The (default) values of the annotation property."@en ;
+        rdfs:domain       sh:ResultAnnotation ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "annotation value"@en .
+
+sh:SPARQLConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to define constraints based on SPARQL queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL constraint component"@en ;
+        sh:parameter      sh:SPARQLConstraintComponent-sparql .
+
+<Blog_postsPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Blog_postsPropertyShapeNodeShape" ;
+        openapi:description  "The container for this blog's posts." ;
+        sh:property          <Blog_postsPropertyShape_itemsPropertyShape> , <Blog_postsPropertyShape_selfLinkPropertyShape> , <Blog_postsPropertyShape_totalItemsPropertyShape> ;
+        sh:targetClass       myOnt:Blog_postsPropertyShape .
+
+sh:qualifiedValueShape
+        a                 rdf:Property ;
+        rdfs:comment      "The shape that a specified number of values must conform to."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "qualified value shape"@en ;
+        rdfs:range        sh:Shape .
+
+openapi:binary  a     rdfs:Datatype ;
+        rdfs:comment  "any sequence of octets" .
+
+myOnt:BlogUserInfos_blog_user_infoPropertyShape_photosAlbumKey
+        a       rdf:Property .
+
+sh:xone  a                rdf:Property ;
+        rdfs:comment      "Specifies a list of shapes so that the value nodes must conform to exactly one of the shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "exactly one"@en ;
+        rdfs:range        rdf:List .
+
+sh:QualifiedMaxCountConstraintComponent-qualifiedMaxCount
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:datatype       xsd:integer ;
+        sh:path           sh:qualifiedMaxCount .
+
+sh:Parameter  a           rdfs:Class ;
+        rdfs:comment      "The class of parameter declarations, consisting of a path predicate and (possibly) information about allowed value type, cardinality and other characteristics."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Parameter"@en ;
+        rdfs:subClassOf   sh:PropertyShape .
+
+sh:Shape  a               rdfs:Class ;
+        rdfs:comment      "A shape is a collection of constraints that may be targeted for certain nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Shape"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+sh:condition  a           rdf:Property ;
+        rdfs:comment      "The shapes that the focus nodes need to conform to before a rule is executed on them."@en ;
+        rdfs:domain       sh:Rule ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "condition"@en ;
+        rdfs:range        sh:Shape .
+
+<Blog_localePropertyShape_variantPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_localePropertyShape_variantPropertyShape" ;
+        openapi:description  "The language variant this blog is set to." ;
+        openapi:name         "variant" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_localePropertyShape_variant .
+
+sh:targetSubjectsOf  a    rdf:Property ;
+        rdfs:comment      "Links a shape to a property, indicating that all subjects of triples that have the given property as their predicate must conform to the shape."@en ;
+        rdfs:domain       sh:Shape ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "target subjects of"@en ;
+        rdfs:range        rdf:Property .
+
+sh:equals  a              rdf:Property ;
+        rdfs:comment      "Specifies a property that must have the same values as the value nodes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "equals"@en ;
+        rdfs:range        rdf:Property .
+
+sh:focusNode  a           rdf:Property ;
+        rdfs:comment      "The focus node that was validated when the result was produced."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "focus node"@en .
+
+openapi:readOnly  a   rdf:Property ;
+        rdfs:comment  "Declares the property as read only"@en ;
+        rdfs:label    "readOnly"@en ;
+        rdfs:range    xsd:boolean .
+
+<BlogUserInfos_kindPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_kindPropertyShape" ;
+        openapi:description  "The kind of this entity. Always blogger#blogUserInfo." ;
+        openapi:name         "kind" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:BlogUserInfos_kind .
+
+sh:SPARQLRule  a          rdfs:Class ;
+        rdfs:comment      "The class of SHACL rules based on SPARQL CONSTRUCT queries."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL CONSTRUCT rule"@en ;
+        rdfs:subClassOf   sh:SPARQLConstructExecutable , sh:Rule .
+
+<BlogUserInfos_blog_user_infoPropertyShape_kindPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "BlogUserInfos_blog_user_infoPropertyShape_kindPropertyShape" ;
+        openapi:description  "The kind of this entity. Always blogger#blogPerUserInfo." ;
+        openapi:name         "kind" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:BlogUserInfos_blog_user_infoPropertyShape_kind .
+
+sh:JSTargetType  a        rdfs:Class ;
+        rdfs:comment      "The (meta) class for parameterizable targets that are based on JavaScript functions."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript target type"@en ;
+        rdfs:subClassOf   sh:JSExecutable , sh:TargetType .
+
+openapi:mapKey  a    rdf:Property ;
+        rdfs:domain  openapi:PropertyMapper ;
+        rdfs:label   "mapKey"@en ;
+        rdfs:range   xsd:string .
+
+<Blog_kindPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_kindPropertyShape" ;
+        openapi:description  "The kind of this entry. Always blogger#blog." ;
+        openapi:name         "kind" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_kind .
+
+sh:jsFunctionName  a      rdf:Property ;
+        rdfs:comment      "The name of the JavaScript function to execute."@en ;
+        rdfs:domain       sh:JSExecutable ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript function name"@en ;
+        rdfs:range        xsd:string .
+
+sh:resultPath  a          rdf:Property ;
+        rdfs:comment      "The path of a validation result, based on the path of the validated property shape."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "result path"@en ;
+        rdfs:range        rdfs:Resource .
+
+openapi:label  a  openapi:Style .
+
+sh:conforms  a            rdf:Property ;
+        rdfs:comment      "True if the validation did not produce any validation results, and false otherwise."@en ;
+        rdfs:domain       sh:ValidationReport ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "conforms"@en ;
+        rdfs:range        xsd:boolean .
+
+<Comments_authorPropertyShape_idPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape_idPropertyShape" ;
+        openapi:description  "The identifier of the comment creator." ;
+        openapi:name         "id" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Comments_authorPropertyShape_id .
+
+sh:MaxExclusiveConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to restrict the range of value nodes with a maximum exclusive value."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Max-exclusive constraint component"@en ;
+        sh:parameter      sh:MaxExclusiveConstraintComponent-maxExclusive .
+
+sh:declare  a             rdf:Property ;
+        rdfs:comment      "Links a resource with its namespace prefix declarations."@en ;
+        rdfs:domain       owl:Ontology ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "declare"@en ;
+        rdfs:range        sh:PrefixDeclaration .
+
+sh:subject  a             rdf:Property ;
+        rdfs:comment      "An expression producing the resources that shall be inferred as subjects."@en ;
+        rdfs:domain       sh:TripleRule ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "subject"@en .
+
+openapi:mapping  a    rdf:Property ;
+        rdfs:comment  "An object to hold mappings between payload values and schema names or references."@en ;
+        rdfs:domain   openapi:Discriminator ;
+        rdfs:label    "mapping"@en ;
+        rdfs:range    openapi:PropertyMapper .
+
+openapi:PathParameter
+        a                rdfs:Class ;
+        rdfs:comment     "A parameter value that is part of the operation's URL"@en ;
+        rdfs:label       "PathParameter"@en ;
+        rdfs:subClassOf  openapi:Parameter .
+
+openapi:minProperties
+        a           rdf:Property ;
+        rdfs:label  "minProperties"@en ;
+        rdfs:range  xsd:int .
+
+sh:qualifiedValueShapesDisjoint
+        a                 rdf:Property ;
+        rdfs:comment      "Can be used to mark the qualified value shape to be disjoint with its sibling shapes."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "qualified value shapes disjoint"@en ;
+        rdfs:range        xsd:boolean .
+
+sh:MinExclusiveConstraintComponent-minExclusive
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:maxCount       1 ;
+        sh:nodeKind       sh:Literal ;
+        sh:path           sh:minExclusive .
+
+openapi:Header  a     rdfs:Class ;
+        rdfs:comment  "Custom headers that are expected as part of the HTTP request/response"@en ;
+        rdfs:label    "Header"@en .
+
+<Comments_authorPropertyShapeNodeShape>
+        a                    sh:NodeShape ;
+        rdfs:label           "Comments_authorPropertyShapeNodeShape" ;
+        openapi:description  "The author of this comment." ;
+        sh:property          <Comments_authorPropertyShape_imagePropertyShape> , <Comments_authorPropertyShape_urlPropertyShape> , <Comments_authorPropertyShape_displayNamePropertyShape> , <Comments_authorPropertyShape_idPropertyShape> ;
+        sh:targetClass       <https://schema.org/author> .
+
+sh:SPARQLConstraintComponent-sparql
+        a                 sh:Parameter ;
+        rdfs:isDefinedBy  sh: ;
+        sh:path           sh:sparql .
+
+sh:shapesGraph  a         rdf:Property ;
+        rdfs:comment      "Shapes graphs that should be used when validating this data graph."@en ;
+        rdfs:domain       owl:Ontology ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "shapes graph"@en ;
+        rdfs:range        owl:Ontology .
+
+sh:SPARQLExecutable  a    rdfs:Class ;
+        rdfs:comment      "The class of resources that encapsulate a SPARQL query."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "SPARQL executable"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+openapi:spaceDelimited
+        a       openapi:Style .
+
+sh:Warning  a             sh:Severity ;
+        rdfs:comment      "The severity for a warning validation result."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Warning"@en .
+
+<Blog_urlPropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Blog_urlPropertyShape" ;
+        openapi:description  "The URL where this blog is published." ;
+        openapi:name         "url" ;
+        sh:datatype          xsd:string ;
+        sh:path              myOnt:Blog_url .
+
+openapi:GET  a  openapi:Method .
+
+myOnt:Comments_kind  a  rdf:Property .
+
+<https://schema.org/comment>
+        a       owl:Class .
+
+myOnt:Comments_blogPropertyShape
+        a       owl:Class .
+
+myOnt:Blog_localePropertyShape
+        a       owl:Class .
+
+sh:PropertyGroup  a       rdfs:Class ;
+        rdfs:comment      "Instances of this class represent groups of property shapes that belong together."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Property group"@en ;
+        rdfs:subClassOf   rdfs:Resource .
+
+sh:propertyValidator  a   rdf:Property ;
+        rdfs:comment      "The validator(s) used to evaluate a constraint in the context of a property shape."@en ;
+        rdfs:domain       sh:ConstraintComponent ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "property validator"@en ;
+        rdfs:range        sh:Validator .
+
+sh:JSFunction  a          rdfs:Class ;
+        rdfs:comment      "The class of SHACL functions that execute a JavaScript function when called."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "JavaScript function"@en ;
+        rdfs:subClassOf   sh:JSExecutable , sh:Function .
+
+<https://schema.org/datePublished>
+        a       rdf:Property .
+
+<Comments_authorPropertyShape_imagePropertyShape>
+        a                    sh:PropertyShape ;
+        rdfs:label           "Comments_authorPropertyShape_imagePropertyShape" ;
+        openapi:description  "The container for the creator's avatar URL." ;
+        openapi:name         "image" ;
+        sh:node              <Comments_authorPropertyShape_imagePropertyShapeNodeShape> ;
+        sh:path              myOnt:Comments_authorPropertyShape_image .
+
+sh:sourceConstraintComponent
+        a                 rdf:Property ;
+        rdfs:comment      "The constraint component that is the source of the result."@en ;
+        rdfs:domain       sh:AbstractResult ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "source constraint component"@en ;
+        rdfs:range        sh:ConstraintComponent .
+
+sh:message  a             rdf:Property ;
+        rdfs:comment      "A human-readable message (possibly with placeholders for variables) explaining the cause of the result."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "message"@en .
+
+sh:class  a               rdf:Property ;
+        rdfs:comment      "The type that all value nodes must have."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "class"@en ;
+        rdfs:range        rdfs:Class .
+
+sh:EqualsConstraintComponent
+        a                 sh:ConstraintComponent ;
+        rdfs:comment      "A constraint component that can be used to verify that the set of value nodes is equal to the set of nodes that have the focus node as subject and the value of a given property as predicate."@en ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "Equals constraint component"@en ;
+        sh:parameter      sh:EqualsConstraintComponent-equals .
+
+openapi:Scope  a      rdfs:Class ;
+        rdfs:comment  "The available scopes for the OAuth2 security scheme"@en ;
+        rdfs:label    "Scope"@en .
+
+openapi:pipeDelimited
+        a       openapi:Style .
+
+sh:result  a              rdf:Property ;
+        rdfs:comment      "The validation results contained in a validation report."@en ;
+        rdfs:domain       sh:ValidationReport ;
+        rdfs:isDefinedBy  sh: ;
+        rdfs:label        "result"@en ;
+        rdfs:range        sh:ValidationResult .
+
+openapi:mapValue  a  rdf:Property ;
+        rdfs:domain  openapi:PropertyMapper ;
+        rdfs:label   "mapValue"@en ;
+        rdfs:range   sh:Shape .

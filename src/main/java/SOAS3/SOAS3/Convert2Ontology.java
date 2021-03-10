@@ -1161,8 +1161,11 @@ public class Convert2Ontology {
 				if (itemsObject.get$ref() != null) {
 					schemaName = extractSchemaName(itemsObject.get$ref());
 					itemsObject = schemas.get(schemaName);
+					shapeInd = parseSchemaObject(ontModel, schemaName, null, itemsObject, schemas);
 				}
-				shapeInd = findShapeIndividual(ontModel, schemaName + "NodeShape");
+				if (shapeInd == null) {
+					shapeInd = findShapeIndividual(ontModel, schemaName + "NodeShape");
+				}
 				// Prediction pe	itemsObject.getType() != null
 				if (shapeInd == null && itemsObject.getType() != null) {
 					//create a NodeShape individual for each item of the array
@@ -1253,19 +1256,21 @@ public class Convert2Ontology {
 		Individual nodeShapeInd = ontModel.createIndividual(schemaName,ontModel.getOntClass(OpenApiOntUtils.NodeShapeClassURI));
 		property_creator.AddSchemaLabel(nodeShapeInd, schemaName);
 		//create a new class with name "schemaName"
-		OntClass newClass = ontModel.createClass(NS + oldSchemaName);
-		//Set collection as superClass
-		newClass.addSuperClass(ontModel.getOntClass(OpenApiOntUtils.CollectionClassURI));
-		Resource classURI= ResourceFactory.createResource(newClass.getURI());
-		//Extract targetClass value of nodeShapeInd
-		ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.targetClassURI), classURI));
+		if (oldSchemaName != null) {
+			OntClass newClass = ontModel.createClass(NS + oldSchemaName);
+			//Set collection as superClass
+			newClass.addSuperClass(ontModel.getOntClass(OpenApiOntUtils.CollectionClassURI));
+			Resource classURI = ResourceFactory.createResource(newClass.getURI());
+			//Extract targetClass value of nodeShapeInd
+			ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.targetClassURI), classURI));
+		}
 		//create a property shape individual for the schemaObject
 		Individual memberInd = createPropertyShape(ontModel, null, null, schemaObject, schemas);
 		//Make this property shape a member of collection
 		//Test
 		ontModel.add(ontModel.createStatement(nodeShapeInd, ontModel.getProperty(OpenApiOntUtils.propertyURI), memberInd));
 		///
-		ontModel.add(ontModel.createStatement(memberInd, ontModel.getProperty(OpenApiOntUtils.pathURI),ontModel.getProperty(OpenApiOntUtils.memberURI)));
+//		ontModel.add(ontModel.createStatement(memberInd, ontModel.getProperty(OpenApiOntUtils.pathURI),ontModel.getProperty(OpenApiOntUtils.memberURI)));
 		return nodeShapeInd;
 	}
 

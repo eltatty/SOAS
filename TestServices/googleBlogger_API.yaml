@@ -1,0 +1,511 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Google Blogger
+  description: The Blogger API v3 allows client applications to view and update Blogger content. Your client application can use Blogger API v3 to create new blog posts, edit or delete existing posts, and query for posts that match particular criteria.
+  termsOfService: https://developer.google.com/books/terms.html
+  license:
+    name: Apache 2.0
+    url: https://creativecommons.org/licenses/by/4.0
+externalDocs:
+  description: Find more info here
+  url: https://developers.google.com/blogger/docs/3.0/reference
+servers:
+  - url: https://www.googleapis.com/blogger/v3
+paths:
+  /blogs/{blogId}:
+    get:
+      summary: Retrieves a blog by its ID
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - name: maxPosts
+          description: Maximum number of posts to retrieve along with the blog. When this parameter is not specified, no posts will be returned as part of the blog resource.
+          in: header
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Blog Resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Blog"
+  /blogs/byurl:
+    get:
+      summary: Retrieves a blog by URL.
+      parameters:
+        - name: url
+          description: The URL of the blog to retrieve.
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Blog Resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Blog"
+  /users/{userId}/blogs:
+    get:
+      summary: Retrieves a list of blogs.
+      parameters:
+        - $ref: "#/components/parameters/userIdParam"
+        - name: fetchUserInfo
+          description: Whether the response is a list of blogs with per-user information instead of just blogs.
+          in: header
+          required: false
+          schema:
+            type: boolean
+        - name: view
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [ADMIM, AUTHOR, READER]
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - kind
+                  - items
+                  - blogUserInfos
+                properties:
+                  kind:
+                    description: The kind of this entity. Always blogger#blogList.
+                    type: string
+                  items:
+                    description: The list of Blogs this user has Authorship or Admin rights for.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Blog"
+                  blogUserInfos:
+                    description: Admin level list of blog per-user information.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BlogUserInfos"
+  /blogs/{blogId}/posts/{postId}/comments:
+    get:
+      summary: Retrieves the list of comments for a post.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/endDateParam"
+        - $ref: "#/components/parameters/fetchBodiesParam"
+        - $ref: "#/components/parameters/maxResutlsParam"
+        - $ref: "#/components/parameters/pageTokenParam"
+        - $ref: "#/components/parameters/startDateParam"
+        - name: status
+          description: Acceptable values are.
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [emptied, live, pending, spam]
+        - name: view
+          description: Acceptable values are.
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [ADMIN, AUTHOR, READER]
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    description: The kind of this entry. Always blogger#commentList.
+                    type: string
+                  nextPageToken:
+                    description: Pagination token to fetch the next page, if one exists.
+                    type: string
+                  prevPageToken:
+                    description: Pagination token to fetch the previous page, if one exists.
+                    type: string
+                  items:
+                    description: The list of comments resources for the specified post.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Comments"
+
+  /blogs/{blogId}/posts/{postId}/comments/{commentId}:
+    delete:
+      summary: Delete a comment by ID.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/commentIdParam"
+      responses:
+        "200":
+          description: If successful, this method returns an empty response body.
+    get:
+      summary: Retrieves one comment resource by its commentId.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/commentIdParam"
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comments"
+  /blogs/{blogId}/posts/{postId}/comments/{commentId}/approve:
+    post:
+      summary: Marks a comment as not spam.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/commentIdParam"
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comments"
+  /blogs/{blogId}/comments:
+    get:
+      summary: Retrieves the comments for a blog, across all posts, possibly filtered.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/endDateParam"
+        - $ref: "#/components/parameters/fetchBodiesParam"
+        - $ref: "#/components/parameters/maxResutlsParam"
+        - $ref: "#/components/parameters/pageTokenParam"
+        - $ref: "#/components/parameters/startDateParam"
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    description: The kind of this entry. Always blogger#commentList.
+                    type: string
+                  nextPageToken:
+                    description: Pagination token to fetch the next page, if one exists.
+                    type: string
+                  prevPageToken:
+                    description: Pagination token to fetch the previous page, if one exists.
+                    type: string
+                  items:
+                    description: The list of comments resources for the specified post.
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Comments"
+  /blogs/{blogId}/posts/{postId}/comments/{commentId}/spam:
+    post:
+      summary: Marks a comment as spam.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/commentIdParam"
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comments"
+  /blogs/blogId/posts/postId/comments/commentId/removecontent:
+    post:
+      summary: Removes the content of a comment.
+      parameters:
+        - $ref: "#/components/parameters/blogIdParam"
+        - $ref: "#/components/parameters/postIdParam"
+        - $ref: "#/components/parameters/commentIdParam"
+      responses:
+        "200":
+          description: If successful, this method returns a response body with the following structure.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comments"
+
+components:
+  parameters:
+    endDateParam:
+      name: endDate
+      description: Latest date of comment to fetch, a date-time with RFC 3339 formatting.
+      in: header
+      required: false
+      schema:
+        type: string
+        format: date-time
+
+    fetchBodiesParam:
+      name: fetchBodies
+      description: Whether the body content of the comments is included.
+      in: header
+      required: false
+      schema:
+        type: boolean
+
+    maxResutlsParam:
+      name: maxResults
+      description: Maximum number of comments to include in the result.
+      in: header
+      required: false
+      schema:
+        type: integer
+
+    pageTokenParam:
+      name: pageToken
+      description: Continuation token if request is paged.
+      in: header
+      required: false
+      schema:
+        type: string
+
+    startDateParam:
+      name: startDate
+      description: Earliest date of comment to fetch, a date-time with RFC 3339 formatting.
+      in: header
+      required: false
+      schema:
+        type: string
+        format: date-time
+
+    commentIdParam:
+      name: commentId
+      description: The ID of the comment to get.
+      in: path
+      required: true
+      schema:
+        type: string
+
+    postIdParam:
+      name: postId
+      description: The ID of the post to fetch comments from.
+      in: path
+      required: true
+      schema:
+        type: string
+
+    blogIdParam:
+      name: blogId
+      description: The ID of the blog to get.
+      in: path
+      required: true
+      schema:
+        type: string
+
+    userIdParam:
+      name: userId
+      description: The ID of the user whose blogs are to be fetched. Either the word self or the user's profile ID.
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    Comments:
+      x-refersTo: https://schema.org/comment
+      type: object
+      properties:
+        kind:
+          description: The kind of this resource. Always blogger#comment.
+          type: string
+        id:
+          description: The ID for this resource.
+          type: string
+        post:
+          description: Data about the post containing this comment.
+          type: object
+          properties:
+            id:
+              description: The identifier of the post containing this comment.
+              type: string
+        blog:
+          description: Data about the blog containing this comment.
+          type: object
+          properties:
+            id:
+              description: The identifier of the blog containing this comment.
+              type: string
+        published:
+          description: RFC 3339 date-time date-time when this comment was published, for example "2012-04-15T19:38:01-07:00".
+          type: string
+          format: date-time
+        updated:
+          description: RFC 3339 date-time when this comment was last updated, for example "2012-04-15T19:43:21-07:00".
+          type: string
+          format: date-time
+        selfLink:
+          description: The Blogger API URL to fetch this resource from.
+          type: string
+        context:
+          description: The content of the comment, which can include HTML markup.
+          type: string
+        author:
+          x-refersTo: https://schema.org/author
+          type: object
+          description: The author of this comment.
+          properties:
+            id:
+              description: The identifier of the comment creator.
+              type: string
+            displayName:
+              description: The comment creator's display name.
+              type: string
+            url:
+              description: The URL of the comment creator's profile page.
+              type: string
+            image:
+              description: The container for the creator's avatar URL.
+              type: object
+              properties:
+                url:
+                  description: The URL of the comment creator's avatar image.
+                  type: object
+        inReplyTo:
+          description: Data about the comment this is in reply to.
+          type: object
+          properties:
+            id:
+              description: The ID of the parent of this comment.
+              type: string
+        status:
+          description: The status of the comment. The status is only visible to users who have Administration rights on a blog.
+          type: string
+
+    BlogUserInfos:
+      allOf:
+        - $ref: "#/components/schemas/Blog"
+        - type: object
+          properties:
+            kind:
+              description: The kind of this entity. Always blogger#blogUserInfo.
+              type: string
+            blog_user_info:
+              description: Information about a User for the Blog.
+              type: object
+              properties:
+                kind:
+                  description: The kind of this entity. Always blogger#blogPerUserInfo.
+                  type: string
+                userId:
+                  description: ID of the User
+                  type: string
+                blogId:
+                  description: ID of the Blog resource
+                  type: string
+                photosAlbumKey:
+                  description: The Photo Album Key for the user when adding photos to the blog.
+                  type: string
+                hasAdminAccess:
+                  description: True if the user has Admin level access to the blog.
+                  type: boolean
+
+    Blog:
+      x-kindOf: https://schema.org/Blog
+      type: object
+      description: A blog is the root data class for the Blogger API. Each blog has a series of posts and pages, and each post has a series of comments.
+      required:
+        - kind
+        - id
+        - name
+        - description
+        - published
+        - updated
+        - url
+        - selfLink
+        - posts
+        - locale
+        - customerMetaData
+        - pages
+      properties:
+        kind:
+          x-kindOf: https://schema.org/about
+          type: string
+          description: The kind of this entry. Always blogger#blog.
+        id:
+          type: string
+          description: The ID for this resource.
+        name:
+          type: string
+          description: The name of this blog, which is usually displayed in Blogger as the blog's title. The title can include HTML.
+        description:
+          type: string
+          description: The description of this blog, which is usually displayed in Blogger underneath the blog's title. The description can include HTML.
+        publised:
+          x-kindOf: https://schema.org/datePublished
+          type: string
+          format: date-time
+          description: RFC 3339 date-time when this blog was published.
+        updated:
+          type: string
+          format: date-time
+          description: RFC 3339 date-time when this blog was published.
+        url:
+          type: string
+          description: The URL where this blog is published.
+        selfLink:
+          type: string
+          description: The Blogger API URL to fetch this resource from.
+        posts:
+          type: object
+          description: The container for this blog's posts.
+          required:
+            - totalItems
+            - selfLink
+            - items
+          properties:
+            totalItems:
+              type: integer
+              description: The total number of posts on this blog.
+            selfLink:
+              type: string
+              description: The URL of the collection of posts for this blog.
+            items:
+              type: array
+              description: The list of posts for this Blog.
+              items:
+                type: object
+        locale:
+          type: object
+          description: The locale this blog is set to, as broken out below.
+          required:
+            - language
+            - country
+            - variant
+          properties:
+            language:
+              type: string
+              description: The language this blog is set to, for example "en" for English.
+            country:
+              type: string
+              description: The country variant of the language, for example "US" for American English.
+            variant:
+              type: string
+              description: The language variant this blog is set to.
+        customMetaData:
+          type: string
+          description: The JSON custom metadata for the blog.
+        pages:
+          type: object
+          description: The container for this blog's pages.
+          required:
+            - totalitems
+            - selfLink
+          properties:
+            totalItems:
+              type: integer
+              description: The total number of pages for this blog.
+            selfLink:
+              type: string
+              description: The URL of the pages collection for this blog.
