@@ -135,9 +135,6 @@ sh:LessThanConstraintComponent
         rdfs:label        "Less-than constraint component"@en ;
         sh:parameter      sh:LessThanConstraintComponent-lessThan .
 
-_:b0    a                 openapi:Path ;
-        openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}" .
-
 myOnt:Blog_pagesPropertyShape_totalItems
         a       rdf:Property .
 
@@ -1848,36 +1845,10 @@ openapi:deepObject  a  openapi:Style .
 <service_document>  a               openapi:Document ;
         openapi:externalDoc         <service_externalDoc> ;
         openapi:info                <service_info> ;
-        openapi:supportedOperation  [ a                      openapi:Operation ;
-                                      openapi:method         openapi:GET ;
-                                      openapi:onPath         [ a                 openapi:Path ;
-                                                               openapi:pathName  "/blogs/byurl"
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "The URL of the blog to retrieve." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "url" ;
-                                                               openapi:required     true ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:response       [ a                    openapi:Response ;
-                                                               openapi:content      [ a                      openapi:MediaType ;
-                                                                                      openapi:mediaTypeName  "application/json" ;
-                                                                                      openapi:schema         <BlogNodeShape>
-                                                                                    ] ;
-                                                               openapi:description  "Blog Resource" ;
-                                                               openapi:statusCode   "200"
-                                                             ] ;
-                                      openapi:serverInfo     <service_server> ;
-                                      openapi:summary        "Retrieves a blog by URL."
-                                    ] ;
         openapi:supportedOperation  [ a                   openapi:Operation ;
                                       openapi:method      openapi:POST ;
                                       openapi:onPath      [ a                 openapi:Path ;
-                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam"
+                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve"
                                                           ] ;
                                       openapi:parameter   [ a                    openapi:PathParameter ;
                                                             openapi:description  "The ID of the comment to get." ;
@@ -1918,7 +1889,115 @@ openapi:deepObject  a  openapi:Style .
                                                             openapi:statusCode   "200"
                                                           ] ;
                                       openapi:serverInfo  <service_server> ;
-                                      openapi:summary     "Marks a comment as spam."
+                                      openapi:summary     "Marks a comment as not spam."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the blog to get." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "blogId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the post to fetch comments from." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "postId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Acceptable values are." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "view" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Acceptable values are." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "status" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "startDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Continuation token if request is paged." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "pageToken" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Whether the body content of the comments is included." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "fetchBodies" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:boolean
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Maximum number of comments to include in the result." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "maxResults" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:int
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "endDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         [ a            sh:NodeShape ;
+                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
+                                                                                                             ]
+                                                                                    ] ;
+                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves the list of comments for a post."
                                     ] ;
         openapi:supportedOperation  [ a                   openapi:Operation ;
                                       openapi:method      openapi:DELETE ;
@@ -1959,6 +2038,156 @@ openapi:deepObject  a  openapi:Style .
                                                           ] ;
                                       openapi:serverInfo  <service_server> ;
                                       openapi:summary     "Delete a comment by ID."
+                                    ] ;
+        openapi:supportedOperation  [ a                   openapi:Operation ;
+                                      openapi:method      openapi:POST ;
+                                      openapi:onPath      [ a                 openapi:Path ;
+                                                            openapi:pathName  "/blogs/blogId/posts/postId/comments/commentId/removecontent"
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the comment to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "commentId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the post to fetch comments from." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "postId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:parameter   [ a                    openapi:PathParameter ;
+                                                            openapi:description  "The ID of the blog to get." ;
+                                                            openapi:explode      false ;
+                                                            openapi:name         "blogId" ;
+                                                            openapi:required     true ;
+                                                            openapi:schema       [ a            sh:PropertyShape ;
+                                                                                   sh:datatype  xsd:string
+                                                                                 ] ;
+                                                            openapi:style        openapi:simple
+                                                          ] ;
+                                      openapi:response    [ a                    openapi:Response ;
+                                                            openapi:content      [ a                      openapi:MediaType ;
+                                                                                   openapi:mediaTypeName  "application/json" ;
+                                                                                   openapi:schema         <CommentsNodeShape>
+                                                                                 ] ;
+                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                            openapi:statusCode   "200"
+                                                          ] ;
+                                      openapi:serverInfo  <service_server> ;
+                                      openapi:summary     "Removes the content of a comment."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/{blogId}/comments"
+                                                             ] ;
+                                      openapi:parameter      [ a                    openapi:PathParameter ;
+                                                               openapi:description  "The ID of the blog to get." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "blogId" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "startDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Maximum number of comments to include in the result." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "maxResults" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:int
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Whether the body content of the comments is included." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "fetchBodies" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:boolean
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "endDate" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:dateTime
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "Continuation token if request is paged." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "pageToken" ;
+                                                               openapi:required     false ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         [ a            sh:NodeShape ;
+                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
+                                                                                                             ]
+                                                                                    ] ;
+                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves the comments for a blog, across all posts, possibly filtered."
+                                    ] ;
+        openapi:supportedOperation  [ a                      openapi:Operation ;
+                                      openapi:method         openapi:GET ;
+                                      openapi:onPath         [ a                 openapi:Path ;
+                                                               openapi:pathName  "/blogs/byurl"
+                                                             ] ;
+                                      openapi:requestHeader  [ a                    openapi:Header ;
+                                                               openapi:description  "The URL of the blog to retrieve." ;
+                                                               openapi:explode      false ;
+                                                               openapi:name         "url" ;
+                                                               openapi:required     true ;
+                                                               openapi:schema       [ a            sh:PropertyShape ;
+                                                                                      sh:datatype  xsd:string
+                                                                                    ] ;
+                                                               openapi:style        openapi:simple
+                                                             ] ;
+                                      openapi:response       [ a                    openapi:Response ;
+                                                               openapi:content      [ a                      openapi:MediaType ;
+                                                                                      openapi:mediaTypeName  "application/json" ;
+                                                                                      openapi:schema         <BlogNodeShape>
+                                                                                    ] ;
+                                                               openapi:description  "Blog Resource" ;
+                                                               openapi:statusCode   "200"
+                                                             ] ;
+                                      openapi:serverInfo     <service_server> ;
+                                      openapi:summary        "Retrieves a blog by URL."
                                     ] ;
         openapi:supportedOperation  [ a                      openapi:Operation ;
                                       openapi:method         openapi:GET ;
@@ -2046,7 +2275,7 @@ openapi:deepObject  a  openapi:Style .
         openapi:supportedOperation  [ a                   openapi:Operation ;
                                       openapi:method      openapi:POST ;
                                       openapi:onPath      [ a                 openapi:Path ;
-                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve"
+                                                            openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam"
                                                           ] ;
                                       openapi:parameter   [ a                    openapi:PathParameter ;
                                                             openapi:description  "The ID of the comment to get." ;
@@ -2087,7 +2316,7 @@ openapi:deepObject  a  openapi:Style .
                                                             openapi:statusCode   "200"
                                                           ] ;
                                       openapi:serverInfo  <service_server> ;
-                                      openapi:summary     "Marks a comment as not spam."
+                                      openapi:summary     "Marks a comment as spam."
                                     ] ;
         openapi:supportedOperation  [ a                   openapi:Operation ;
                                       openapi:method      openapi:GET ;
@@ -2132,238 +2361,6 @@ openapi:deepObject  a  openapi:Style .
                                                           ] ;
                                       openapi:serverInfo  <service_server> ;
                                       openapi:summary     "Retrieves one comment resource by its commentId."
-                                    ] ;
-        openapi:supportedOperation  [ a                   openapi:Operation ;
-                                      openapi:method      openapi:POST ;
-                                      openapi:onPath      [ a                 openapi:Path ;
-                                                            openapi:pathName  "/blogs/blogId/posts/postId/comments/commentId/removecontent"
-                                                          ] ;
-                                      openapi:parameter   [ a                    openapi:PathParameter ;
-                                                            openapi:description  "The ID of the comment to get." ;
-                                                            openapi:explode      false ;
-                                                            openapi:name         "commentId" ;
-                                                            openapi:required     true ;
-                                                            openapi:schema       [ a            sh:PropertyShape ;
-                                                                                   sh:datatype  xsd:string
-                                                                                 ] ;
-                                                            openapi:style        openapi:simple
-                                                          ] ;
-                                      openapi:parameter   [ a                    openapi:PathParameter ;
-                                                            openapi:description  "The ID of the post to fetch comments from." ;
-                                                            openapi:explode      false ;
-                                                            openapi:name         "postId" ;
-                                                            openapi:required     true ;
-                                                            openapi:schema       [ a            sh:PropertyShape ;
-                                                                                   sh:datatype  xsd:string
-                                                                                 ] ;
-                                                            openapi:style        openapi:simple
-                                                          ] ;
-                                      openapi:parameter   [ a                    openapi:PathParameter ;
-                                                            openapi:description  "The ID of the blog to get." ;
-                                                            openapi:explode      false ;
-                                                            openapi:name         "blogId" ;
-                                                            openapi:required     true ;
-                                                            openapi:schema       [ a            sh:PropertyShape ;
-                                                                                   sh:datatype  xsd:string
-                                                                                 ] ;
-                                                            openapi:style        openapi:simple
-                                                          ] ;
-                                      openapi:response    [ a                    openapi:Response ;
-                                                            openapi:content      [ a                      openapi:MediaType ;
-                                                                                   openapi:mediaTypeName  "application/json" ;
-                                                                                   openapi:schema         <CommentsNodeShape>
-                                                                                 ] ;
-                                                            openapi:description  "If successful, this method returns a response body with the following structure." ;
-                                                            openapi:statusCode   "200"
-                                                          ] ;
-                                      openapi:serverInfo  <service_server> ;
-                                      openapi:summary     "Removes the content of a comment."
-                                    ] ;
-        openapi:supportedOperation  [ a                      openapi:Operation ;
-                                      openapi:method         openapi:GET ;
-                                      openapi:onPath         [ a                 openapi:Path ;
-                                                               openapi:pathName  "/blogs/{blogId}/comments"
-                                                             ] ;
-                                      openapi:parameter      [ a                    openapi:PathParameter ;
-                                                               openapi:description  "The ID of the blog to get." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "blogId" ;
-                                                               openapi:required     true ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Continuation token if request is paged." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "pageToken" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "startDate" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:dateTime
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Maximum number of comments to include in the result." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "maxResults" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:int
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Whether the body content of the comments is included." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "fetchBodies" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:boolean
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "endDate" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:dateTime
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:response       [ a                    openapi:Response ;
-                                                               openapi:content      [ a                      openapi:MediaType ;
-                                                                                      openapi:mediaTypeName  "application/json" ;
-                                                                                      openapi:schema         [ a            sh:NodeShape ;
-                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
-                                                                                                             ]
-                                                                                    ] ;
-                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
-                                                               openapi:statusCode   "200"
-                                                             ] ;
-                                      openapi:serverInfo     <service_server> ;
-                                      openapi:summary        "Retrieves the comments for a blog, across all posts, possibly filtered."
-                                    ] ;
-        openapi:supportedOperation  [ a                      openapi:Operation ;
-                                      openapi:method         openapi:GET ;
-                                      openapi:onPath         [ a                 openapi:Path ;
-                                                               openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments"
-                                                             ] ;
-                                      openapi:parameter      [ a                    openapi:PathParameter ;
-                                                               openapi:description  "The ID of the post to fetch comments from." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "postId" ;
-                                                               openapi:required     true ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:parameter      [ a                    openapi:PathParameter ;
-                                                               openapi:description  "The ID of the blog to get." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "blogId" ;
-                                                               openapi:required     true ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Latest date of comment to fetch, a date-time with RFC 3339 formatting." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "endDate" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:dateTime
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Acceptable values are." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "status" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Earliest date of comment to fetch, a date-time with RFC 3339 formatting." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "startDate" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:dateTime
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Maximum number of comments to include in the result." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "maxResults" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:int
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Continuation token if request is paged." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "pageToken" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Whether the body content of the comments is included." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "fetchBodies" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:boolean
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:requestHeader  [ a                    openapi:Header ;
-                                                               openapi:description  "Acceptable values are." ;
-                                                               openapi:explode      false ;
-                                                               openapi:name         "view" ;
-                                                               openapi:required     false ;
-                                                               openapi:schema       [ a            sh:PropertyShape ;
-                                                                                      sh:datatype  xsd:string
-                                                                                    ] ;
-                                                               openapi:style        openapi:simple
-                                                             ] ;
-                                      openapi:response       [ a                    openapi:Response ;
-                                                               openapi:content      [ a                      openapi:MediaType ;
-                                                                                      openapi:mediaTypeName  "application/json" ;
-                                                                                      openapi:schema         [ a            sh:NodeShape ;
-                                                                                                               sh:property  <itemsPropertyShape> , <prevPageTokenPropertyShape> , <nextPageTokenPropertyShape> , <kindPropertyShape>
-                                                                                                             ]
-                                                                                    ] ;
-                                                               openapi:description  "If successful, this method returns a response body with the following structure." ;
-                                                               openapi:statusCode   "200"
-                                                             ] ;
-                                      openapi:serverInfo     <service_server> ;
-                                      openapi:summary        "Retrieves the list of comments for a post."
                                     ] ;
         openapi:version             "1.0.0" .
 
@@ -2559,6 +2556,9 @@ sh:IRIOrLiteral  a        sh:NodeKind ;
         rdfs:isDefinedBy  sh: ;
         rdfs:label        "IRI or literal"@en .
 
+_:b0    a                 openapi:Path ;
+        openapi:pathName  "/blogs/{blogId}/posts/{postId}/comments/{commentId}" .
+
 sh:namespace  a           rdf:Property ;
         rdfs:comment      "The namespace associated with a prefix in a prefix declaration."@en ;
         rdfs:domain       sh:PrefixDeclaration ;
@@ -2697,15 +2697,15 @@ sh:OrConstraintComponent-or
         rdfs:isDefinedBy  sh: ;
         sh:path           sh:or .
 
-myOnt:Comments_postPropertyShape_id
-        a       rdf:Property .
-
 sh:MaxLengthConstraintComponent-maxLength
         a                 sh:Parameter ;
         rdfs:isDefinedBy  sh: ;
         sh:datatype       xsd:integer ;
         sh:maxCount       1 ;
         sh:path           sh:maxLength .
+
+myOnt:Comments_postPropertyShape_id
+        a       rdf:Property .
 
 myOnt:blogUserInfos  a  rdf:Property .
 

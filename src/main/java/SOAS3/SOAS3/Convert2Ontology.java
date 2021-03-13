@@ -1162,6 +1162,7 @@ public class Convert2Ontology {
 					schemaName = extractSchemaName(itemsObject.get$ref());
 					itemsObject = schemas.get(schemaName);
 					shapeInd = parseSchemaObject(ontModel, schemaName, null, itemsObject, schemas);
+					ontModel.add(ontModel.createStatement(propertyShapeInd, ontModel.getProperty(OpenApiOntUtils.nodeURI), shapeInd));
 				}
 				if (shapeInd == null) {
 					shapeInd = findShapeIndividual(ontModel, schemaName + "NodeShape");
