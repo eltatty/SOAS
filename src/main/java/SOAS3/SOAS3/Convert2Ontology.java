@@ -234,14 +234,14 @@ public class Convert2Ontology {
 		//if there are no operation's security requirements, use global ones.
 		if(operationObject.getSecurity()!=null || globSecReqIndList!=null)
 			if(operationObject.getSecurity()==null){
-				for (Individual securiryReqInd : globSecReqIndList) {
+				for (Individual securityReqInd : globSecReqIndList) {
 					ontModel.add(ontModel.createStatement(operationInd, ontModel.getProperty(OpenApiOntUtils.securityURI),securityReqInd));
 				}
 			}
 		//else define new security requirements for this operation.
 			else{
-				for (SecurityRequirement securiryReqObject : operationObject.getSecurity()) {
-					Individual securityReqInd = parseSecurityReqObject(ontModel,securiryReqObject);
+				for (SecurityRequirement securityReqObject : operationObject.getSecurity()) {
+					Individual securityReqInd = parseSecurityReqObject(ontModel,securityReqObject);
 					ontModel.add(ontModel.createStatement(operationInd, ontModel.getProperty(OpenApiOntUtils.securityURI),securityReqInd));
 				}
 			}
